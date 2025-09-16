@@ -13,6 +13,10 @@ class AppAssets {
   static const String authBackground = "assets/icons/wh_logo.png";
   static const String onboardingPattern = "assets/images/onbo.png";
   static const String faceId = "assets/icons/face.svg";
+  static const String touchId = "assets/icons/fing.svg";
+  static const String check = "assets/icons/done.svg";
+  static const String currentStep = "assets/icons/currentst.svg";
+  static const String upcomingStep = "assets/icons/un.svg";
 
 
 

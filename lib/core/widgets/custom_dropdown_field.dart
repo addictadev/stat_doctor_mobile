@@ -57,7 +57,7 @@ class CustomDropdownField extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
             color: AppColors.white,
-            borderRadius: BorderRadius.circular(context.responsiveBorderRadius),
+            borderRadius: BorderRadius.circular(25),
             border: Border.all(color: AppColors.borderLight, width: 1),
           ),
           child: DropdownButtonFormField<String>(
@@ -66,7 +66,18 @@ class CustomDropdownField extends StatelessWidget {
                 horizontal: 16,
                 vertical: 16,
               ),
-              border: InputBorder.none,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(25),
+                borderSide: BorderSide.none,
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(25),
+                borderSide: BorderSide.none,
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(25),
+                borderSide: BorderSide.none,
+              ),
               hintText: hint,
               hintStyle: ResponsiveUtils.getResponsiveTextStyle(
                 context,
@@ -78,13 +89,6 @@ class CustomDropdownField extends StatelessWidget {
                 ),
                 color: AppColors.textTertiary,
               ),
-              suffixIcon:
-                  suffixIcon ??
-                  Icon(
-                    Icons.keyboard_arrow_down,
-                    color: AppColors.primary,
-                    size: 20,
-                  ),
             ),
             items: items,
             onChanged: onChanged,
@@ -100,7 +104,11 @@ class CustomDropdownField extends StatelessWidget {
               ),
               color: AppColors.textPrimary,
             ),
-            icon: const SizedBox.shrink(),
+            icon: Icon(
+              Icons.keyboard_arrow_down,
+              color: AppColors.primary,
+              size: 20,
+            ),
           ),
         ),
       ],

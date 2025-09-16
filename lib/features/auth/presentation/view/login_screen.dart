@@ -11,6 +11,7 @@ import 'package:stat_doctor/core/utils/styles/font_utils.dart';
 import 'package:stat_doctor/core/widgets/custom_textform_field.dart';
 import 'package:stat_doctor/core/widgets/primary_button.dart';
 import 'package:stat_doctor/core/navigation_services/navigation_manager.dart';
+import 'package:stat_doctor/features/registration/presentation/view/registration_screen.dart';
 import 'otp_verification_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -109,6 +110,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         
                         // FaceID Button
                         _buildFaceIdButton(),
+                        
+                        SizedBox(height: 3.h),
+                        
+                        // Register Button
+                        _buildRegisterButton(),
                       ],
                     ),
                   ),
@@ -123,6 +129,20 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+Widget _buildRegisterButton() {
+  return PrimaryButton(
+    text: "register".tr(),
+    color: AppColors.scaffoldColor,
+    textStyle: TextStyle(
+      fontSize: FontSizes.s16,
+      fontWeight: AppFont.semiBold,
+      color: AppColors.primary,
+    ),
+    onPressed: () {
+      NavigationManager.navigateTo(const RegistrationScreen());
+    },
+  );
+}
 
   Widget _buildHeader() {
     return
