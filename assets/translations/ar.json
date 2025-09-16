@@ -1,0 +1,17 @@
+{
+    "exit_app_title": "إنهاء التطبيق",
+    "exit_app_message": "هل أنت متأكد من إنهاء التطبيق؟",
+    "exit_app_cancel": "إلغاء",
+    "exit_app_exit": "إنهاء",
+    "delete_account": "حذف الحساب",
+    "log_out": "تسجيل الخروج",
+    "login": "تسجيل الدخول",
+    "register": "تسجيل",
+    "forgot_password": "هل نسيت كلمة المرور",
+    "reset_password": "إعادة تعيين كلمة المرور",
+    "verify_email": "تحقق من البريد الإلكتروني",
+    "email_verification": "تحقق من البريد الإلكتروني",
+    "email_verification_message": "يرجى التحقق من بريدك الإلكتروني للتحقق",
+    "email_verification_success": "تم التحقق من البريد الإلكتروني بنجاح",
+    "email_verification_failed": "فشل التحقق من البريد الإلكتروني"
+}
