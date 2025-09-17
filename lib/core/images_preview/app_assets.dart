@@ -17,6 +17,8 @@ class AppAssets {
   static const String check = "assets/icons/done.svg";
   static const String currentStep = "assets/icons/currentst.svg";
   static const String upcomingStep = "assets/icons/un.svg";
+  static const String goldStar = "assets/icons/tot.svg";
+  static const String upload = "assets/icons/que.svg";
 
 
 

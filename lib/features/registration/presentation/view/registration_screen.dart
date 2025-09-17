@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
+import 'package:stat_doctor/core/navigation_services/navigation_manager.dart';
+import 'package:stat_doctor/features/auth/presentation/view/login_screen.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/responsive_utils.dart';
 import '../../../../core/widgets/registration_step_indicator.dart';
 import '../../../../core/widgets/primary_button.dart';
+import '../../../../core/utils/styles/styles.dart';
+import '../../../../core/utils/styles/font_utils.dart';
 import 'personal_info_step.dart';
 import 'medical_info_step.dart';
 import 'references_step.dart';
@@ -43,6 +47,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
+    }else{
+      NavigationManager.navigateToAndFinish(const LoginScreen());
     }
   }
 
@@ -74,15 +80,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         ),
         title: Text(
           'enter_your_data_to_create_account'.tr(),
-          style: ResponsiveUtils.getResponsiveTextStyle(
-            context,
-            fontSize: ResponsiveUtils.getResponsiveFontSize(
-              context,
-              mobile: 16,
-              tablet: 18,
-              desktop: 20,
-            ),
-            fontWeight: FontWeight.w600,
+          style: TextStyles.textViewRegular16.copyWith(
+            fontWeight: AppFont.semiBold,
             color: AppColors.textPrimary,
           ),
         ),
@@ -121,7 +120,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           // Navigation buttons
           Container(
             padding: EdgeInsets.all(ResponsiveUtils.getResponsivePadding(context)),
-            child: Row(
+            child:
+            
+            Column(
+              children: [
+                Row(
               children: [
                 if (currentStep > 1)
                     Expanded(
@@ -136,17 +139,35 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     ),
                   ),
                 if (currentStep > 1) SizedBox(width: 16),
-                  Expanded(
-                    child: PrimaryButton(
-                      text: currentStep == 4 ? 'complete'.tr() : 'next'.tr(),
+             
+                Expanded(
+                  child: PrimaryButton(
+                    text: currentStep == 4 ? 'complete'.tr() : 'next'.tr(),
                     onPressed: _nextStep,
                   ),
                 ),
               ],
-            ),
+              ),
+                 if (currentStep == 3 || currentStep == 4) ...[
+                  SizedBox(height: 1.h),
+                   PrimaryButton(
+                      text: 'skip'.tr(),
+                      onPressed: _nextStep,
+                      color: AppColors.bgProfile,
+                      textStyle: TextStyle(
+                        color: AppColors.textSecondary,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    SizedBox(height: 1.h),
+                  
+                ],
+          ]),
           ),
         ],
       ),
     );
+      
+    
   }
 }

@@ -1,9 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/responsive_utils.dart';
 import '../../../../core/widgets/custom_textform_field.dart';
-import '../../../../core/widgets/primary_button.dart';
+import '../../../../core/widgets/custom_dropdown_field.dart';
+import '../../../../core/utils/styles/styles.dart';
+import '../../../../core/utils/styles/font_utils.dart';
+
+class ReferenceData {
+  final TextEditingController nameController;
+  final TextEditingController mobileController;
+  final TextEditingController emailController;
+  final TextEditingController hospitalController;
+  String? specialty;
+  String? seniority;
+
+  ReferenceData({
+    required this.nameController,
+    required this.mobileController,
+    required this.emailController,
+    required this.hospitalController,
+    this.specialty,
+    this.seniority,
+  });
+
+  void dispose() {
+    nameController.dispose();
+    mobileController.dispose();
+    emailController.dispose();
+    hospitalController.dispose();
+  }
+}
 
 class ReferencesStep extends StatefulWidget {
   const ReferencesStep({super.key});
@@ -15,46 +43,55 @@ class ReferencesStep extends StatefulWidget {
 class _ReferencesStepState extends State<ReferencesStep> {
   final _formKey = GlobalKey<FormState>();
   
-  // Reference 1
-  final _ref1NameController = TextEditingController();
-  final _ref1TitleController = TextEditingController();
-  final _ref1EmailController = TextEditingController();
-  final _ref1PhoneController = TextEditingController();
-  final _ref1RelationshipController = TextEditingController();
+  // List to store all references
+  final List<ReferenceData> _references = [];
   
-  // Reference 2
-  final _ref2NameController = TextEditingController();
-  final _ref2TitleController = TextEditingController();
-  final _ref2EmailController = TextEditingController();
-  final _ref2PhoneController = TextEditingController();
-  final _ref2RelationshipController = TextEditingController();
-  
-  // Reference 3
-  final _ref3NameController = TextEditingController();
-  final _ref3TitleController = TextEditingController();
-  final _ref3EmailController = TextEditingController();
-  final _ref3PhoneController = TextEditingController();
-  final _ref3RelationshipController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    // Initialize with first reference with default data
+    _references.add(ReferenceData(
+      nameController: TextEditingController(),
+      mobileController: TextEditingController(),
+      emailController: TextEditingController(),
+      hospitalController: TextEditingController(),
+    ));
+  }
+
+  final List<String> _specialties = [
+    'General Practice',
+    'Cardiology',
+    'Dermatology',
+    'Pediatrics',
+    'Orthopedics',
+    'Neurology',
+    'Psychiatry',
+    'Emergency Medicine',
+    'Internal Medicine',
+    'Surgery',
+    'Radiology',
+    'Anesthesiology',
+    'Pathology',
+    'Oncology',
+    'Other',
+  ];
+
+  final List<String> _seniorityLevels = [
+    'Junior',
+    'Senior',
+    'Consultant',
+    'Specialist',
+    'Professor',
+    'Head of Department',
+    'Director',
+    'Other',
+  ];
 
   @override
   void dispose() {
-    _ref1NameController.dispose();
-    _ref1TitleController.dispose();
-    _ref1EmailController.dispose();
-    _ref1PhoneController.dispose();
-    _ref1RelationshipController.dispose();
-    
-    _ref2NameController.dispose();
-    _ref2TitleController.dispose();
-    _ref2EmailController.dispose();
-    _ref2PhoneController.dispose();
-    _ref2RelationshipController.dispose();
-    
-    _ref3NameController.dispose();
-    _ref3TitleController.dispose();
-    _ref3EmailController.dispose();
-    _ref3PhoneController.dispose();
-    _ref3RelationshipController.dispose();
+    for (var reference in _references) {
+      reference.dispose();
+    }
     super.dispose();
   }
 
@@ -67,69 +104,71 @@ class _ReferencesStepState extends State<ReferencesStep> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Instructional text
             Text(
-              'professional_references'.tr(),
-              style: ResponsiveUtils.getResponsiveTextStyle(
-                context,
-                fontSize: ResponsiveUtils.getResponsiveFontSize(
-                  context,
-                  mobile: 18,
-                  tablet: 20,
-                  desktop: 22,
-                ),
-                fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary,
-              ),
-            ),
-            SizedBox(height: 8),
-            Text(
-              'provide_references'.tr(),
-              style: ResponsiveUtils.getResponsiveTextStyle(
-                context,
-                fontSize: ResponsiveUtils.getResponsiveFontSize(
-                  context,
-                  mobile: 14,
-                  tablet: 16,
-                  desktop: 18,
-                ),
+              'references_assessment_info'.tr(),
+              style: TextStyles.textViewRegular14.copyWith(
                 color: AppColors.textSecondary,
               ),
             ),
             SizedBox(height: 30),
             
-            // Reference 1
-            _buildReferenceSection(
-              title: 'reference 1',
-              nameController: _ref1NameController,
-              titleController: _ref1TitleController,
-              emailController: _ref1EmailController,
-              phoneController: _ref1PhoneController,
-              relationshipController: _ref1RelationshipController,
-              isRequired: true,
-            ),
-            SizedBox(height: 30),
+            // All References
+            ...List.generate(_references.length, (index) {
+              final reference = _references[index];
+              final isFirst = index == 0;
+              return Column(
+                children: [
+                  _buildReferenceSection(
+                    title: isFirst ? 'Reference one' : 'Reference ${index + 1}',
+                    reference: reference,
+                    index: index,
+                  ),
+                  SizedBox(height: 20),
+                ],
+              );
+            }),
             
-            // Reference 2
-            _buildReferenceSection(
-              title: 'reference 2',
-              nameController: _ref2NameController,
-              titleController: _ref2TitleController,
-              emailController: _ref2EmailController,
-              phoneController: _ref2PhoneController,
-              relationshipController: _ref2RelationshipController,
-              isRequired: true,
+            // Add Another Reference Button (only show if less than 3 references)
+            if (_references.length < 3) ...[
+              _buildAddReferenceButton(),
+              SizedBox(height: 20),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAddReferenceButton() {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _references.add(ReferenceData(
+            nameController: TextEditingController(),
+            mobileController: TextEditingController(),
+            emailController: TextEditingController(),
+            hospitalController: TextEditingController(),
+          ));
+        });
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.add,
+              color: AppColors.primary,
+              size: 20,
             ),
-            SizedBox(height: 30),
-            
-            // Reference 3
-            _buildReferenceSection(
-              title: 'reference_optional'.tr(),
-              nameController: _ref3NameController,
-              titleController: _ref3TitleController,
-              emailController: _ref3EmailController,
-              phoneController: _ref3PhoneController,
-              relationshipController: _ref3RelationshipController,
-              isRequired: false,
+            SizedBox(width: 8),
+            Text(
+              'add_another_reference'.tr(),
+              style: TextStyles.textViewRegular14.copyWith(
+                fontWeight: AppFont.semiBold,
+                color: AppColors.primary,
+              ),
             ),
           ],
         ),
@@ -139,111 +178,144 @@ class _ReferencesStepState extends State<ReferencesStep> {
 
   Widget _buildReferenceSection({
     required String title,
-    required TextEditingController nameController,
-    required TextEditingController titleController,
-    required TextEditingController emailController,
-    required TextEditingController phoneController,
-    required TextEditingController relationshipController,
-    required bool isRequired,
+    required ReferenceData reference,
+    required int index,
   }) {
     return Container(
-      padding: EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(
-          ResponsiveUtils.getResponsiveBorderRadius(context),
-        ),
-        border: Border.all(
-          color: AppColors.borderLight,
-          width: 1,
-        ),
-      ),
+      padding: EdgeInsets.all(4.w),
+
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title,
-            style: ResponsiveUtils.getResponsiveTextStyle(
-              context,
-              fontSize: ResponsiveUtils.getResponsiveFontSize(
-                context,
-                mobile: 16,
-                tablet: 18,
-                desktop: 20,
+          Row(
+            children: [
+              Expanded(
+                child:                 Text(
+                  title.tr(),
+                  style: TextStyles.textViewRegular16.copyWith(
+                    fontWeight: AppFont.semiBold,
+                    color: AppColors.textPrimary,
+                  ),
+                ),
               ),
-              fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
-            ),
+              // Remove button for references after the first one
+              if (index > 0)
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _references[index].dispose();
+                      _references.removeAt(index);
+                    });
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(4),
+                    child: Icon(
+                      Icons.close,
+                      color: AppColors.error,
+                      size: 20,
+                    ),
+                  ),
+                ),
+            ],
           ),
           SizedBox(height: 20),
           
-          // Full Name
+          // Reference's full name
           CustomTextFormField(
-            controller: nameController,
-            placeholder: 'full_name'.tr(),
-            validator: isRequired ? (value) {
+            controller: reference.nameController,
+            placeholder: 'reference_full_name'.tr(),
+            validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'please_enter_reference_name'.tr();
               }
               return null;
-            } : null,
+            },
           ),
           SizedBox(height: 16),
           
-          // Job Title
+          // Reference's mobile
           CustomTextFormField(
-            controller: titleController,
-            placeholder: 'job_title'.tr(),
-            validator: isRequired ? (value) {
+            controller: reference.mobileController,
+            placeholder: 'reference_mobile'.tr(),
+            keyboardType: TextInputType.phone,
+            validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'please_enter_reference_title'.tr();
+                return 'please_enter_mobile_number'.tr();
               }
               return null;
-            } : null,
+            },
           ),
           SizedBox(height: 16),
           
-          // Email
+          // Reference's email
           CustomTextFormField(
-            controller: emailController,
-            placeholder: 'email_address'.tr(),
+            controller: reference.emailController,
+            placeholder: 'reference_email'.tr(),
             keyboardType: TextInputType.emailAddress,
-            validator: isRequired ? (value) {
+            validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'please_enter_reference_email'.tr();
+                return 'please_enter_email_address'.tr();
               }
               if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
-                return 'please_enter_valid_reference_email'.tr();
+                return 'please_enter_valid_email'.tr();
               }
               return null;
-            } : null,
+            },
           ),
           SizedBox(height: 16),
           
-          // Phone
-          CustomTextFormField(
-            controller: phoneController,
-            placeholder: 'phone_number'.tr(),
-            keyboardType: TextInputType.phone,
-            validator: isRequired ? (value) {
+          // Select reference's specialty
+          CustomDropdownField(
+            label: 'select_reference_specialty'.tr(),
+            hint: 'select'.tr(),
+            value: reference.specialty,
+            items: _specialties.map((specialty) {
+              return DropdownMenuItem<String>(
+                value: specialty,
+                child: Text(specialty),
+              );
+            }).toList(),
+            onChanged: (value) => setState(() => reference.specialty = value),
+            validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'please_enter_reference_phone'.tr();
+                return 'please_select_specialty'.tr();
               }
               return null;
-            } : null,
+            },
           ),
           SizedBox(height: 16),
           
-          // Relationship
-          CustomTextFormField(
-            controller: relationshipController,
-            placeholder: 'professional_relationship'.tr(),
-            validator: isRequired ? (value) {
+          // Select reference's seniority
+          CustomDropdownField(
+            label: 'select_reference_seniority'.tr(),
+            hint: 'select'.tr(),
+            value: reference.seniority,
+            items: _seniorityLevels.map((seniority) {
+              return DropdownMenuItem<String>(
+                value: seniority,
+                child: Text(seniority),
+              );
+            }).toList(),
+            onChanged: (value) => setState(() => reference.seniority = value),
+            validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'please_describe_relationship'.tr();
+                return 'please_select_seniority'.tr();
               }
               return null;
-            } : null,
+            },
+          ),
+          SizedBox(height: 16),
+          
+          // Reference's current hospital
+          CustomTextFormField(
+            controller: reference.hospitalController,
+            placeholder: 'reference_current_hospital'.tr(),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'please_enter_hospital_name'.tr();
+              }
+              return null;
+            },
           ),
         ],
       ),
