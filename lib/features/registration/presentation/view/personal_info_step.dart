@@ -8,6 +8,8 @@ import '../../../../core/utils/responsive_utils.dart';
 import '../../../../core/widgets/custom_textform_field.dart';
 import '../../../../core/widgets/profile_image_picker.dart';
 import '../../../../core/widgets/custom_toggle_switch.dart';
+import '../../../../core/utils/styles/styles.dart';
+import '../../../../core/utils/styles/font_utils.dart';
 
 class PersonalInfoStep extends StatefulWidget {
   const PersonalInfoStep({super.key});
@@ -130,15 +132,8 @@ class _PersonalInfoStepState extends State<PersonalInfoStep> {
   Widget _buildSectionTitle(String title) {
     return Text(
       title,
-      style: ResponsiveUtils.getResponsiveTextStyle(
-        context,
-        fontSize: ResponsiveUtils.getResponsiveFontSize(
-          context,
-          mobile: 18,
-          tablet: 20,
-          desktop: 22,
-        ),
-        fontWeight: FontWeight.w600,
+      style: TextStyles.textViewRegular18.copyWith(
+        fontWeight: AppFont.semiBold,
         color: AppColors.textPrimary,
       ),
     );
@@ -181,29 +176,15 @@ class _PersonalInfoStepState extends State<PersonalInfoStep> {
               children: [
                 Text(
                   title,
-                  style: ResponsiveUtils.getResponsiveTextStyle(
-                    context,
-                    fontSize: ResponsiveUtils.getResponsiveFontSize(
-                      context,
-                      mobile: 14,
-                      tablet: 16,
-                      desktop: 18,
-                    ),
-                    fontWeight: FontWeight.w600,
+                  style: TextStyles.textViewRegular14.copyWith(
+                    fontWeight: AppFont.semiBold,
                     color: AppColors.textPrimary,
                   ),
                 ),
                 SizedBox(height: 4),
                 Text(
                   subtitle,
-                  style: ResponsiveUtils.getResponsiveTextStyle(
-                    context,
-                    fontSize: ResponsiveUtils.getResponsiveFontSize(
-                      context,
-                      mobile: 12,
-                      tablet: 14,
-                      desktop: 16,
-                    ),
+                  style: TextStyles.textViewRegular12.copyWith(
                     color: AppColors.textSecondary,
                   ),
                 ),
