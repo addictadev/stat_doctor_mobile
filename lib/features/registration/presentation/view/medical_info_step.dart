@@ -5,6 +5,8 @@ import '../../../../core/utils/responsive_utils.dart';
 import '../../../../core/widgets/custom_dropdown_field.dart';
 import '../../../../core/widgets/custom_textform_field.dart';
 import '../../../../core/widgets/custom_radio_tile.dart';
+import '../../../../core/utils/styles/styles.dart';
+import '../../../../core/utils/styles/font_utils.dart';
 
 class MedicalInfoStep extends StatefulWidget {
   const MedicalInfoStep({super.key});
@@ -137,15 +139,8 @@ class _MedicalInfoStepState extends State<MedicalInfoStep> {
             // AHPRA License Restrictions
             Text(
               'do_you_have_restrictions'.tr(),
-              style: ResponsiveUtils.getResponsiveTextStyle(
-                context,
-                fontSize: ResponsiveUtils.getResponsiveFontSize(
-                  context,
-                  mobile: 14,
-                  tablet: 16,
-                  desktop: 18,
-                ),
-                fontWeight: FontWeight.w600,
+              style: TextStyles.textViewRegular14.copyWith(
+                fontWeight: AppFont.semiBold,
                 color: AppColors.textPrimary,
               ),
             ),
@@ -191,15 +186,8 @@ class _MedicalInfoStepState extends State<MedicalInfoStep> {
               children: [
                 Text(
                   'write_work_bio'.tr(),
-                  style: ResponsiveUtils.getResponsiveTextStyle(
-                    context,
-                    fontSize: ResponsiveUtils.getResponsiveFontSize(
-                      context,
-                      mobile: 14,
-                      tablet: 16,
-                      desktop: 18,
-                    ),
-                    fontWeight: FontWeight.w600,
+                  style: TextStyles.textViewRegular14.copyWith(
+                    fontWeight: AppFont.semiBold,
                     color: AppColors.textPrimary,
                   ),
                 ),
@@ -227,15 +215,8 @@ class _MedicalInfoStepState extends State<MedicalInfoStep> {
             // CV Upload
             Text(
               'cv_resume'.tr(),
-              style: ResponsiveUtils.getResponsiveTextStyle(
-                context,
-                fontSize: ResponsiveUtils.getResponsiveFontSize(
-                  context,
-                  mobile: 14,
-                  tablet: 16,
-                  desktop: 18,
-                ),
-                fontWeight: FontWeight.w600,
+              style: TextStyles.textViewRegular14.copyWith(
+                fontWeight: AppFont.semiBold,
                 color: AppColors.textPrimary,
               ),
             ),
@@ -268,15 +249,8 @@ class _MedicalInfoStepState extends State<MedicalInfoStep> {
                       SizedBox(width: 8),
                       Text(
                         'upload_document'.tr(),
-                        style: ResponsiveUtils.getResponsiveTextStyle(
-                          context,
-                          fontSize: ResponsiveUtils.getResponsiveFontSize(
-                            context,
-                            mobile: 14,
-                            tablet: 16,
-                            desktop: 18,
-                          ),
-                          fontWeight: FontWeight.w600,
+                        style: TextStyles.textViewRegular14.copyWith(
+                          fontWeight: AppFont.semiBold,
                           color: AppColors.textPrimary,
                         ),
                       ),
