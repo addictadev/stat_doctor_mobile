@@ -111,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         // FaceID Button
                         _buildFaceIdButton(),
                         
-                        SizedBox(height: 3.h),
+                        SizedBox(height: 4.h),
                         
                         // Register Button
                         _buildRegisterButton(),
@@ -130,18 +130,24 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 Widget _buildRegisterButton() {
-  return PrimaryButton(
-    text: "register".tr(),
-    color: AppColors.scaffoldColor,
-    textStyle: TextStyle(
-      fontSize: FontSizes.s16,
-      fontWeight: AppFont.semiBold,
-      color: AppColors.primary,
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: [
+   Text('Don’t have an account?',style: TextStyle(
+    fontSize: FontSizes.s16,
+    fontWeight: AppFont.regular,
+   ),),
+   SizedBox(width: 1.w),
+    Text(
+      "Sign up".tr(),
+      style: TextStyle(
+        fontSize: FontSizes.s16,
+        fontWeight: AppFont.semiBold,
+        color: AppColors.primary,
+      ),
     ),
-    onPressed: () {
-      NavigationManager.navigateTo(const RegistrationScreen());
-    },
-  );
+  ],);
 }
 
   Widget _buildHeader() {
