@@ -12,6 +12,7 @@ class AppAssets {
 
   static const String authBackground = "assets/icons/wh_logo.png";
   static const String onboardingPattern = "assets/images/onbo.png";
+  static const String onboardingPattern2 = "assets/images/Onboarding.png";
   static const String faceId = "assets/icons/face.svg";
   static const String touchId = "assets/icons/fing.svg";
   static const String check = "assets/icons/done.svg";
@@ -19,6 +20,9 @@ class AppAssets {
   static const String upcomingStep = "assets/icons/un.svg";
   static const String goldStar = "assets/icons/tot.svg";
   static const String upload = "assets/icons/que.svg";
+  static const String homeBackground = "assets/images/hom.png";
+  static const String filterIcon = "assets/icons/filter.svg";
+  static const String locationIcon = "assets/images/locat.png";
 
 
 

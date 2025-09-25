@@ -130,7 +130,14 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 Widget _buildRegisterButton() {
-  return Row(
+  return 
+  InkWell(
+    onTap: () {
+      NavigationManager.navigateTo(const RegistrationScreen());
+    },
+    child: 
+  
+   Row(
     mainAxisAlignment: MainAxisAlignment.center,
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
@@ -147,7 +154,7 @@ Widget _buildRegisterButton() {
         color: AppColors.primary,
       ),
     ),
-  ],);
+  ],));
 }
 
   Widget _buildHeader() {
@@ -324,7 +331,7 @@ Widget _buildRegisterButton() {
 
   Widget _buildFooter() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: ResponsiveUtils.getResponsivePadding(context), vertical: 3.h),
+      padding: EdgeInsets.symmetric(horizontal: ResponsiveUtils.getResponsivePadding(context), vertical: 6.h),
       child: Column(
         children: [
           // Agreement Text

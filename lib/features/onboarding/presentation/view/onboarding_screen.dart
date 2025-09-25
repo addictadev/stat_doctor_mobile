@@ -87,6 +87,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ],
             stops: [0.0, 0.5, 1.0],
           ),
+          image: DecorationImage(
+            image: AssetImage(AppAssets.onboardingPattern2),
+            fit: BoxFit.cover,
+          ),
         ),
         child: SafeArea(
           child: Column(
@@ -120,20 +124,23 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(height: 4.h),
+          SizedBox(height: 8.h),
           
-          // Onboarding Image
-          _buildOnboardingImage(),
+          // Onboarding Image - Made flexible
+          Expanded(
+            flex: 4,
+            child: _buildOnboardingImage(),
+          ),
           
-          SizedBox(height: 4.h),
+          SizedBox(height: 2.h),
           
-          // Main Text
-          _buildMainText(page),
+          // Main Text - Made flexible
+          Expanded(
+            flex: 1,
+            child: _buildMainText(page),
+          ),
           
-          // SizedBox(height: 2.h),
-          
-          // Description
-          // _buildDescription(page),
+          SizedBox(height: 2.h),
         ],
       ),
     );
@@ -142,34 +149,35 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget _buildOnboardingImage() {
     return SizedBox(
       width: 75.w,
-      height: 55.h,
       child: Image.asset(
         AppAssets.onboardingPattern,
-        fit: BoxFit.fill,
+        fit: BoxFit.cover,
       ),
     );
   }
 
   Widget _buildMainText(OnboardingPage page) {
-    return RichText(
-      textAlign: TextAlign.center,
-      text: TextSpan(
-        style: TextStyle(
-          fontSize: 22.sp,
-          fontWeight: FontWeight.w600,
-          color: const Color(0xFF1A1A1A),
-          height: 1.2,
-        ),
-        children: [
-          TextSpan(text: page.title),
-          TextSpan(
-            text: "\n${page.subtitle}",
-            style: TextStyle(
-              color: AppColors.primary, // Teal color
-              fontWeight: FontWeight.bold,
-            ),
+    return Center(
+      child: RichText(
+        textAlign: TextAlign.center,
+        text: TextSpan(
+          style: TextStyle(
+            fontSize: 20.sp,
+            fontWeight: FontWeight.w600,
+            color: const Color(0xFF1A1A1A),
+            height: 1.2,
           ),
-        ],
+          children: [
+            TextSpan(text: page.title),
+            TextSpan(
+              text: "\n${page.subtitle}",
+              style: TextStyle(
+                color: AppColors.primary, // Teal color
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -178,7 +186,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   Widget _buildBottomNavigation() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 4.h),
+      padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

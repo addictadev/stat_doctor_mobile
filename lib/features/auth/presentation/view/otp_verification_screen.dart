@@ -10,6 +10,7 @@ import 'package:stat_doctor/core/utils/styles/font_utils.dart';
 import 'package:stat_doctor/core/widgets/custom_pin_code_text_field.dart';
 import 'package:stat_doctor/core/widgets/primary_button.dart';
 import 'package:stat_doctor/core/navigation_services/navigation_manager.dart';
+import 'package:stat_doctor/features/main_screens/presentation/view/main_navigation_screen.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
   final String phoneNumber;
@@ -77,7 +78,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
 
   void _onVerifyPressed() async {
     if (_otpCode.length != 4) {
-      _showErrorSnackBar("Please enter a valid 6-digit OTP");
+      _showErrorSnackBar("Please enter a valid 4-digit OTP");
       return;
     }
 
@@ -93,7 +94,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     });
 
     // Navigate to next screen (e.g., home or profile setup)
-    // NavigationManager.navigateToAndFinish(HomeScreen());
+    NavigationManager.navigateToAndFinish(const MainNavigationScreen());
     _showSuccessSnackBar("OTP verified successfully!");
   }
 

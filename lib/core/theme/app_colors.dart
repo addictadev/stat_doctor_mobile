@@ -10,6 +10,7 @@ class AppColors {
   static const Color overlayDark = Color(0x66000000);
   static const Color overlayQueue = Color(0xFFF6F7FD);
   static const Color overlayGray = Color(0xFFF6F7FD);
+  static const Color greenOverlay = Color(0xFFE6F0F1);
   // Text Colors
   static const Color textPrimary = Color(0xFF1A1A1A);
   static const Color textSecondary = Color(0xFF6C757D);
