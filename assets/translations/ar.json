@@ -170,5 +170,9 @@
     "group_6": "مجموعة (6)",
     "shifts_coming_soon": "ميزة الورديات قريباً",
     "notifications_coming_soon": "ميزة الإشعارات قريباً",
-    "account_coming_soon": "ميزة الحساب قريباً"
+    "account_coming_soon": "ميزة الحساب قريباً",
+    "upcoming": "القادمة",
+    "past": "السابقة",
+    "applied": "تم التقديم",
+    "accepted": "مقبول"
 }
