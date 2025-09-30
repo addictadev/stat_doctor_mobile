@@ -7,6 +7,7 @@ import 'home_screen.dart';
 import 'shifts_screen.dart';
 import 'notifications_screen.dart';
 import 'account_screen.dart';
+import '../../../home/presentation/view/shifts/view/shifts_screen.dart' as new_shifts;
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -28,7 +29,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     NavigationItem(
       icon: Icons.work,
       label: 'shifts',
-      screen: const ShiftsScreen(),
+      screen: const new_shifts.ShiftsScreen(),
     ),
     NavigationItem(
       icon: Iconsax.notification,
