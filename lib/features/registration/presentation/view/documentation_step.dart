@@ -201,6 +201,8 @@ class _DocumentationStepState extends State<DocumentationStep> {
               ],
             ),
           ),
+         
+         
           SizedBox(height: 12),
           
           // Help Link
@@ -234,6 +236,8 @@ class _DocumentationStepState extends State<DocumentationStep> {
               ],
             ),
           ),
+       
+       
         ],
       ),
     );
