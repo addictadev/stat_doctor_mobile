@@ -4,20 +4,24 @@ import 'package:sizer/sizer.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 import '../../../../core/theme/app_colors.dart';
 import 'home_screen.dart';
-import 'shifts_screen.dart';
 import 'notifications_screen.dart';
 import 'account_screen.dart';
 import '../../../home/presentation/view/shifts/view/shifts_screen.dart' as new_shifts;
 
 class MainNavigationScreen extends StatefulWidget {
-  const MainNavigationScreen({super.key});
+  final int initialIndex;
+  
+  const MainNavigationScreen({
+    super.key,
+    this.initialIndex = 0,
+  });
 
   @override
   State<MainNavigationScreen> createState() => _MainNavigationScreenState();
 }
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
-  int _currentIndex = 0;
+  late int _currentIndex;
   late PageController _pageController;
 
   final List<NavigationItem> _navigationItems = [
@@ -46,6 +50,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   @override
   void initState() {
     super.initState();
+    _currentIndex = widget.initialIndex;
     _pageController = PageController(initialPage: _currentIndex);
   }
 
@@ -85,18 +90,12 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
   Widget _buildBottomNavigationBar() {
     return Container(
-      // height: 8.h,
-      margin: EdgeInsets.only(left: 6.w, right: 6.w, bottom: 3.h),
+      // height: 9.8.h,
+      padding: EdgeInsets.only(top: 2.h),
+      margin: EdgeInsets.only(left: 6.w, right: 6.w, bottom: 2.5.h),
       decoration: BoxDecoration(
-        color: const Color(0xFF2C2C2E).withOpacity(0.95),
+        color:  Colors.transparent,
         borderRadius: BorderRadius.circular(90),
-        boxShadow: [
-          // BoxShadow(
-          //   color: Colors.black.withOpacity(0.1),
-          //   blurRadius: 20,
-          //   offset: const Offset(0, 8),
-          // ),
-        ],
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(90),
@@ -104,26 +103,28 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           currentIndex: _currentIndex,
           onTap: _onTabTapped,
           type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.transparent,
+          backgroundColor:Color(0xFF2C2C2E).withOpacity(0.95),
           elevation: 0,
+          
           selectedItemColor: Colors.white,
           unselectedItemColor: Colors.white.withOpacity(0.6),
+          
           selectedLabelStyle: TextStyle(
             fontWeight: FontWeight.w600,
             color: Colors.white,
-            fontSize: 10.sp,
+            fontSize: 13.sp,
           ),
           unselectedLabelStyle: TextStyle(
             color: Colors.white.withOpacity(0.6),
-            fontSize: 9.sp,
+            fontSize: 13.sp,
           ),
           items: _navigationItems.map((item) {
             return BottomNavigationBarItem(
               icon: Padding(
-                padding: EdgeInsets.symmetric(vertical: 4),
+                padding: EdgeInsets.only(bottom: 1.w,top: 3.w),
                 child: Icon(
                   item.icon,
-                  size: 5.5.w,
+                  size:5.w,
                 ),
               ),
               label: item.label.tr(),
