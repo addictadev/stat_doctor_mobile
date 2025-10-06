@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/styles/styles.dart';
 import '../../../../core/navigation_services/navigation_manager.dart';
 import '../../../hospital_details/presentation/view/hospital_details_screen.dart';
+import '../../../shifts/presentation/view/apply_screen.dart';
+import '../../../shifts/presentation/widgets/rate_experience_bottom_sheet.dart';
 
 class ShiftDetailsScreen extends StatefulWidget {
   final ShiftDetailsData shiftData;
@@ -50,7 +53,7 @@ class _ShiftDetailsScreenState extends State<ShiftDetailsScreen> {
               ),
             ),
           ),
-          _buildApplyButton(),
+          _buildActionButtons(),
         ],
       ),
     );
@@ -129,7 +132,7 @@ class _ShiftDetailsScreenState extends State<ShiftDetailsScreen> {
               children: [
                 // Hospital thumbnail image
                 Container(
-                  width: 15.w,
+                  width: 17.w,
                   height: 15.w,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
@@ -161,13 +164,21 @@ class _ShiftDetailsScreenState extends State<ShiftDetailsScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Hospital name
-                      Text(
-                        widget.shiftData.hospitalName,
-                        style: TextStyles.textViewBold16.copyWith(
-                          color: AppColors.textPrimary,
-                          fontSize: 16.sp,
-                        ),
+                      // Hospital name with status
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              widget.shiftData.hospitalName,
+                              style: TextStyles.textViewBold16.copyWith(
+                                color: AppColors.textPrimary,
+                                fontSize: 16.sp,
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 2.w),
+                          _buildStatusPill(),
+                        ],
                       ),
                     ],
                   ),
@@ -206,6 +217,61 @@ class _ShiftDetailsScreenState extends State<ShiftDetailsScreen> {
         ),
       ),
     );
+  }
+
+  Widget _buildStatusPill() {
+    // Only show status pill for non-available shifts
+    if (widget.shiftData.status == ShiftStatus.available) {
+      return Container();
+    }
+
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: 3.w,
+        vertical: 1.h,
+      ),
+      decoration: BoxDecoration(
+        color: _getStatusColor(),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Text(
+        _getStatusText(),
+        style: TextStyles.textViewBold12.copyWith(
+          color: AppColors.white,
+          fontSize: 12.sp,
+        ),
+      ),
+    );
+  }
+
+  Color _getStatusColor() {
+    switch (widget.shiftData.status) {
+      case ShiftStatus.applied:
+        return AppColors.primary;
+      case ShiftStatus.accepted:
+        return AppColors.success;
+      case ShiftStatus.cancelled:
+        return AppColors.error;
+      case ShiftStatus.archived:
+        return AppColors.textSecondary;
+      case ShiftStatus.available:
+        return AppColors.primary;
+    }
+  }
+
+  String _getStatusText() {
+    switch (widget.shiftData.status) {
+      case ShiftStatus.applied:
+        return 'applied'.tr();
+      case ShiftStatus.accepted:
+        return 'accepted'.tr();
+      case ShiftStatus.cancelled:
+        return 'cancelled'.tr();
+      case ShiftStatus.archived:
+        return 'archived'.tr();
+      case ShiftStatus.available:
+        return '';
+    }
   }
 
   void _navigateToHospitalDetails() {
@@ -623,13 +689,15 @@ class _ShiftDetailsScreenState extends State<ShiftDetailsScreen> {
     );
   }
 
-  Widget _buildApplyButton() {
-    final selectedCount = _selectedSimilarShifts.length;
+  Widget _buildActionButtons() {
     return Container(
-      padding: EdgeInsets.only(left: 4.w,right: 4.w,top: 2.h,bottom: 3.h),
+      padding: EdgeInsets.only(left: 4.w, right: 4.w, top: 2.h, bottom: 3.h),
       decoration: BoxDecoration(
         color: AppColors.white,
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(30),topRight: Radius.circular(30)),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30),
+        ),
         boxShadow: [
           BoxShadow(
             color: AppColors.shadowLight,
@@ -638,27 +706,57 @@ class _ShiftDetailsScreenState extends State<ShiftDetailsScreen> {
           ),
         ],
       ),
-      child: Container(
-        width: double.infinity,
-        height: 6.h,
-        decoration: BoxDecoration(
-          color: AppColors.primary,
-          borderRadius: BorderRadius.circular(25),
-        ),
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            borderRadius: BorderRadius.circular(25),
-            onTap: () {
-              // Handle apply action
-              _showApplyConfirmation();
-            },
-            child: Center(
-              child: Text(
-                selectedCount > 0 ? 'Apply ($selectedCount shifts)' : 'Apply',
-                style: TextStyles.textViewBold16.copyWith(
-                  color: AppColors.white,
-                ),
+      child: _buildButtonsForStatus(),
+    );
+  }
+
+  Widget _buildButtonsForStatus() {
+    switch (widget.shiftData.status) {
+      case ShiftStatus.applied:
+        return _buildWithdrawButton();
+      
+      case ShiftStatus.accepted:
+        return Column(
+          children: [
+            _buildWithdrawButton(),
+            SizedBox(height: 1.h),
+            _buildCancelShiftButton(),
+           
+          ],
+        );
+      
+      case ShiftStatus.cancelled:
+        return Container(); // No buttons for cancelled shifts
+      
+      case ShiftStatus.archived:
+        return _buildReviewButton();
+      
+      case ShiftStatus.available:
+        return _buildApplyButton();
+    }
+  }
+
+  Widget _buildApplyButton() {
+    final selectedCount = _selectedSimilarShifts.length;
+    return Container(
+      width: double.infinity,
+      height: 6.h,
+      decoration: BoxDecoration(
+        color: AppColors.primary,
+        borderRadius: BorderRadius.circular(30.w),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(30.w),
+          onTap: () {
+            _navigateToApplyScreen();
+          },
+          child: Center(
+            child: Text(
+              selectedCount > 0 ? 'Apply ($selectedCount shifts)' : 'Apply',
+              style: TextStyles.textViewBold16.copyWith(
+                color: AppColors.white,
               ),
             ),
           ),
@@ -667,61 +765,371 @@ class _ShiftDetailsScreenState extends State<ShiftDetailsScreen> {
     );
   }
 
-  void _showApplyConfirmation() {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(
-          'Apply for Shift${_selectedSimilarShifts.length > 1 ? 's' : ''}',
-          style: TextStyles.textViewBold18.copyWith(
-            color: AppColors.textPrimary,
-          ),
-        ),
-        content: Text(
-          _selectedSimilarShifts.length > 1 
-            ? 'You are applying for ${_selectedSimilarShifts.length} shifts. Continue?'
-            : 'You are applying for this shift. Continue?',
-          style: TextStyles.textViewRegular14.copyWith(
-            color: AppColors.textSecondary,
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
+  Widget _buildWithdrawButton() {
+    return Container(
+      width: double.infinity,
+      height: 6.h,
+      decoration: BoxDecoration(
+        color: AppColors.primary,
+        borderRadius: BorderRadius.circular(30.w),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(30.w),
+          onTap: () {
+            _showWithdrawConfirmation();
+          },
+          child: Center(
             child: Text(
-              'Cancel',
-              style: TextStyles.textViewRegular14.copyWith(
-                color: AppColors.textSecondary,
+              'withdraw_application'.tr(),
+              style: TextStyles.textViewBold16.copyWith(
+                color: AppColors.white,
               ),
             ),
           ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              // Handle application submission
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                    'Application submitted successfully!',
-                    style: TextStyles.textViewRegular14.copyWith(
-                      color: AppColors.white,
-                    ),
-                  ),
-                  backgroundColor: AppColors.success,
-                ),
-              );
-            },
-            child: Text(
-              'Apply',
-              style: TextStyles.textViewBold14.copyWith(
-                color: AppColors.primary,
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
+
+  Widget _buildCancelShiftButton() {
+    return Container(
+      width: double.infinity,
+      height: 6.h,
+      decoration: BoxDecoration(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(30.w),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(30.w),
+          onTap: () {
+            _showCancelConfirmation();
+          },
+          child: Center(
+            child: Text(
+              'cancel_shift'.tr(),
+              style: TextStyles.textViewBold16.copyWith(
+                color: AppColors.grayColor,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildRateButton() {
+    return Container(
+      width: double.infinity,
+      height: 6.h,
+      decoration: BoxDecoration(
+        color: AppColors.primary,
+        borderRadius: BorderRadius.circular(30.w),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(30.w),
+          onTap: () {
+            _showRateExperienceBottomSheet();
+          },
+          child: Center(
+            child: Text(
+              'rate'.tr(),
+              style: TextStyles.textViewBold16.copyWith(
+                color: AppColors.white,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildReviewButton() {
+    return Container(
+      width: double.infinity,
+      height: 6.h,
+      decoration: BoxDecoration(
+        color: AppColors.primary,
+        borderRadius: BorderRadius.circular(30.w),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(30.w),
+          onTap: () {
+            _navigateToReviews();
+          },
+          child: Center(
+            child: Text(
+              'review'.tr(),
+              style: TextStyles.textViewBold16.copyWith(
+                color: AppColors.white,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _navigateToApplyScreen() {
+    final selectedCount = _selectedSimilarShifts.length;
+    final numberOfShifts = selectedCount > 0 ? selectedCount : 1;
+    
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ApplyScreen(
+          numberOfShifts: numberOfShifts,
+          hospitalName: widget.shiftData.hospitalName,
+        ),
+      ),
+    );
+  }
+
+  void _showWithdrawConfirmation() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => _buildWithdrawDialog(),
+    );
+  }
+
+  Widget _buildWithdrawDialog() {
+    return Dialog(
+      backgroundColor: Colors.transparent,
+      child: Container(
+        width: 80.w,
+        padding: EdgeInsets.all(6.w),
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(6.w),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Title
+            Text(
+              'Withdraw application?',
+              style: TextStyles.textViewBold18.copyWith(
+                color: AppColors.textPrimary,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            
+            SizedBox(height: 3.h),
+            
+            // Message
+            Text(
+              'You are withdrawing your application for this shift. You can apply again.',
+              style: TextStyles.textViewRegular14.copyWith(
+                color: AppColors.textPrimary,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            
+            SizedBox(height: 2.h),
+            
+            // Withdraw Button
+            Container(
+              width: double.infinity,
+              height: 6.h,
+              decoration: BoxDecoration(
+                color: AppColors.primary,
+                borderRadius: BorderRadius.circular(12.w),
+              ),
+              child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(12),
+                  onTap: () {
+                    Navigator.pop(context);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          'Application withdrawn successfully',
+                          style: TextStyles.textViewRegular14.copyWith(
+                            color: AppColors.white,
+                          ),
+                        ),
+                        backgroundColor: AppColors.success,
+                      ),
+                    );
+                  },
+                  child: Center(
+                    child: Text(
+                      'Withdraw',
+                      style: TextStyles.textViewBold16.copyWith(
+                        color: AppColors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            
+            SizedBox(height: 1.h),
+            
+            // Cancel Button
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text(
+                'Cancel',
+                style: TextStyles.textViewRegular14.copyWith(
+                  color: AppColors.textLight,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showCancelConfirmation() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => _buildCancelDialog(),
+    );
+  }
+
+  Widget _buildCancelDialog() {
+    return Dialog(
+      backgroundColor: Colors.transparent,
+      child: Container(
+        width: 80.w,
+        padding: EdgeInsets.all(6.w),
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(6.w),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Title
+            Text(
+              'Cancel shift?',
+              style: TextStyles.textViewBold18.copyWith(
+                color: AppColors.textPrimary,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            
+            SizedBox(height: 3.h),
+            
+            // Message
+            Text(
+              'You are cancelling this accepted shift. This cannot be undone.',
+              style: TextStyles.textViewRegular14.copyWith(
+                color: AppColors.textPrimary,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            
+            SizedBox(height: 4.h),
+            
+            // Cancel Shift Button
+            Container(
+              width: double.infinity,
+              height: 6.h,
+              decoration: BoxDecoration(
+                color: AppColors.primary,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(12),
+                  onTap: () {
+                    Navigator.pop(context);
+                    // TODO: Implement cancel shift logic
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          'Shift cancelled successfully',
+                          style: TextStyles.textViewRegular14.copyWith(
+                            color: AppColors.white,
+                          ),
+                        ),
+                        backgroundColor: AppColors.success,
+                      ),
+                    );
+                  },
+                  child: Center(
+                    child: Text(
+                      'Cancel Shift',
+                      style: TextStyles.textViewBold16.copyWith(
+                        color: AppColors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            
+            SizedBox(height: 2.h),
+            
+            // Back Button
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text(
+                'Back',
+                style: TextStyles.textViewRegular14.copyWith(
+                  color: AppColors.textLight,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showRateExperienceBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => RateExperienceBottomSheet(
+        onSubmit: () {
+          // TODO: Implement rating submission logic
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                'Thank you for your rating!',
+                style: TextStyles.textViewRegular14.copyWith(
+                  color: AppColors.white,
+                ),
+              ),
+              backgroundColor: AppColors.success,
+            ),
+          );
+        },
+        onCancel: () {
+          // Handle cancellation if needed
+        },
+      ),
+    );
+  }
+
+  void _navigateToReviews() {
+    // Show the rate experience bottom sheet instead of navigating to reviews
+    _showRateExperienceBottomSheet();
+  }
+}
+
+enum ShiftStatus {
+  available,
+  applied,
+  accepted,
+  cancelled,
+  archived,
 }
 
 class ShiftDetailsData {
@@ -742,6 +1150,7 @@ class ShiftDetailsData {
   final String contactPhone;
   final String contactEmail;
   final List<Map<String, String>> similarShifts;
+  final ShiftStatus status;
 
   ShiftDetailsData({
     required this.hospitalName,
@@ -761,5 +1170,6 @@ class ShiftDetailsData {
     required this.contactPhone,
     required this.contactEmail,
     required this.similarShifts,
+    this.status = ShiftStatus.available,
   });
 }
