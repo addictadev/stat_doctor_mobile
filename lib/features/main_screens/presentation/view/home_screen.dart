@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final List<ShiftData> _hospitalShifts = [
     ShiftData(
-      hospitalName: "St Vincent's Public Hospital Melbourne",
+      hospitalName: "nasr's Public Melbourne",
       date: "Mon, 26 Sep 2022",
       time: "10:30 pm - 8:30 am (8 hrs)",
       rate: "\$120/hr",
@@ -51,7 +51,44 @@ class _HomeScreenState extends State<HomeScreen> {
       groupSize: 6,
     ),
     ShiftData(
-      hospitalName: "Royal Melbourne Hospital",
+      hospitalName: "MObark Hospital",
+      date: "Tue, 27 Sep 2022",
+      time: "7:00 am - 3:00 pm (8 hrs)",
+      rate: "\$110/hr",
+      distance: "2.1km",
+      role: "VMO/SMO",
+      seniority: "Senior OS",
+      requirements: [
+        "Min. skill level VMO/SMO",
+        "Specialty General Medicine",
+        "Support level Senior on site",
+      ],
+      hasAccommodation: true,
+      hasTravel: true,
+      isGroup: false,
+      groupSize: 1,
+    ),
+  ];
+  final List<ShiftData> _interestedShifts = [
+    ShiftData(
+      hospitalName: "St Hospital Melbourne",
+      date: "Mon, 26 Sep 2022",
+      time: "10:30 pm - 8:30 am (8 hrs)",
+      rate: "\$120/hr",
+      distance: "3.6km",
+      role: "VMO/SMO",
+      seniority: "Senior OS",
+      requirements: [
+        "Min. skill level VMO/SMO",
+        "Specialty Emergency Medicine",
+      ],
+      hasAccommodation: false,
+      hasTravel: true,
+      isGroup: true,
+      groupSize: 6,
+    ),
+    ShiftData(
+      hospitalName: "St Hospital Melbourne",
       date: "Tue, 27 Sep 2022",
       time: "7:00 am - 3:00 pm (8 hrs)",
       rate: "\$110/hr",
@@ -72,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final List<ShiftData> _otherShifts = [
     ShiftData(
-      hospitalName: "St Vincent's Public Hospital Melbourne",
+      hospitalName: "St Public Hospital Melbourne",
       date: "Mon, 26 Sep 2022",
       time: "10:30 pm - 8:30 am",
       rate: "\$120/hr",
@@ -86,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
       groupSize: 1,
     ),
     ShiftData(
-      hospitalName: "St Vincent's Public Hospital Melbourne",
+      hospitalName: "cairo Public Hospital Melbourne",
       date: "Mon, 26 Sep 2022",
       time: "10:30 pm - 8:30 am",
       rate: "\$120/hr",
@@ -100,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
       groupSize: 1,
     ),
     ShiftData(
-      hospitalName: "St Vincent's Public Hospital Melbourne",
+      hospitalName: "St tonus Public Hospital Melbourne",
   date: "Mon, 26 Sep 2022",
       time: "10:30 pm - 8:30 am",
       rate: "\$120/hr",
@@ -114,7 +151,7 @@ class _HomeScreenState extends State<HomeScreen> {
       groupSize: 1,
     ),
     ShiftData(
-      hospitalName: "St Vincent's Public Hospital Melbourne",
+      hospitalName: "St Hospital Melbourne",
       date: "Mon, 26 Sep 2022",
       time: "10:30 pm - 8:30 am",
       rate: "\$120/hr",
@@ -247,7 +284,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         SizedBox(height: 1.h),
         SizedBox(
-          height: 48.h,
+          height: 46.h,
           child: ListView.builder(
             padding: EdgeInsets.zero,
             scrollDirection: Axis.horizontal,
@@ -292,11 +329,11 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         SizedBox(height: 1.h),
         SizedBox(
-          height: 48.h,
+          height: 46.h,
           child: ListView.builder(
             padding: EdgeInsets.zero,
             scrollDirection: Axis.horizontal,
-            itemCount: _hospitalShifts.length,
+            itemCount: _interestedShifts.length,
             itemBuilder: (context, index) {
               return Container(
                 width: 75.w,
@@ -314,7 +351,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: EdgeInsets.all(3.w),
                 margin: EdgeInsets.only(right: 4.w),
                 child: ShiftCard(
-                  shiftData: _hospitalShifts[index],
+                  shiftData: _interestedShifts[index],
                   isHorizontal: true,
                 ),
               );
@@ -339,7 +376,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: 1.h),
+              padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: .5.h),
               decoration: BoxDecoration(
                 color: AppColors.white,
                 borderRadius: BorderRadius.circular(20),
@@ -350,8 +387,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Text(
                     'closest_to_me'.tr(),
-                    style: TextStyles.textViewRegular12.copyWith(
-                      color: AppColors.textPrimary,
+                    style: TextStyles.textViewMedium12.copyWith(
+                      color: AppColors.primary,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   SizedBox(width: 1.w),
