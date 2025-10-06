@@ -11,6 +11,7 @@ class AppColors {
   static const Color overlayQueue = Color(0xFFF6F7FD);
   static const Color overlayGray = Color(0xFFF6F7FD);
   static const Color greenOverlay = Color(0xFFE6F0F1);
+  static const Color grayColor = Color(0xFF7B7B7B);
   // Text Colors
   static const Color textPrimary = Color(0xFF1A1A1A);
   static const Color textSecondary = Color(0xFF6C757D);
@@ -86,6 +87,7 @@ class AppColors {
   static const Color homeGradientBlue = Color(0x7A1195F7); // #1195F77A
   static const Color homeGradientCyan = Color(0x57C1E2ED); // #C1E2ED57
   static const Color homeGradientWhite = Color(0xFFF5F5F5); // #F5F5F5
+  static const Color homeGradientWhite2 = Color(0xFFEBF0F8); // #F5F5F5
 
   static const LinearGradient homeBackgroundGradient = LinearGradient(
     begin: Alignment.topRight,

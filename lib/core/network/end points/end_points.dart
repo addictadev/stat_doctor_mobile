@@ -7,7 +7,7 @@ class EndPoints {
 
   // API base url
   static const String baseUrl =
-      "https://raalc-back.addictaco.website/api/v1/mobile/";
+      "https://api-dev.statdoctor.app/app/api/app/";
 
   // Auth Endpoints
   static const String register = "auth/register";
@@ -21,4 +21,7 @@ class EndPoints {
 
   // Home Endpoints
   static const String banner = "banner";
+  
+  // Profile Endpoints
+  static const String profileInfoRegister = "profile-info-register";
 }
