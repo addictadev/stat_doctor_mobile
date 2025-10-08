@@ -6,8 +6,8 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/styles/styles.dart';
 import '../../../../core/navigation_services/navigation_manager.dart';
 import '../../../hospital_details/presentation/view/hospital_details_screen.dart';
-import '../../../shifts/presentation/view/apply_screen.dart';
-import '../../../shifts/presentation/widgets/rate_experience_bottom_sheet.dart';
+import '../../../apply_shifts/presentation/view/apply_screen.dart';
+import '../../../apply_shifts/presentation/widgets/rate_experience_bottom_sheet.dart';
 
 class ShiftDetailsScreen extends StatefulWidget {
   final ShiftDetailsData shiftData;
