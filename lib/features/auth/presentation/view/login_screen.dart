@@ -11,7 +11,7 @@ import 'package:stat_doctor/core/utils/styles/font_utils.dart';
 import 'package:stat_doctor/core/widgets/custom_textform_field.dart';
 import 'package:stat_doctor/core/widgets/primary_button.dart';
 import 'package:stat_doctor/core/navigation_services/navigation_manager.dart';
-import 'package:stat_doctor/features/registration/presentation/view/registration_screen.dart';
+import 'package:stat_doctor/features/auth/presentation/view/registration/presentation/view/registration_screen.dart';
 import 'otp_verification_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -27,12 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
 
-  @override
-  void initState() {
-    super.initState();
-    // Set default phone number
-    _mobileController.text = "(+61) 4 1234 5678";
-  }
+
 
   @override
   void dispose() {
@@ -114,7 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         SizedBox(height: 4.h),
                         
                         // Register Button
-                        _buildRegisterButton(),
+                        // _buildRegisterButton(),
                       ],
                     ),
                   ),
@@ -245,6 +240,7 @@ Widget _buildRegisterButton() {
             focusNode: _mobileFocusNode,
             keyboardType: TextInputType.phone,
             textInputAction: TextInputAction.done,
+            hint: "enter your mobile number",
             inputFormatters: [
               FilteringTextInputFormatter.digitsOnly,
               LengthLimitingTextInputFormatter(15),

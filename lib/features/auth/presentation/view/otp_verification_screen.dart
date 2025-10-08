@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
@@ -25,11 +26,11 @@ class OtpVerificationScreen extends StatefulWidget {
 }
 
 class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
-  final TextEditingController _otpController = TextEditingController();
   String _otpCode = '';
   bool _isLoading = false;
   bool _isResendLoading = false;
   int _resendTimer = 0;
+  Timer? _timer;
 
   @override
   void initState() {
@@ -39,27 +40,26 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
 
   @override
   void dispose() {
-    _otpController.dispose();
+    _timer?.cancel();
     super.dispose();
   }
 
 
   void _startResendTimer() {
+    _timer?.cancel(); // Cancel any existing timer
     _resendTimer = 30; // 30 seconds countdown
-    _updateTimer();
-  }
-
-  void _updateTimer() {
-    if (_resendTimer > 0) {
-      Future.delayed(const Duration(seconds: 1), () {
-        if (mounted) {
-          setState(() {
-            _resendTimer--;
-          });
-          _updateTimer();
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (mounted) {
+        setState(() {
+          _resendTimer--;
+        });
+        if (_resendTimer <= 0) {
+          timer.cancel();
         }
-      });
-    }
+      } else {
+        timer.cancel();
+      }
+    });
   }
 
   void _onOtpChanged(String otp) {
@@ -273,7 +273,6 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   Widget _buildOtpSection() {
     return CustomPinCodeTextField(
       context: context,
-      controller: _otpController,
       onChanged: _onOtpChanged,
       oncomplete: _onOtpCompleted,
       textStyle: TextStyle(
