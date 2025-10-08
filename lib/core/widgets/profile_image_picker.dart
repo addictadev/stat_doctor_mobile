@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'dart:io';
 import '../theme/app_colors.dart';
 
 class ProfileImagePicker extends StatelessWidget {
   final String? imagePath;
+  final File? imageFile;
   final VoidCallback onTap;
   final double size;
   final Color? backgroundColor;
@@ -13,6 +15,7 @@ class ProfileImagePicker extends StatelessWidget {
   const ProfileImagePicker({
     super.key,
     this.imagePath,
+    this.imageFile,
     required this.onTap,
     this.size = 100,
     this.backgroundColor,
@@ -39,21 +42,7 @@ class ProfileImagePicker extends StatelessWidget {
           children: [
             // Profile image or placeholder
             Center(
-              child: imagePath != null
-                  ? ClipOval(
-                      child: Image.asset(
-                        imagePath!,
-                        width: size - 4,
-                        height: size - 4,
-                        fit: BoxFit.cover,
-                      ),
-                    )
-                  : placeholder ??
-                      Icon(
-                        Iconsax.image,
-                        size: size * 0.4,
-                        color: AppColors.textSecondary,
-                      ),
+              child: _buildImageWidget(),
             ),
             // Edit icon
             Positioned(
@@ -82,5 +71,34 @@ class ProfileImagePicker extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _buildImageWidget() {
+    if (imageFile != null) {
+      return ClipOval(
+        child: Image.file(
+          imageFile!,
+          width: size - 4,
+          height: size - 4,
+          fit: BoxFit.cover,
+        ),
+      );
+    } else if (imagePath != null) {
+      return ClipOval(
+        child: Image.asset(
+          imagePath!,
+          width: size - 4,
+          height: size - 4,
+          fit: BoxFit.cover,
+        ),
+      );
+    } else {
+      return placeholder ??
+          Icon(
+            Iconsax.image,
+            size: size * 0.4,
+            color: AppColors.textSecondary,
+          );
+    }
   }
 }

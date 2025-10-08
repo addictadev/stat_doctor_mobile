@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:stat_doctor/features/splash/presentation/view/splash_screen.dart' show SplashScreen;
+import 'package:stat_doctor/multi_providers.dart';
 
 import 'core/navigation_services/navigation_manager.dart';
 import 'core/theme/app_theme.dart';
@@ -22,19 +25,14 @@ class _MyAppState extends State<MyApp> {
     return LocalizedApp(
       child: Sizer(
         builder: (context, orientation, deviceType) {
-          return MaterialApp(
+          return
+          MultiProvider(
+          providers: MultiProviders.providers(),
+          child: 
+          
+           MaterialApp(
             theme: AppTheme.createTheme(LocalizeAndTranslate.getLanguageCode()),
-            builder: (BuildContext context, Widget? child) {
-              child = LocalizeAndTranslate.directionBuilder(context, child);
-
-              child = MediaQuery(
-                data: MediaQuery.of(
-                  context,
-                ).copyWith(textScaler: const TextScaler.linear(1.0)),
-                child: child,
-              );
-              return child;
-            },
+            builder: EasyLoading.init(),
             title: "Stat Doctor",
 
             navigatorKey: NavigationManager.navigatorKey,
@@ -53,7 +51,7 @@ class _MyAppState extends State<MyApp> {
               );
             },
             debugShowCheckedModeBanner: false,
-          );
+          ));
         },
       ),
     );
