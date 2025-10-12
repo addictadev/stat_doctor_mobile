@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:stat_doctor/core/images_preview/app_assets.dart' show AppAssets;
 import 'package:stat_doctor/core/images_preview/custom_asset_img.dart';

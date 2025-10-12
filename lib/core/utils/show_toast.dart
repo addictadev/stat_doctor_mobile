@@ -18,7 +18,7 @@ BuildContext getContext() {
   }
 }
 
-showCustomedToast(String message, ToastType toastType) {
+void showCustomedToast(String message, ToastType toastType) {
   // Add a small delay to ensure the context is ready
   Future.delayed(const Duration(milliseconds: 100), () {
     try {

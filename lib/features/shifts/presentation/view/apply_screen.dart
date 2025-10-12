@@ -5,9 +5,9 @@ import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:stat_doctor/core/images_preview/app_assets.dart';
 import 'package:stat_doctor/core/images_preview/custom_asset_img.dart' show CustomImageAsset;
 import 'package:stat_doctor/core/images_preview/custom_svg_img.dart';
+import 'package:stat_doctor/features/apply_shifts/presentation/widgets/expandable_section.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/styles/styles.dart';
-import '../widgets/expandable_section.dart';
 import '../../../references/presentation/widgets/reference_card.dart';
 import '../../../references/data/models/reference_model.dart';
 

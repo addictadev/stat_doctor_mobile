@@ -3,7 +3,6 @@
 import 'dart:io';
 import 'package:stat_doctor/core/images_preview/app_assets.dart';
 import 'package:stat_doctor/core/images_preview/custom_asset_img.dart';
-import 'package:stat_doctor/core/images_preview/custom_svg_img.dart';
 import 'package:stat_doctor/core/theme/app_colors.dart';
 import 'package:stat_doctor/core/utils/responsive_utils.dart';
 

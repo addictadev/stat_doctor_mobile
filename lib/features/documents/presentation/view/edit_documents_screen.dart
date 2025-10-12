@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:sizer/sizer.dart';
 import 'package:stat_doctor/core/images_preview/app_assets.dart';
@@ -11,9 +10,7 @@ import 'package:stat_doctor/core/utils/responsive_utils.dart';
 import 'package:stat_doctor/core/navigation_services/navigation_manager.dart';
 import 'package:stat_doctor/features/documents/data/models/document_model.dart';
 import 'package:stat_doctor/features/documents/presentation/widgets/document_card.dart';
-import 'package:stat_doctor/features/documents/presentation/widgets/document_upload_button.dart';
-import 'package:stat_doctor/features/documents/presentation/widgets/section_header.dart';
-import 'package:stat_doctor/features/documents/presentation/widgets/points_display_card.dart';
+
 
 class EditDocumentsScreen extends StatefulWidget {
   const EditDocumentsScreen({super.key});
@@ -185,15 +182,15 @@ class _EditDocumentsScreenState extends State<EditDocumentsScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SectionHeader(
-          title: 'Proof of identity',
-          showInfoIcon: true,
-          onInfoTap: () => _showInfoDialog(
-            'Proof of identity',
-            'Documents must equal to minimum 100 points. You must provide AT LEAST 1 primary document. Documents must be certified copies.',
-          ),
-          subtitle: 'Documents must equal to minimum 100 points. You must provide AT LEAST 1 primary document. Documents must be certified copies.',
-        ),
+        // SectionHeader(
+        //   title: 'Proof of identity',
+        //   showInfoIcon: true,
+        //   onInfoTap: () => _showInfoDialog(
+        //     'Proof of identity',
+        //     'Documents must equal to minimum 100 points. You must provide AT LEAST 1 primary document. Documents must be certified copies.',
+        //   ),
+        //   subtitle: 'Documents must equal to minimum 100 points. You must provide AT LEAST 1 primary document. Documents must be certified copies.',
+        // ),
         
         // Primary document dropdown
         _buildDropdownField(
@@ -348,14 +345,14 @@ class _EditDocumentsScreenState extends State<EditDocumentsScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SectionHeader(
-          title: 'Other documentation',
-          showInfoIcon: true,
-          onInfoTap: () => _showInfoDialog(
-            'Other documentation',
-            'Information about other documentation requirements.',
-          ),
-        ),
+        // SectionHeader(
+        //   title: 'Other documentation',
+        //   showInfoIcon: true,
+        //   onInfoTap: () => _showInfoDialog(
+        //     'Other documentation',
+        //     'Information about other documentation requirements.',
+        //   ),
+        // ),
         
         ...otherDocs.map((doc) => _buildDocumentItem(doc)),
       ],
@@ -383,12 +380,14 @@ class _EditDocumentsScreenState extends State<EditDocumentsScreen> {
             document: document,
           )
         else
-          DocumentUploadButton(
-            text: 'Upload Document',
-            onTap: () => _uploadDocument(),
-          ),
+        SizedBox()
+
+          // DocumentUploadButton(
+          //   text: 'Upload Document',
+          //   onTap: () => _uploadDocument(),
+          // ),
         
-        SizedBox(height: 2.h),
+        // SizedBox(height: 2.h),
       ],
     );
   }
