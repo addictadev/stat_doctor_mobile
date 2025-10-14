@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:sizer/sizer.dart';
 import 'package:stat_doctor/core/images_preview/app_assets.dart';
 import 'package:stat_doctor/core/images_preview/custom_asset_img.dart';

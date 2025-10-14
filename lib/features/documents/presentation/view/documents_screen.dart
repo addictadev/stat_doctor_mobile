@@ -6,8 +6,6 @@ import 'package:stat_doctor/core/utils/styles/styles.dart';
 import 'package:stat_doctor/core/utils/responsive_utils.dart';
 import 'package:stat_doctor/core/navigation_services/navigation_manager.dart';
 import 'package:stat_doctor/features/documents/data/models/document_model.dart';
-import 'package:stat_doctor/features/documents/presentation/widgets/document_upload_button.dart';
-import 'package:stat_doctor/features/documents/presentation/widgets/section_header.dart';
 import 'edit_documents_screen.dart';
 
 class DocumentsScreen extends StatefulWidget {
@@ -199,11 +197,11 @@ class _DocumentsScreenState extends State<DocumentsScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SectionHeader(
-          title: 'Proof of identity',
-          showInfoIcon: true,
-          onInfoTap: () => _showInfoDialog('Proof of identity', 'Information about proof of identity requirements.'),
-        ),
+        // SectionHeader(
+        //   title: 'Proof of identity',
+        //   showInfoIcon: true,
+        //   onInfoTap: () => _showInfoDialog('Proof of identity', 'Information about proof of identity requirements.'),
+        // ),
         
         // Primary document
         _buildDocumentItem(
@@ -222,9 +220,9 @@ class _DocumentsScreenState extends State<DocumentsScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SectionHeader(
-          title: 'Centrelink card',
-        ),
+        // SectionHeader(
+        //   title: 'Centrelink card',
+        // ),
         
         _buildDocumentItem(
           label: 'Centrelink card',
@@ -243,11 +241,11 @@ class _DocumentsScreenState extends State<DocumentsScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SectionHeader(
-          title: 'Other documentation',
-          showInfoIcon: true,
-          onInfoTap: () => _showInfoDialog('Other documentation', 'Information about other documentation requirements.'),
-        ),
+        // SectionHeader(
+        //   title: 'Other documentation',
+        //   showInfoIcon: true,
+        //   onInfoTap: () => _showInfoDialog('Other documentation', 'Information about other documentation requirements.'),
+        // ),
         
         ...otherDocs.map((doc) => _buildDocumentItem(
           label: doc.type.displayName,
@@ -281,10 +279,13 @@ class _DocumentsScreenState extends State<DocumentsScreen> {
         if (hasDocument)
           _buildReadOnlyDocumentCard(document)
         else
-          DocumentUploadButton(
-            text: 'Upload Document',
-            onTap: () => _uploadDocument(document),
-          ),
+
+        SizedBox()
+
+          // DocumentUploadButton(
+          //   text: 'Upload Document',
+          //   onTap: () => _uploadDocument(document),
+          // ),
       ],
     );
   }

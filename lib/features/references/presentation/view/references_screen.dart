@@ -7,7 +7,6 @@ import 'package:stat_doctor/core/utils/responsive_utils.dart';
 import 'package:stat_doctor/core/navigation_services/navigation_manager.dart';
 import 'package:stat_doctor/features/references/data/models/reference_model.dart';
 import 'package:stat_doctor/features/references/presentation/widgets/reference_card.dart';
-import 'add_reference_screen.dart';
 
 class ReferencesScreen extends StatefulWidget {
   const ReferencesScreen({super.key});
@@ -179,7 +178,7 @@ class _ReferencesScreenState extends State<ReferencesScreen> {
   }
 
   void _navigateToAddReference() {
-    NavigationManager.navigateTo(const AddReferenceScreen());
+    // NavigationManager.navigateTo(const AddReferenceScreen());
   }
 
   void _editReference(ReferenceModel reference) {

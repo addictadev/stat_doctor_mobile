@@ -10,6 +10,7 @@ import 'package:stat_doctor/features/settings/presentation/view/terms_of_service
 import 'package:stat_doctor/features/settings/presentation/view/privacy_policy_screen.dart';
 import 'package:stat_doctor/features/settings/presentation/view/contact_support_screen.dart';
 import 'package:stat_doctor/features/settings/presentation/view/about_statdoctor_screen.dart';
+import 'package:stat_doctor/features/settings/presentation/view/notification_settings_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -107,7 +108,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Widget _buildNavigationSettings() {
     return Column(
-      children: [
+      children: [        
         SettingsNavigationItem(
           title: 'Terms of Service',
           onTap: () => NavigationManager.navigateTo(const TermsOfServiceScreen()),

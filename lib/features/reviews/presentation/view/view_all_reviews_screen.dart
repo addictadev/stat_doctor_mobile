@@ -3,7 +3,6 @@ import 'package:iconsax/iconsax.dart';
 import 'package:sizer/sizer.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/styles/styles.dart';
-import '../../../../core/navigation_services/navigation_manager.dart';
 import '../widgets/review_card.dart';
 
 class ViewAllReviewsScreen extends StatefulWidget {

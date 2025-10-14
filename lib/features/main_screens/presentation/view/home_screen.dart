@@ -11,7 +11,6 @@ import '../../../../core/utils/styles/styles.dart';
 import '../widgets/shift_card.dart';
 import '../widgets/filter_button.dart';
 import '../../../search/presentation/view/search_screen.dart';
-import '../../../filter/presentation/view/filter_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

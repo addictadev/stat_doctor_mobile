@@ -4,11 +4,9 @@ import 'package:sizer/sizer.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/utils/styles/styles.dart';
-import '../../../../../../core/utils/responsive_utils.dart';
 import '../../../../../../core/images_preview/app_assets.dart';
 import '../../../../../../core/navigation_services/navigation_manager.dart';
 import '../widgets/filter_chip_widget.dart';
-import '../widgets/shift_status_badge.dart';
 import '../widgets/shift_card_widget.dart';
 import '../widgets/upcoming_past_toggle.dart';
 import '../../../../../shift_details/presentation/view/shift_details_screen.dart';
@@ -101,21 +99,23 @@ class _ShiftsScreenState extends State<ShiftsScreen> {
           ),
           SliverPadding(
             padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),
-            sliver: SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  final shift = _filteredShifts[index];
-                  return Padding(
-                    padding: EdgeInsets.only(bottom: 2.h),
-                    child: ShiftCardWidget(
-                      shift: shift,
-                      onTap: () => _navigateToShiftDetails(shift),
+            sliver: _filteredShifts.isEmpty 
+                ? SliverToBoxAdapter(child: _buildNoShiftsState())
+                : SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        final shift = _filteredShifts[index];
+                        return Padding(
+                          padding: EdgeInsets.only(bottom: 2.h),
+                          child: ShiftCardWidget(
+                            shift: shift,
+                            onTap: () => _navigateToShiftDetails(shift),
+                          ),
+                        );
+                      },
+                      childCount: _filteredShifts.length,
                     ),
-                  );
-                },
-                childCount: _filteredShifts.length,
-              ),
-            ),
+                  ),
           ),
         ],
       ),
@@ -309,5 +309,50 @@ class _ShiftsScreenState extends State<ShiftsScreen> {
       {'date': 'Wed, 01 Nov 2022', 'rate': '\$300/hr'},
       {'date': 'Wed, 01 Nov 2022', 'rate': '\$350/hr'},
     ];
+  }
+
+  Widget _buildNoShiftsState() {
+    return SizedBox(
+      height: 50.h,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          // Magnifying glass icon
+          Container(
+            width: 20.w,
+            height: 20.w,
+            decoration: BoxDecoration(
+              color: AppColors.borderLight.withOpacity(0.3),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              Iconsax.search_normal,
+              color: AppColors.textSecondary,
+              size: 10.w,
+            ),
+          ),
+          SizedBox(height: 3.h),
+          
+          // Title
+          Text(
+            'No shift information available at the moment',
+            style: TextStyles.textViewBold18.copyWith(
+              color: AppColors.textPrimary,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 2.h),
+          
+          // Subtitle
+          Text(
+            'Check back later for new shift opportunities',
+            style: TextStyles.textViewRegular14.copyWith(
+              color: AppColors.textSecondary,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -11,7 +11,7 @@ import 'package:stat_doctor/core/utils/styles/font_utils.dart';
 import 'package:stat_doctor/core/widgets/custom_textform_field.dart';
 import 'package:stat_doctor/core/widgets/primary_button.dart';
 import 'package:stat_doctor/core/navigation_services/navigation_manager.dart';
-import 'package:stat_doctor/features/auth/presentation/view/registration/presentation/view/registration_screen.dart';
+// import 'package:stat_doctor/features/auth/presentation/view/registration/presentation/view/registration_screen.dart';
 import 'otp_verification_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -128,7 +128,7 @@ Widget _buildRegisterButton() {
   return 
   InkWell(
     onTap: () {
-      NavigationManager.navigateTo(const RegistrationScreen());
+      // NavigationManager.navigateTo(const RegistrationScreen());
     },
     child: 
   
