@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:stat_doctor/features/documents/presentation/view/documents_screen.dart';
+import 'package:stat_doctor/features/references/presentation/view/references_screen.dart';
+import 'package:stat_doctor/features/settings/presentation/view/notification_settings_screen.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/styles/styles.dart';
 import '../../../../core/navigation_services/navigation_manager.dart';
@@ -10,6 +13,8 @@ import '../../../profile/presentation/widgets/profile_menu_item.dart';
 import '../../../profile/presentation/widgets/logout_button.dart';
 import '../../../profile/presentation/widgets/logout_confirmation_dialog.dart';
 import '../../../profile/presentation/edit_profile_screen.dart';
+import '../../../profile/presentation/edit_medical_profile_screen.dart';
+import '../../../settings/presentation/view/settings_screen.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -54,53 +59,23 @@ class _AccountScreenState extends State<AccountScreen> {
   }
 
   void _navigateToMedicalProfile() {
-    // TODO: Implement medical profile screen
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Medical profile coming soon'),
-        backgroundColor: AppColors.info,
-      ),
-    );
+    NavigationManager.navigateTo(const EditMedicalProfileScreen());
   }
 
   void _navigateToReferences() {
-    // TODO: Implement references screen
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('References coming soon'),
-        backgroundColor: AppColors.info,
-      ),
-    );
+    NavigationManager.navigateTo(const ReferencesScreen());
   }
 
   void _navigateToDocuments() {
-    // TODO: Implement documents screen
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Documents coming soon'),
-        backgroundColor: AppColors.info,
-      ),
-    );
+    NavigationManager.navigateTo(const DocumentsScreen());
   }
 
   void _navigateToNotifications() {
-    // TODO: Navigate to notifications screen
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Notifications coming soon'),
-        backgroundColor: AppColors.info,
-      ),
-    );
+    NavigationManager.navigateTo(const NotificationSettingsScreen());
   }
 
   void _navigateToSettings() {
-    // TODO: Implement settings screen
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Settings coming soon'),
-        backgroundColor: AppColors.info,
-      ),
-    );
+    NavigationManager.navigateTo(const SettingsScreen());
   }
 
   @override

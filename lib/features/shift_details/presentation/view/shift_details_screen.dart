@@ -8,6 +8,8 @@ import '../../../../core/navigation_services/navigation_manager.dart';
 import '../../../hospital_details/presentation/view/hospital_details_screen.dart';
 import '../../../apply_shifts/presentation/view/apply_screen.dart';
 import '../../../apply_shifts/presentation/widgets/rate_experience_bottom_sheet.dart';
+import '../../../shifts/presentation/view/rate_experience_screen.dart';
+import '../../../shifts/presentation/view/add_to_calendar_screen.dart';
 
 class ShiftDetailsScreen extends StatefulWidget {
   final ShiftDetailsData shiftData;
@@ -46,6 +48,8 @@ class _ShiftDetailsScreenState extends State<ShiftDetailsScreen> {
                   _buildJobRequirementsCard(),
                   SizedBox(height: 2.h),
                   _buildContactDetailsCard(),
+                  SizedBox(height: 2.h),
+                  _buildReviewsAndRatingsCard(),
                   SizedBox(height: 2.h),
                   _buildSimilarShiftsCard(),
                   SizedBox(height: 4.h),
@@ -115,7 +119,7 @@ class _ShiftDetailsScreenState extends State<ShiftDetailsScreen> {
         padding: EdgeInsets.all(4.w),
         decoration: BoxDecoration(
           color: AppColors.white,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
               color: AppColors.shadowLight,
@@ -132,14 +136,14 @@ class _ShiftDetailsScreenState extends State<ShiftDetailsScreen> {
               children: [
                 // Hospital thumbnail image
                 Container(
-                  width: 17.w,
-                  height: 15.w,
+                  width: 20.w,
+                  height: 18.w,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(12),
                     color: Colors.grey[100],
                   ),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(12),
                     child: Image.asset(
                       'assets/images/hom.png', // Hospital building image
                       fit: BoxFit.cover,
@@ -147,7 +151,7 @@ class _ShiftDetailsScreenState extends State<ShiftDetailsScreen> {
                         return Container(
                           decoration: BoxDecoration(
                             color: AppColors.primary.withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(12),
                           ),
                           child: Icon(
                             Iconsax.hospital,
@@ -170,9 +174,9 @@ class _ShiftDetailsScreenState extends State<ShiftDetailsScreen> {
                           Expanded(
                             child: Text(
                               widget.shiftData.hospitalName,
-                              style: TextStyles.textViewBold16.copyWith(
+                              style: TextStyles.textViewBold18.copyWith(
                                 color: AppColors.textPrimary,
-                                fontSize: 16.sp,
+                                fontSize: 18.sp,
                               ),
                             ),
                           ),
@@ -180,38 +184,40 @@ class _ShiftDetailsScreenState extends State<ShiftDetailsScreen> {
                           _buildStatusPill(),
                         ],
                       ),
+                      SizedBox(height: 1.5.h),
+                      // Address with map pin
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(
+                            Iconsax.location,
+                            color: AppColors.textPrimary,
+                            size: 4.w,
+                          ),
+                          SizedBox(width: 1.w),
+                          Expanded(
+                            child: Text(
+                              widget.shiftData.address,
+                              style: TextStyles.textViewRegular14.copyWith(
+                                color: AppColors.textPrimary,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 0.5.h),
+                      // Distance
+                      Text(
+                        '${widget.shiftData.distance} from current location',
+                        style: TextStyles.textViewRegular14.copyWith(
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ],
-            ),
-            SizedBox(height: 1.h),
-            // Address with map pin
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Icon(
-                  Iconsax.location,
-                  color: AppColors.textPrimary,
-                  size: 4.w,
-                ),
-                SizedBox(width: 1.w),
-                Text(
-                  widget.shiftData.address,
-                  style: TextStyles.textViewRegular14.copyWith(
-                    color: AppColors.textPrimary,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 0.5.h),
-            // Distance
-            Text(
-              '${widget.shiftData.distance} from current location',
-              style: TextStyles.textViewRegular14.copyWith(
-                color: AppColors.primary,
-                fontWeight: FontWeight.w500,
-              ),
             ),
           ],
         ),
@@ -330,7 +336,7 @@ class _ShiftDetailsScreenState extends State<ShiftDetailsScreen> {
       padding: EdgeInsets.all(4.w),
       decoration: BoxDecoration(
         color: AppColors.white,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
             color: AppColors.shadowLight,
@@ -382,7 +388,7 @@ class _ShiftDetailsScreenState extends State<ShiftDetailsScreen> {
             ),
           ),
           Container(
-            width: .5.w,
+            width: 0.5.w,
             height: 5.5.h,
             color: AppColors.borderLight,
             margin: EdgeInsets.symmetric(horizontal: 3.w),
@@ -399,8 +405,9 @@ class _ShiftDetailsScreenState extends State<ShiftDetailsScreen> {
               SizedBox(height: 0.5.h),
               Text(
                 widget.shiftData.rate,
-                style: TextStyles.textViewBold18.copyWith(
+                style: TextStyles.textViewBold20.copyWith(
                   color: AppColors.textPrimary,
+                  fontSize: 20.sp,
                 ),
               ),
             ],
@@ -452,20 +459,18 @@ class _ShiftDetailsScreenState extends State<ShiftDetailsScreen> {
       padding: EdgeInsets.all(4.w),
       decoration: BoxDecoration(
         color: AppColors.white,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.borderLight),
+        borderRadius: BorderRadius.circular(16),
         boxShadow: [
-          // BoxShadow(
-          //   color: AppColors.shadowLight,
-          //   blurRadius: 8,
-          //   offset: const Offset(0, 2),
-          // ),
+          BoxShadow(
+            color: AppColors.shadowLight,
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
         ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-        
           _buildRequirementRow('Skill level', widget.shiftData.skillLevel),
           SizedBox(height: 1.5.h),
           _buildRequirementRow('Specialty', widget.shiftData.specialty),
@@ -507,7 +512,7 @@ class _ShiftDetailsScreenState extends State<ShiftDetailsScreen> {
       padding: EdgeInsets.all(4.w),
       decoration: BoxDecoration(
         color: AppColors.white,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
             color: AppColors.shadowLight,
@@ -525,40 +530,174 @@ class _ShiftDetailsScreenState extends State<ShiftDetailsScreen> {
               color: AppColors.textPrimary,
             ),
           ),
+          SizedBox(height: 2.h),
+          _buildContactRow('Name', widget.shiftData.contactName),
           SizedBox(height: 1.h),
-       Row(mainAxisAlignment: MainAxisAlignment.start,children: [  
-        Text('Name',style: TextStyles.textViewRegular16.copyWith(
-              color: AppColors.textSecondary,
-            ),),
-            SizedBox(width: 5.w),
-         Text(
-            widget.shiftData.contactName,
-            style: TextStyles.textViewSemiBold16,
-          ),],),
-          SizedBox(height: 0.5.h),
-       Row(mainAxisAlignment: MainAxisAlignment.start,children: [  
-        Text('Phone',style: TextStyles.textViewRegular16.copyWith(
-              color: AppColors.textSecondary,
-            ),),
-            SizedBox(width: 5.w),
-         Text(
-            widget.shiftData.contactPhone,
-            style: TextStyles.textViewSemiBold16.copyWith(
-           
+          _buildContactRow('Phone', widget.shiftData.contactPhone),
+          SizedBox(height: 1.h),
+          _buildContactRow('Email', widget.shiftData.contactEmail),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildContactRow(String label, String value) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          width: 25.w,
+          child: Text(
+            label,
+            style: TextStyles.textViewBold16.copyWith(
+              color: AppColors.textPrimary,
             ),
-          )]),
-          SizedBox(height: 0.5.h),
-       Row(mainAxisAlignment: MainAxisAlignment.start,children: [  
-        Text('Email',style: TextStyles.textViewRegular16.copyWith(
-              color: AppColors.textSecondary,
-            ),),
-            SizedBox(width: 5.w),
-         Text(
-            widget.shiftData.contactEmail,
-            style: TextStyles.textViewSemiBold16.copyWith(
-             
+          ),
+        ),
+        SizedBox(width: 2.w),
+        Expanded(
+          child: Text(
+            value,
+            style: TextStyles.textViewRegular16.copyWith(
+              color: AppColors.textPrimary,
             ),
-          ),])
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildReviewsAndRatingsCard() {
+    return Container(
+      width: 100.w,
+      padding: EdgeInsets.all(4.w),
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.shadowLight,
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Reviews and Ratings',
+            style: TextStyles.textViewBold18.copyWith(
+              color: AppColors.textPrimary,
+            ),
+          ),
+          SizedBox(height: 2.h),
+          
+          // Sample review
+          _buildReviewItem(
+            name: 'Dr. Sarah Cooper',
+            date: '20 Oct 2022',
+            rating: 4.5,
+            comment: 'The treatment of the hospital is very good, the environment is clean and hygienic, and I am very honored to participate in this shift.',
+          ),
+          
+          SizedBox(height: 2.h),
+          
+          _buildReviewItem(
+            name: 'Dr. Michael Johnson',
+            date: '15 Oct 2022',
+            rating: 4.0,
+            comment: 'Excellent facilities and professional staff. Highly recommend working here.',
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildReviewItem({
+    required String name,
+    required String date,
+    required double rating,
+    required String comment,
+  }) {
+    return Container(
+      padding: EdgeInsets.all(3.w),
+      decoration: BoxDecoration(
+        color: AppColors.borderLight.withOpacity(0.3),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              // Profile picture
+              Container(
+                width: 10.w,
+                height: 10.w,
+                decoration: BoxDecoration(
+                  color: AppColors.primary.withOpacity(0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Iconsax.user,
+                  color: AppColors.primary,
+                  size: 5.w,
+                ),
+              ),
+              SizedBox(width: 3.w),
+              
+              // Name and date
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      name,
+                      style: TextStyles.textViewBold14.copyWith(
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
+                    Text(
+                      date,
+                      style: TextStyles.textViewRegular12.copyWith(
+                        color: AppColors.textSecondary,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              
+              // Rating
+              Row(
+                children: [
+                  Icon(
+                    Icons.star,
+                    color: Colors.amber,
+                    size: 4.w,
+                  ),
+                  SizedBox(width: 1.w),
+                  Text(
+                    rating.toString(),
+                    style: TextStyles.textViewBold14.copyWith(
+                      color: AppColors.textPrimary,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          
+          SizedBox(height: 1.h),
+          
+          // Comment
+          Text(
+            comment,
+            style: TextStyles.textViewRegular14.copyWith(
+              color: AppColors.textSecondary,
+              height: 1.4,
+            ),
+          ),
         ],
       ),
     );
@@ -721,7 +860,6 @@ class _ShiftDetailsScreenState extends State<ShiftDetailsScreen> {
             _buildWithdrawButton(),
             SizedBox(height: 1.h),
             _buildCancelShiftButton(),
-           
           ],
         );
       
@@ -782,7 +920,7 @@ class _ShiftDetailsScreenState extends State<ShiftDetailsScreen> {
           },
           child: Center(
             child: Text(
-              'withdraw_application'.tr(),
+              'Withdraw Application',
               style: TextStyles.textViewBold16.copyWith(
                 color: AppColors.white,
               ),
@@ -794,25 +932,20 @@ class _ShiftDetailsScreenState extends State<ShiftDetailsScreen> {
   }
 
   Widget _buildCancelShiftButton() {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: 6.h,
-      decoration: BoxDecoration(
-        color: Colors.transparent,
-        borderRadius: BorderRadius.circular(30.w),
-      ),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          borderRadius: BorderRadius.circular(30.w),
           onTap: () {
             _showCancelConfirmation();
           },
           child: Center(
             child: Text(
-              'cancel_shift'.tr(),
+              'Cancel Shift',
               style: TextStyles.textViewBold16.copyWith(
-                color: AppColors.grayColor,
+                color: AppColors.textSecondary,
               ),
             ),
           ),
@@ -1119,8 +1252,55 @@ class _ShiftDetailsScreenState extends State<ShiftDetailsScreen> {
   }
 
   void _navigateToReviews() {
-    // Show the rate experience bottom sheet instead of navigating to reviews
-    _showRateExperienceBottomSheet();
+    // Navigate to standalone rate experience screen
+    _navigateToRateExperienceScreen();
+  }
+
+  void _navigateToRateExperienceScreen() {
+    NavigationManager.navigateTo(
+      RateExperienceScreen(
+        hospitalName: widget.shiftData.hospitalName,
+        shiftDate: widget.shiftData.date,
+      ),
+    );
+  }
+
+  Widget _buildAddToCalendarButton() {
+    return Container(
+      width: double.infinity,
+      height: 6.h,
+      decoration: BoxDecoration(
+        color: AppColors.primary,
+        borderRadius: BorderRadius.circular(30.w),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(30.w),
+          onTap: () {
+            _navigateToAddToCalendar();
+          },
+          child: Center(
+            child: Text(
+              'Add to calendar',
+              style: TextStyles.textViewBold16.copyWith(
+                color: AppColors.white,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _navigateToAddToCalendar() {
+    NavigationManager.navigateTo(
+      AddToCalendarScreen(
+        hospitalName: widget.shiftData.hospitalName,
+        shiftDate: widget.shiftData.date,
+        shiftTime: widget.shiftData.time,
+      ),
+    );
   }
 }
 
