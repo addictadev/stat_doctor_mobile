@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:sizer/sizer.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
-import '../../../../../../core/theme/app_colors.dart';
-import '../../../../../../core/utils/styles/styles.dart';
-import '../../../../../../core/images_preview/app_assets.dart';
-import '../../../../../../core/navigation_services/navigation_manager.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/utils/styles/styles.dart';
+import '../../../../core/images_preview/app_assets.dart';
+import '../../../../core/navigation_services/navigation_manager.dart';
 import '../widgets/filter_chip_widget.dart';
 import '../widgets/shift_card_widget.dart';
 import '../widgets/upcoming_past_toggle.dart';
-import '../../../../../shift_details/presentation/view/shift_details_screen.dart';
-import '../../../../../shift_details/data/models/shift_details_data.dart';
+import '../../../shift_details/presentation/view/shift_details_screen.dart';
+import '../../../shift_details/data/models/shift_details_data.dart';
 
 class ShiftsScreen extends StatefulWidget {
   const ShiftsScreen({super.key});
@@ -179,12 +179,14 @@ class _ShiftsScreenState extends State<ShiftsScreen> {
       flexibleSpace: FlexibleSpaceBar(
         background: Container(
           decoration: BoxDecoration(
-       image: DecorationImage(
-        image: AssetImage(AppAssets.homeBackground),
-        fit: BoxFit.cover,
-        
-       ),
-       borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30)),
+            image: DecorationImage(
+              image: AssetImage(AppAssets.homeBackground),
+              fit: BoxFit.cover,
+            ),
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(30), 
+              bottomRight: Radius.circular(30)
+            ),
           ),
           child: Stack(
             children: [
@@ -219,7 +221,6 @@ class _ShiftsScreenState extends State<ShiftsScreen> {
                         color: Colors.white,
                       ),
                     ),
-
                     UpcomingPastToggle(
                       isUpcoming: _isUpcoming,
                       onToggle: (value) {

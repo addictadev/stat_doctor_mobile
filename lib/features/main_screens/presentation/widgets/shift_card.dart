@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
+import 'package:stat_doctor/features/shift_details/data/models/shift_details_data.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/styles/styles.dart';
 import '../../../../core/utils/styles/font_utils.dart';
@@ -52,6 +53,8 @@ class ShiftCard extends StatelessWidget {
       contactPhone: '(03) 9529 1234',
       contactEmail: 'info@gmail.com.au',
       similarShifts: _generateSimilarShifts(),
+      status: shiftData.status ?? 'Applied',
+      reviews: _generateReviews(shiftData.status),
     );
 
     Navigator.push(
@@ -99,6 +102,27 @@ class ShiftCard extends StatelessWidget {
       {'date': 'Wed, 01 Nov 2022', 'rate': '\$300/hr'},
       {'date': 'Wed, 01 Nov 2022', 'rate': '\$350/hr'},
     ];
+  }
+
+  List<Map<String, dynamic>> _generateReviews(String? status) {
+    // Only generate reviews for archived shifts
+    if (status == 'Archived') {
+      return [
+        {
+          'name': 'Dr. Sarah Cooper',
+          'date': '25 Oct 2025',
+          'rating': '4.5',
+          'comment': 'The treatment of the hospital is very good, the environment is clean and hygienic, and I am very honored to participate in this shift.'
+        },
+        {
+          'name': 'Dr. Michael Johnson',
+          'date': '20 Oct 2025',
+          'rating': '4.8',
+          'comment': 'Excellent facilities and supportive staff. The shift was well-organized and the team was very professional.'
+        }
+      ];
+    }
+    return [];
   }
 
   Widget _buildHorizontalCard() {
@@ -581,6 +605,7 @@ class ShiftData {
   final bool hasTravel;
   final bool isGroup;
   final int groupSize;
+  final String? status;
 
   ShiftData({
     required this.hospitalName,
@@ -595,5 +620,6 @@ class ShiftData {
     required this.hasTravel,
     required this.isGroup,
     required this.groupSize,
+    this.status,
   });
 }
