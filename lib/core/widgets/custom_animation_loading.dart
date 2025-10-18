@@ -1,6 +1,5 @@
 import 'package:stat_doctor/core/config/app_colors.dart';
 import 'package:stat_doctor/core/config/app_images.dart';
-import 'package:stat_doctor/core/extensions/theme_mode.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -14,7 +13,7 @@ class CustomAnimationLoading extends StatelessWidget {
       color: color?? AppColors.transparent,
       child: Center(
         child: Image.asset(
-          context.isDarkMode ? AppImages.logoDark : AppImages.logoLight,
+          AppImages.logo,
           width: MediaQuery.sizeOf(context).width*0.4,
         ).animate(
           delay: 200.ms,
