@@ -98,7 +98,7 @@ dependencies:
   flutter_launcher_icons: ^0.14.3     # App icon generation for all platforms
   flutter_native_splash: ^2.4.4       # Splash screen generation
   permission_handler: ^12.0.0+1       # Runtime permission handling
-  package_info_plus: ^8.3.0           # App package information access
+  package_info_plus: ^9.0.0           # App package information access
   flutter_rating_bar: ^4.0.1          # Rating bar widget for reviews
 
 
@@ -128,7 +128,6 @@ flutter:
     - assets/fonts/          # Custom font files (ReadexPro family)
     - assets/icons/          # SVG icons for UI components
     - assets/images/         # PNG/JPG images and logos
-    - assets/lotties/        # Lottie animation files
     - assets/translation/    # Localization files (ARB format)
 
   # =============================================================================
@@ -171,8 +170,8 @@ flutter_launcher_icons:
 # =============================================================================
 flutter_native_splash:
   color: "#ffffff"  # Background color (white)
-  image: assets/images/splash-max.png  # Splash screen image (1152x1152px)
+  image: assets/images/splash.png  # Splash screen image (1152x1152px)
   android_12:  # Android 12+ splash screen configuration
-    image: assets/images/splash-max.png  # Android 12+ splash image
+    image: assets/images/splash.png  # Android 12+ splash image
     icon_background_color: "#ffffff"   # Icon background color
     branding_mode: none  # No branding text overlay
