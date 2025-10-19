@@ -7,22 +7,15 @@ import 'package:stat_doctor/core/services/media_service/media_services.dart';
 import 'package:stat_doctor/core/widgets/bottom_sheet_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stat_doctor/core/extensions/localization.dart';
 
 class UploadBottomSheet extends StatelessWidget {
   final Function(File file) onchange;
-  const UploadBottomSheet({required this.onchange, super.key});
+  const UploadBottomSheet({required this.onchange, super.key,});
 
-  static final MediaService _mediaService = sl<MediaService>();
+  static final MediaService _mediaService  = sl<MediaService>();
 
-  Future<void> _getImage(
-    BuildContext context,
-    AppImageSource appImageSource,
-  ) async {
-    final pickedImageFile = await _mediaService.uploadImage(
-      context,
-      appImageSource,
-    );
+  Future<void> _getImage(BuildContext context, AppImageSource appImageSource) async {
+    final pickedImageFile = await _mediaService.uploadImage(context, appImageSource);
     if (pickedImageFile != null) {
       onchange(pickedImageFile);
     }
@@ -35,13 +28,10 @@ class UploadBottomSheet extends StatelessWidget {
     }
   }
 
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Theme.of(context).scaffoldBackgroundColor,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
-      ),
+    return Padding(
       padding: EdgeInsets.fromLTRB(15.w, 10.h, 15.w, 25.h),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -51,7 +41,7 @@ class UploadBottomSheet extends StatelessWidget {
             height: 3.5.h,
             margin: EdgeInsets.only(bottom: 15.h),
             decoration: BoxDecoration(
-              color: Theme.of(context).dividerColor,
+              color: Theme.of(context).highlightColor,
               borderRadius: BorderRadius.circular(50.r),
             ),
           ),
@@ -61,25 +51,25 @@ class UploadBottomSheet extends StatelessWidget {
               _getImage(context, AppImageSource.gallery);
             },
             icon: AppIcons.gallery,
-            text: context.tr.uploadChooseImage,
+            text: "Choose Image"
           ),
-
+      
           BottomSheetCard(
             onTap: () {
               sl<AppNavigator>().pop();
               _getImage(context, AppImageSource.camera);
             },
             icon: AppIcons.camera,
-            text: context.tr.uploadTakePicture,
+            text: "Take Picture"
           ),
-
+      
           BottomSheetCard(
             onTap: () {
               sl<AppNavigator>().pop();
               _getMultipleFile(context);
             },
             icon: AppIcons.file,
-            text: context.tr.uploadChooseFromFiles,
+            text: "Choose From Files"
           ),
         ],
       ),

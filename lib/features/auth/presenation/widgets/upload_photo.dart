@@ -1,60 +1,77 @@
-// // ignore_for_file: use_build_context_synchronously
+import 'dart:io';
+import 'package:be_widgets/be_widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:stat_doctor/core/config/app_icons.dart';
+import 'package:stat_doctor/core/config/styles/styles.dart';
+import 'package:stat_doctor/core/injection/injection_container.dart';
+import 'package:stat_doctor/core/toast/app_toast.dart';
+import 'package:stat_doctor/core/widgets/app_shimmer.dart';
+import 'package:stat_doctor/core/widgets/circle_container.dart';
+import 'package:stat_doctor/core/widgets/custom_popup.dart';
+import 'package:stat_doctor/core/widgets/shimmer_shape.dart';
+import 'package:stat_doctor/core/widgets/upload_bottom_sheet.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stat_doctor/features/upload_file/presentation/cubit/upload_file_cubit.dart';
 
-// import 'dart:io';
-// import 'package:stat_doctor/core/constant/app_colors.dart';
-// import 'package:stat_doctor/core/constant/app_icons.dart';
-// import 'package:stat_doctor/core/constant/styles/styles.dart';
-// import 'package:stat_doctor/core/extensions/extensions.dart';
-// import 'package:stat_doctor/core/methods/check_image.dart';
-// import 'package:stat_doctor/core/widgets/app_shimmer.dart';
-// import 'package:stat_doctor/core/widgets/circle_container.dart';
-// import 'package:stat_doctor/features/auth/presenation/widgets/upload_bottom_sheet.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter_screenutil/flutter_screenutil.dart';
+class UploadPhoto extends StatelessWidget {
+  final TextEditingController photoProfileController;
+  final TextEditingController photoProfilePathController;
+  final TextEditingController photoProfileNameController;
 
-// class UploadPhoto extends StatefulWidget {
-//   final TextEditingController photoPathController;
-//   const UploadPhoto({required this.photoPathController, super.key});
-//   @override
-//   State<UploadPhoto> createState() => _UploadPhotoState();
-// }
+  const UploadPhoto({required this.photoProfileController, required this.photoProfilePathController, required this.photoProfileNameController, super.key});
 
-// class _UploadPhotoState extends State<UploadPhoto> {
-//   bool isLoading = false;
+  bool hasImage() {return photoProfilePathController.text.isNotEmpty && photoProfileNameController.text.isNotEmpty && photoProfileController.text.isNotEmpty;}
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       spacing: 10.h,
-//       children: [
-//         isLoading ? AppShimmer(child: CircleContainer(size: 100, color: Theme.of(context).primaryColor,),) :
-//         CircleContainer(
-//           onTap: () {
-//             showModalBottomSheet(
-//               context: context,
-//               shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(25.r))),
-//               isScrollControlled: true,
-//               backgroundColor: AppColors.transparent ,
-//               builder: (ctx) => UploadBottomSheet(
-//                 onchange: (file) async {
-//                   setState(() {isLoading = true;});
-//                   if(await CheckImageAI.checkImage(image: file, context: context)) {
-//                     setState(() {widget.photoPathController.text = file.path;});
-//                   }
-//                   setState(() {isLoading = false;});
-//                 },
-//               )
-//             );
-//           },
-//           size: 100,
-//           noAlignment: widget.photoPathController.text != '',
-//           color: Theme.of(context).scaffoldBackgroundColor,
-//           child: widget.photoPathController.text != '' ?
-//           Image.file(File(widget.photoPathController.text,), fit: BoxFit.cover,):
-//           AppIcons.icon(icon: AppIcons.uploadPhoto, color: Theme.of(context).primaryColor),
-//         ),
-//         Text(context.l10n.photoWhiteBackground, style: TextStyles.textViewRegular12.copyWith(color: Theme.of(context).hintColor))
-//       ],
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => sl<UploadFileCubit>(),
+      child: Column(
+        spacing: 10.h,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Photo Profile', style: TextStyles.textViewSemiBold14),
+          BlocConsumer<UploadFileCubit, UploadFileState>(
+            listener: (context, state) {
+              if (state is UploadFileLoaded) {
+                photoProfilePathController.text = state.uploadFile.path;
+                photoProfileNameController.text = state.uploadFile.name;
+                photoProfileController.text = state.uploadFile.url;
+              } else if (state is UploadFileFailure) {
+                appToast(context: context, type: ToastType.error, message: state.message);
+              }
+            },
+            builder: (context, state) {
+              if (state is UploadFileLoading) {return AppShimmer(child: ShimmerShape(width: 75.w, height: 75.h, radius: 5000.r,));}
+              return BeBadge(
+                offset: Offset(-10, 10),
+                badge: CircleContainer(
+                  onTap: () {
+                    CustomPopup.appShowModalBottomSheet(
+                      backgroundColor: Theme.of(context).cardColor,
+                      context: context,
+                      builder: (ctx) => UploadBottomSheet(onchange: (file) {context.read<UploadFileCubit>().uploadFile(filePath: file.path);},),
+                    );
+                  },
+                  size: 25,
+                  color: Theme.of(context).cardColor,
+                  borderColor: Theme.of(context).dividerColor,
+                  child: AppIcons.icon(icon: AppIcons.edit, color: Theme.of(context).colorScheme.onSurface, size: 10),
+                ),
+                child: CircleContainer(
+                  size: 75,
+                  color: Theme.of(context).cardColor,
+                  borderColor: Theme.of(context).dividerColor,
+                  noAlignment: hasImage(),
+                  child: hasImage() ? Image.file(File(photoProfilePathController.text,), fit: BoxFit.cover,):
+                  AppIcons.icon(icon: AppIcons.gallery, color: Theme.of(context).hintColor, size: 25),
+                ),
+              );
+            },
+          )
+        ],
+      ),
+    );
+  }
+}

@@ -25,7 +25,7 @@ class BottomSheetCard extends StatelessWidget {
               height: 35.h,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: Theme.of(context).cardColor,
+                color: Theme.of(context).scaffoldBackgroundColor,
                 shape: BoxShape.circle
               ),
               child: AppIcons.icon(icon: icon, size: 17, color: Theme.of(context).primaryColor)

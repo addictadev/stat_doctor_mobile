@@ -7,8 +7,9 @@ import 'package:stat_doctor/core/theme/time_line_theme.dart';
 import 'package:timelines_plus/timelines_plus.dart';
 
 class SignupStepper extends StatelessWidget {
+  final ValueChanged<int> onStepTap;
   final int currentStep;
-  const SignupStepper({super.key, required this.currentStep});
+  const SignupStepper({super.key, required this.onStepTap, required this.currentStep});
 
   static final List<String> stepLabels = [
     "Personal info",
@@ -53,11 +54,15 @@ class SignupStepper extends StatelessWidget {
         children: [
           TimelineTile(
             node: TimelineNode(
-              indicator: Center(
-                child: DotIndicator(
-                  color: getIndicatorColor(context, currentStep > 0),
-                  border: Border.all(color: getColor(context, currentStep >= 0)),
-                  child: getIndicator(context, 0),
+              indicator: InkWell(
+                onTap: () {onStepTap(0);},
+                overlayColor: WidgetStatePropertyAll(AppColors.transparent),
+                child: Center(
+                  child: DotIndicator(
+                    color: getIndicatorColor(context, currentStep > 0),
+                    border: Border.all(color: getColor(context, currentStep >= 0)),
+                    child: getIndicator(context, 0),
+                  ),
                 ),
               ),
               endConnector: SolidLineConnector(color: getColor(context, currentStep > 0)),
@@ -67,11 +72,15 @@ class SignupStepper extends StatelessWidget {
       
           TimelineTile(
             node: TimelineNode(
-              indicator: Center(
-                child: DotIndicator(
-                  color: getIndicatorColor(context, currentStep > 1),
-                  border: Border.all(color: getColor(context, currentStep >= 1)),
-                  child: getIndicator(context, 1),
+              indicator: InkWell(
+                onTap: () {onStepTap(1);},
+                overlayColor: WidgetStatePropertyAll(AppColors.transparent),
+                child: Center(
+                  child: DotIndicator(
+                    color: getIndicatorColor(context, currentStep > 1),
+                    border: Border.all(color: getColor(context, currentStep >= 1)),
+                    child: getIndicator(context, 1),
+                  ),
                 ),
               ),
               startConnector: SolidLineConnector(color: getColor(context, currentStep > 0)),
@@ -82,11 +91,15 @@ class SignupStepper extends StatelessWidget {
       
           TimelineTile(
             node: TimelineNode(
-              indicator: Center(
-                child: DotIndicator(
-                  color: getIndicatorColor(context, currentStep > 2),
-                  border: Border.all(color: getColor(context, currentStep >= 2)),
-                  child: getIndicator(context, 2),
+              indicator: InkWell(
+                onTap: () {onStepTap(2);},
+                overlayColor: WidgetStatePropertyAll(AppColors.transparent),
+                child: Center(
+                  child: DotIndicator(
+                    color: getIndicatorColor(context, currentStep > 2),
+                    border: Border.all(color: getColor(context, currentStep >= 2)),
+                    child: getIndicator(context, 2),
+                  ),
                 ),
               ),
               startConnector: SolidLineConnector(color: getColor(context, currentStep > 1)),
@@ -97,11 +110,15 @@ class SignupStepper extends StatelessWidget {
       
           TimelineTile(
             node: TimelineNode(
-              indicator: Center(
-                child: DotIndicator(
-                  color: getIndicatorColor(context, currentStep > 3),
-                  border: Border.all(color: getColor(context, currentStep >= 3)),
-                  child: getIndicator(context, 3),
+              indicator: InkWell(
+                onTap: () {onStepTap(3);},
+                overlayColor: WidgetStatePropertyAll(AppColors.transparent),
+                child: Center(
+                  child: DotIndicator(
+                    color: getIndicatorColor(context, currentStep > 3),
+                    border: Border.all(color: getColor(context, currentStep >= 3)),
+                    child: getIndicator(context, 3),
+                  ),
                 ),
               ),
               startConnector: SolidLineConnector(color: getColor(context, currentStep > 2)),

@@ -14,4 +14,8 @@ class ConvertNetworkFiles {
     if(isImageLink(path)){path = await DownloadFile.saveImage(path);}
     return await MultipartFile.fromFile(path, filename: path.split('/').last, contentType: MediaType.parse(lookupMimeType(path) ?? 'application/octet-stream'));
   }
+
+  static Future<FormData> formDataFromFilePath({required String path}) async{
+    return FormData.fromMap({'fileList': await convertFileToMultipartFile(path: path)});
+  }
 }
