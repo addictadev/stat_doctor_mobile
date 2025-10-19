@@ -19,10 +19,10 @@ class SignupStepper extends StatelessWidget {
 
   Color getColor(BuildContext context, bool value) => value ? Theme.of(context).primaryColor : Theme.of(context).disabledColor;
   Color getIndicatorColor(BuildContext context, bool value) => value ? Theme.of(context).primaryColor : AppColors.transparent;
-  Widget getText(BuildContext context, bool value) => Padding(
-    padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
+  Widget getText(BuildContext context, bool value, int index) => Padding(
+    padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 5.h),
     child: Text(
-      stepLabels[currentStep],
+      stepLabels[index],
       style: TextStyles.textViewMedium10.copyWith(color: value ? null : Theme.of(context).disabledColor),
     ),
   );
@@ -62,7 +62,7 @@ class SignupStepper extends StatelessWidget {
               ),
               endConnector: SolidLineConnector(color: getColor(context, currentStep > 0)),
             ),
-            contents: getText(context, currentStep >= 0),
+            contents: getText(context, currentStep >= 0, 0),
           ),
       
           TimelineTile(
@@ -77,7 +77,7 @@ class SignupStepper extends StatelessWidget {
               startConnector: SolidLineConnector(color: getColor(context, currentStep > 0)),
               endConnector: SolidLineConnector(color: getColor(context, currentStep > 1)),
             ),
-            contents: getText(context, currentStep >= 1),
+            contents: getText(context, currentStep >= 1, 1),
           ),
       
           TimelineTile(
@@ -92,7 +92,7 @@ class SignupStepper extends StatelessWidget {
               startConnector: SolidLineConnector(color: getColor(context, currentStep > 1)),
               endConnector: SolidLineConnector(color: getColor(context, currentStep > 2)),
             ),
-            contents: getText(context, currentStep >= 2),
+            contents: getText(context, currentStep >= 2, 2),
           ),
       
           TimelineTile(
@@ -106,7 +106,7 @@ class SignupStepper extends StatelessWidget {
               ),
               startConnector: SolidLineConnector(color: getColor(context, currentStep > 2)),
             ),
-            contents: getText(context, currentStep >= 3),
+            contents: getText(context, currentStep >= 3, 3),
           ),
       
         ],
