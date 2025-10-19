@@ -54,11 +54,11 @@ class AppButton extends StatelessWidget {
         onTap: onTap,
         child: Container(
           width: width ?? double.infinity,
-          height: flexableHeight ? null : heigh ?? 50.h,
-          padding: padding ?? EdgeInsets.symmetric(horizontal: 15.w),
+          height: heigh,
+          padding: padding ?? EdgeInsets.all(15.r),
           alignment: alignment ?? Alignment.center,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(radius ?? 15.r),
+            borderRadius: BorderRadius.circular(radius ?? 1000.r),
             border: border ?? Border.all(color: borderColor ?? AppColors.transparent, strokeAlign: BorderSide.strokeAlignInside),
             color: color ?? Theme.of(context).primaryColor,
             gradient: gradient,

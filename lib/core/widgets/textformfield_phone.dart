@@ -44,12 +44,10 @@ class TextFormFieldPhone extends StatelessWidget {
       label: label,
       prefixWidget: CountryCodePicker(
         headerAlignment: MainAxisAlignment.center,
-        onChanged: (value) {
-          countryCodeController.text = value.dialCode.toString();
-        },
+        onChanged: (value) {countryCodeController.text = value.dialCode.toString();},
         enabled: enableCountryPicker,
         hideCloseIcon: true,
-        initialSelection: regionCode ?? 'sa',
+        initialSelection: regionCode ?? 'au',
         topBarPadding: EdgeInsets.only(top: 15.h),
         padding: EdgeInsets.symmetric(horizontal: 5.w),
         dialogBackgroundColor: Theme.of(context).scaffoldBackgroundColor,

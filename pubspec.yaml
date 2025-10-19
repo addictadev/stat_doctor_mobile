@@ -49,7 +49,7 @@ dependencies:
   flutter_svg: ^2.0.16                # SVG vector graphics rendering
   cached_network_image: ^3.4.1        # Efficient cached network image loading
   be_widgets: ^1.0.2                  # Custom UI widget library
-  timelines_plus: ^1.0.6              # Timeline widgets for booking history
+  timelines_plus: ^1.0.7              # Timeline widgets for booking history
   mobkit_dashed_border: ^0.0.7        # Dashed border widgets for forms
 
   # =============================================================================

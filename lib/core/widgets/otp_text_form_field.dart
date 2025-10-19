@@ -23,7 +23,7 @@ class OtpTexFormField extends StatelessWidget {
       enablePinAutofill: true,
       autoDisposeControllers: true,
       autoUnfocus: true,
-      textStyle: TextStyles.textViewBold20,
+      textStyle: TextStyles.textViewBold22,
       mainAxisAlignment: MainAxisAlignment.center,
       useHapticFeedback: true,
       animationType: AnimationType.scale,

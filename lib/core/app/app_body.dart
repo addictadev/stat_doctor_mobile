@@ -1,4 +1,5 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:stat_doctor/core/methods/app_state.dart';
 import 'package:stat_doctor/core/navigation/app_navigator.dart';
 import 'package:stat_doctor/core/network/network_service/api_basehelper.dart';
 import 'package:stat_doctor/core/translation/app_localizations.dart';
@@ -7,7 +8,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stat_doctor/core/storage/data/storage.dart';
 import 'package:stat_doctor/core/theme/app_theme.dart';
 import 'package:stat_doctor/core/injection/injection_container.dart';
-import 'package:stat_doctor/features/onboarding/presentation/screens/onboarding_screen.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -27,14 +27,14 @@ class MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(393, 852),
+      designSize: const Size(375, 812),
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (BuildContext context, Widget? child) => AdaptiveTheme(
         light: AppTheme.appLightTheme,
         dark: AppTheme.appDarkTheme,
         initial: AdaptiveThemeMode.light,
-        debugShowFloatingThemeButton: false,
+        debugShowFloatingThemeButton: true,
         builder: (theme, darkTheme) => MaterialApp(
           debugShowCheckedModeBanner: false,
           scrollBehavior: const ScrollBehavior().copyWith(physics: const BouncingScrollPhysics()),
@@ -44,7 +44,7 @@ class MyAppState extends State<MyApp> {
           supportedLocales: AppLocalizations.supportedLocales,
           locale: _locale,
           navigatorKey: sl<AppNavigator>().navigatorKey,
-          home: OnboardingScreen()
+          home: AppState.currentScreen()
         )
       )
     );

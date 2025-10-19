@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:stat_doctor/core/config/styles/styles.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +11,10 @@ class CustomRichText extends StatelessWidget {
     this.startSubText,
     this.centerSubText,
     this.endSubText,
-    this.textAlign
+    this.textAlign,
+    this.onStartSubTextTap,
+    this.onCenterSubTextTap,
+    this.onEndSubTextTap,
   });
 
   final TextStyle? startSubTextStyle;
@@ -20,7 +24,9 @@ class CustomRichText extends StatelessWidget {
   final String? centerSubText;
   final String? endSubText;
   final TextAlign? textAlign;
-
+  final Function()? onStartSubTextTap;
+  final Function()? onCenterSubTextTap;
+  final Function()? onEndSubTextTap;
   @override
   Widget build(BuildContext context) {
     return RichText(
@@ -31,14 +37,17 @@ class CustomRichText extends StatelessWidget {
           TextSpan(
             text: startSubText,
             style: startSubTextStyle,
+            recognizer: TapGestureRecognizer()..onTap = onStartSubTextTap,
           ),
           TextSpan(
             text: centerSubText,
             style: centerSubTextStyle,
+            recognizer: TapGestureRecognizer()..onTap = onCenterSubTextTap,
           ),
           TextSpan(
             text: endSubText,
             style: endSubTextStyle,
+            recognizer: TapGestureRecognizer()..onTap = onEndSubTextTap,
           )
         ]
       ) 

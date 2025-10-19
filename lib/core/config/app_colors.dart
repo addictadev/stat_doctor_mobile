@@ -18,6 +18,7 @@ abstract class AppColors {
   static const Color borderColorDark = Color(0xFF333333);
   static const Color textColorDark = Color(0xFFFFFFFF);
 
+
   static const Color red = Color(0xFFE71D35);
   static const Color darkRed = Color(0xFFC0392B);
   static const Color lightRed = Color(0xFFFF6347);
@@ -26,7 +27,7 @@ abstract class AppColors {
   static const Color deepOrange = Color(0xFFF98B24);
   static const Color lightGreen = Color(0xFF67BF67);
   static const Color darkGreen = Color(0xFF27AE60);
-  
+  static const Color green = Color(0xFF016D71);
 
   static const Color toastSuccessLightBackground = Color(0xFFF6FFF9);
   static const Color toastWarningLightBackground = Color(0xFFFFF8EC);

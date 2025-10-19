@@ -344,6 +344,18 @@ class TextStyles {
     fontFamily: AppFont.fontFamily,
   );
 
+  static TextStyle textViewBold30 = TextStyle(
+    fontSize: FontSizes.s30,
+    fontWeight: AppFont.bold,
+    fontFamily: AppFont.fontFamily,
+  );
+
+  static TextStyle textViewBold32 = TextStyle(
+    fontSize: FontSizes.s32,
+    fontWeight: AppFont.bold,
+    fontFamily: AppFont.fontFamily,
+  );
+
   static TextStyle textViewRegular9 = TextStyle(
     fontSize: FontSizes.s9,
     fontWeight: AppFont.regular,

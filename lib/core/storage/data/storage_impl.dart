@@ -7,6 +7,7 @@ class StorageImpl implements Storage {
 
   static final String _token = "token";
   static final String _language = "language";
+  static final String _onboarding = "onboarding";
 
   StorageImpl({
     required this.stringBox,
@@ -52,4 +53,15 @@ class StorageImpl implements Storage {
   //* check language
   @override
   bool isSelectLang() => stringBox.get(_language) != null;
+
+
+  //* onboarding storage
+  @override
+  Future<void> storeOnboarding({required bool isCompleted}) async {await boolBox.put(_onboarding, isCompleted);}
+
+  @override
+  bool getOnboarding() => boolBox.get(_onboarding) ?? false;
+
+  @override
+  Future<void> deleteOnboarding() async {await boolBox.delete(_onboarding);}
 }

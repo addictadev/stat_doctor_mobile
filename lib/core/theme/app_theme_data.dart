@@ -30,7 +30,7 @@ class AppThemeData {
     borderColor,
     primaryColor,
   }) => InputDecorationTheme(
-    filled: false,
+    filled: true,
     fillColor: fillColor,
     suffixIconColor: hintColor,
     prefixIconColor: hintColor,
@@ -39,12 +39,12 @@ class AppThemeData {
     labelStyle: TextStyle(color: textColor, fontSize: 12.sp, fontWeight: AppFont.medium, fontFamily: AppFont.fontFamily),
     floatingLabelStyle: TextStyle(color: hintColor, fontSize: 12.sp, fontWeight: AppFont.medium, fontFamily: AppFont.fontFamily),
     errorStyle: TextStyle(color: AppColors.red, fontSize: 12.sp, fontWeight: AppFont.medium, fontFamily: AppFont.fontFamily),
-    border: OutlineInputBorder(borderSide: BorderSide(color: borderColor, width: 1.5.r), borderRadius: BorderRadius.circular(15.r)),
-    enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: borderColor, width: 1.5.r), borderRadius: BorderRadius.circular(15.r)),
-    focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: primaryColor, width: 1.5.r), borderRadius: BorderRadius.circular(15.r)),
-    disabledBorder: OutlineInputBorder(borderSide: BorderSide(color: borderColor, width: 1.5.r), borderRadius: BorderRadius.circular(15.r)),
-    errorBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.red, width: 1.5.r), borderRadius: BorderRadius.circular(15.r)),
-    focusedErrorBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.red, width: 1.5.r), borderRadius: BorderRadius.circular(15.r)),
+    border: OutlineInputBorder(borderSide: BorderSide(color: borderColor, width: 1.5.r), borderRadius: BorderRadius.circular(20.r)),
+    enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: borderColor, width: 1.5.r), borderRadius: BorderRadius.circular(20.r)),
+    focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: primaryColor, width: 1.5.r), borderRadius: BorderRadius.circular(20.r)),
+    disabledBorder: OutlineInputBorder(borderSide: BorderSide(color: borderColor, width: 1.5.r), borderRadius: BorderRadius.circular(20.r)),
+    errorBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.red, width: 1.5.r), borderRadius: BorderRadius.circular(20.r)),
+    focusedErrorBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.red, width: 1.5.r), borderRadius: BorderRadius.circular(20.r)),
   );
 
 
@@ -63,18 +63,8 @@ class AppThemeData {
 
   static CheckboxThemeData checkboxThemeData({required Color primaryColor}) =>
       CheckboxThemeData(
-        fillColor: WidgetStateProperty.resolveWith(
-          (Set<WidgetState> states) =>
-              states.contains(WidgetState.selected)
-                  ? primaryColor
-                  : AppColors.transparent,
-        ),
-        side: WidgetStateBorderSide.resolveWith(
-          (Set<WidgetState> states) =>
-              states.contains(WidgetState.selected)
-                  ? BorderSide.none
-                  : BorderSide(color: primaryColor, width: 1.5.r),
-        ),
+        fillColor: WidgetStateProperty.resolveWith((Set<WidgetState> states) =>states.contains(WidgetState.selected) ? primaryColor: AppColors.transparent,),
+        side: WidgetStateBorderSide.resolveWith((Set<WidgetState> states) =>states.contains(WidgetState.selected)? BorderSide.none : BorderSide(color: primaryColor, width: 1.5.r),),
         checkColor: WidgetStateProperty.all(AppColors.cardColorLight),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.r)),
       );

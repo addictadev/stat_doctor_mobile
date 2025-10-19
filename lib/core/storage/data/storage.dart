@@ -12,4 +12,10 @@ abstract class Storage {
 
   // Check Language
   bool isSelectLang();
+
+
+  // Onboarding Storage
+  Future<void> storeOnboarding({required bool isCompleted});
+  bool getOnboarding();
+  Future<void> deleteOnboarding();
 }

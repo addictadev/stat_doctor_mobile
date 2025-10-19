@@ -73,7 +73,7 @@ class AppTextFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget field = TextFormField(
+    return TextFormField(
       controller: controller,
       obscureText: obscureText ?? false,
       maxLines: minLines != null ? null : 1,
@@ -88,47 +88,30 @@ class AppTextFormField extends StatelessWidget {
       cursorColor: Theme.of(context).primaryColor,
       keyboardType: keyboardType ?? TextInputType.text,
       maxLength: maxLength,
-      onTapOutside: (_) {
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+      onTapOutside: (_) {FocusManager.instance.primaryFocus?.unfocus();},
       maxLengthEnforcement: MaxLengthEnforcement.none,
       decoration: InputDecoration(
         alignLabelWithHint: alignLabelWithHint ?? true,
         fillColor: cardColor ?? Theme.of(context).cardColor,
-        filled: cardColor != null,
+        filled: true,
         hintText: hintText,
         hintStyle: hintStyle,
         labelText: label,
         labelStyle: hintStyle,
         contentPadding:contentPadding ?? EdgeInsets.symmetric(horizontal: 10.w, vertical: 15.h),
         prefixIcon:
-        prefixWidget ??
-            (prefixIcon == null
-                ? null
-                : IconButton(
-              onPressed: () {},
-              highlightColor: AppColors.transparent,
-              splashColor: AppColors.transparent,
-              icon: AppIcons.icon(
-                size: 18,
-                icon: prefixIcon!,
-                color: Theme.of(context).hintColor,
-              ),
-            )),
-        suffixIcon:
-        suffixWidget ??
-            (suffixIcon == null
-                ? null
-                : IconButton(
-              onPressed: () {},
-              highlightColor: AppColors.transparent,
-              splashColor: AppColors.transparent,
-              icon: AppIcons.icon(
-                size: 18,
-                icon: suffixIcon!,
-                color: Theme.of(context).hintColor,
-              ),
-            )),
+        prefixWidget ?? (prefixIcon == null ? null : IconButton(
+          onPressed: () {},
+          highlightColor: AppColors.transparent,
+          splashColor: AppColors.transparent,
+          icon: AppIcons.icon(size: 18, icon: prefixIcon!, color: Theme.of(context).hintColor,),
+        )),
+        suffixIcon: suffixWidget ?? (suffixIcon == null ? null : IconButton(
+          onPressed: () {},
+          highlightColor: AppColors.transparent,
+          splashColor: AppColors.transparent,
+          icon: AppIcons.icon(size: 18, icon: suffixIcon!, color: Theme.of(context).hintColor,),
+        )),
         prefix: prefix,
         suffix: suffix,
         border: border,
@@ -139,7 +122,5 @@ class AppTextFormField extends StatelessWidget {
         enabledBorder: enabledBorder,
       ),
     );
-
-    return field;
   }
 }

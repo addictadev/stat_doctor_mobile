@@ -29,7 +29,7 @@ class AppTheme {
     colorScheme: const ColorScheme.light(
       brightness: Brightness.light,
       primary: AppColors.primaryLight,
-      secondary: AppColors.cardColorLight,
+      secondary: AppColors.secondaryLight,
       surface: AppColors.textColorLight,
       shadow: AppColors.borderColorLight,
       outline: AppColors.borderColorLight,
@@ -37,7 +37,7 @@ class AppTheme {
       onPrimary: AppColors.cardColorLight,
     ),
     inputDecorationTheme: AppThemeData.inputDecorationTheme(
-      fillColor: AppColors.scaffoldColorLight,
+      fillColor: AppColors.cardColorLight,
       borderColor: AppColors.borderColorLight,
       hintColor: AppColors.hintColorLight,
       primaryColor: AppColors.primaryLight,
@@ -115,7 +115,7 @@ class AppTheme {
     colorScheme: const ColorScheme.dark(
       brightness: Brightness.dark,
       primary: AppColors.primaryDark,
-      secondary: AppColors.cardColorDark,
+      secondary: AppColors.secondaryDark,
       surface: AppColors.textColorDark,
       shadow: AppColors.borderColorDark,
       outline: AppColors.borderColorDark,
@@ -123,7 +123,7 @@ class AppTheme {
       onPrimary: AppColors.cardColorDark,
     ),
     inputDecorationTheme: AppThemeData.inputDecorationTheme(
-      fillColor: AppColors.scaffoldColorDark,
+      fillColor: AppColors.cardColorDark,
       borderColor: AppColors.borderColorDark,
       hintColor: AppColors.hintColorDark,
       primaryColor: AppColors.primaryDark,
