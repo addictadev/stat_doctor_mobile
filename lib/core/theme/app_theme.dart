@@ -115,7 +115,7 @@ class AppTheme {
     colorScheme: const ColorScheme.dark(
       brightness: Brightness.dark,
       primary: AppColors.primaryDark,
-      secondary: AppColors.secondaryDark,
+      secondary: AppColors.cardColorDark,
       surface: AppColors.textColorDark,
       shadow: AppColors.borderColorDark,
       outline: AppColors.borderColorDark,
@@ -123,7 +123,7 @@ class AppTheme {
       onPrimary: AppColors.cardColorDark,
     ),
     inputDecorationTheme: AppThemeData.inputDecorationTheme(
-      fillColor: AppColors.cardColorDark,
+      fillColor: AppColors.scaffoldColorDark,
       borderColor: AppColors.borderColorDark,
       hintColor: AppColors.hintColorDark,
       primaryColor: AppColors.primaryDark,

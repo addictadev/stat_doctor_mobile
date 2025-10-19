@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stat_doctor/core/config/app_colors.dart';
 import 'package:stat_doctor/core/config/app_icons.dart';
@@ -26,13 +27,13 @@ class BnbIcon extends StatelessWidget {
         overlayColor: WidgetStatePropertyAll(AppColors.transparent),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.center,
           spacing: 5.h,
           children: [
-            Container(height: 1.75.h, color: selected ? Theme.of(context).colorScheme.surface : null, margin: EdgeInsets.only(bottom: 10),),
-            AppIcons.icon(icon: icon, size: 18, color: selected ? Theme.of(context).colorScheme.surface : Theme.of(context).bottomNavigationBarTheme.unselectedItemColor),
-            Text(text, style: TextStyles.textViewRegular12.copyWith(color: selected? Theme.of(context).colorScheme.surface : Theme.of(context).bottomNavigationBarTheme.unselectedItemColor),maxLines: 1,overflow: TextOverflow.ellipsis,)
+            AppIcons.icon(icon: icon, size: 18, color: selected ? Theme.of(context).cardColor : Theme.of(context).hintColor),
+            Text(text, style: TextStyles.textViewRegular12.copyWith(color: selected? Theme.of(context).cardColor : Theme.of(context).hintColor),maxLines: 1,overflow: TextOverflow.ellipsis,)
           ],
-        )
+        ).animate(value: selected ? 0 : 1,).flip(duration: 300.ms)
       ),
     );
   }
