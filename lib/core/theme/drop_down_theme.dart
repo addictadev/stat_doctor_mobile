@@ -8,7 +8,8 @@ class DropdownTheme {
   static CustomDropdownDecoration dropdownMultiSelectDecoration({required BuildContext context, Color? color, Color? borderColor}) {
     return CustomDropdownDecoration(       
       hintStyle: TextStyles.textViewRegular12.copyWith(color: Theme.of(context).hintColor),
-      headerStyle: TextStyles.textViewBold14,
+      headerStyle: TextStyles.textViewMedium14,
+      listItemStyle: TextStyles.textViewMedium13,
       listItemDecoration: ListItemDecoration(
         splashColor: Theme.of(context).primaryColor.withValues(alpha: 0.25),
         highlightColor: Theme.of(context).primaryColor.withValues(alpha: 0.25),
@@ -23,7 +24,7 @@ class DropdownTheme {
       expandedBorder: Border.all(color: Theme.of(context).dividerColor, width: 1.5.r),
       closedSuffixIcon: Icon(Icons.keyboard_arrow_down_rounded, color: Theme.of(context).hintColor, size: 20.r,),
       expandedSuffixIcon: Icon(Icons.keyboard_arrow_up_rounded, color: Theme.of(context).hintColor, size: 20.r,),
-      closedErrorBorderRadius: BorderRadius.circular(15.r),
+      closedErrorBorderRadius: BorderRadius.circular(20.r),
       searchFieldDecoration: SearchFieldDecoration(
         fillColor: Theme.of(context).scaffoldBackgroundColor,
         prefixIcon: Icon(
@@ -31,19 +32,19 @@ class DropdownTheme {
           color: Theme.of(context).primaryColor,
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15.r),
+          borderRadius: BorderRadius.circular(20.r),
           borderSide: BorderSide(color: Theme.of(context).primaryColor)
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15.r),
+          borderRadius: BorderRadius.circular(20.r),
           borderSide: BorderSide(color: Theme.of(context).dividerColor)
         ),
       ),
       errorStyle: TextStyles.textViewRegular12.copyWith(color: AppColors.red, fontWeight: FontWeight.w500),
-      expandedBorderRadius: BorderRadius.circular(15.r),
-      closedBorderRadius: BorderRadius.circular(15.r),
-      expandedFillColor: color ?? Theme.of(context).scaffoldBackgroundColor,
-      closedFillColor: color ?? Theme.of(context).scaffoldBackgroundColor,
+      expandedBorderRadius: BorderRadius.circular(20.r),
+      closedBorderRadius: BorderRadius.circular(20.r),
+      expandedFillColor: color ?? Theme.of(context).cardColor,
+      closedFillColor: color ?? Theme.of(context).cardColor,
     );
   }
 
@@ -52,8 +53,8 @@ class DropdownTheme {
       hintStyle: TextStyles.textViewRegular12.copyWith(color: Theme.of(context).hintColor),
       headerStyle: TextStyles.textViewBold14,
       border: Border.all(color: Theme.of(context).dividerColor, width: 1.5.r),
-      borderRadius: BorderRadius.circular(15.r),
-      fillColor: color ?? Theme.of(context).scaffoldBackgroundColor,
+      borderRadius: BorderRadius.circular(20.r),
+      fillColor: color ?? Theme.of(context).cardColor,
       suffixIcon: Icon(Icons.keyboard_arrow_down_rounded, color: Theme.of(context).hintColor, size: 20.r,)
     );
   }

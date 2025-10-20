@@ -16,6 +16,7 @@ import 'package:stat_doctor/features/auth/presenation/widgets/auth_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stat_doctor/features/options/presentation/cubit/options_cubit.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -101,8 +102,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     startSubTextStyle: TextStyles.textViewRegular13.copyWith(color: Theme.of(context).hintColor, height: 2.5),
                     centerSubTextStyle: TextStyles.textViewMedium14.copyWith(color: Theme.of(context).primaryColor),
                     onCenterSubTextTap: () {
-                      sl<AppNavigator>().pushReplacement(screen: BlocProvider(
-                        create: (context) => sl<AuthCubit>(),
+                      sl<AppNavigator>().pushReplacement(screen: MultiBlocProvider(
+                        providers: [
+                          BlocProvider(create: (context) => sl<AuthCubit>(),),
+                          BlocProvider(create: (context) => sl<OptionsCubit>(),),
+                        ],
                         child: SignupScreen(),
                       ));
                     },

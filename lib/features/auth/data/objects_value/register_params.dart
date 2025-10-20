@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:equatable/equatable.dart';
 
 class RegisterParams extends Equatable {
@@ -99,22 +101,22 @@ class MedicalDTO extends Equatable {
 }
 
 class ReferencesDTO extends Equatable {
-  final String email;
-  final String fullName;
-  final String hospitalCurrent;
-  final String mobile;
-  final String seniority;
-  final int seq;
-  final String specialty;
+  String? email;
+  String? fullName;
+  String? hospitalCurrent;
+  String? mobile;
+  String? seniority;
+  int? seq;
+  String? specialty;
 
-  const ReferencesDTO({
-    required this.email,
-    required this.fullName,
-    required this.hospitalCurrent,
-    required this.mobile,
-    required this.seniority,
-    required this.seq,
-    required this.specialty,
+  ReferencesDTO({
+    this.email,
+    this.fullName,
+    this.hospitalCurrent,
+    this.mobile,
+    this.seniority,
+    this.seq,
+    this.specialty,
   });
 
   Map<String, dynamic> toJson() => {
@@ -126,6 +128,16 @@ class ReferencesDTO extends Equatable {
     "seq": seq,
     "specialty": specialty,
   };
+
+  ReferencesDTO copyWith({
+    String? email,
+    String? fullName,
+    String? hospitalCurrent,
+    String? mobile,
+    String? seniority,
+    int? seq,
+    String? specialty,
+  }) => ReferencesDTO(email: email ?? this.email, fullName: fullName ?? this.fullName, hospitalCurrent: hospitalCurrent ?? this.hospitalCurrent, mobile: mobile ?? this.mobile, seniority: seniority ?? this.seniority, seq: seq ?? this.seq, specialty: specialty ?? this.specialty);
 
   @override
   List<Object?> get props => [

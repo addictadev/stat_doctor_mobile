@@ -606,8 +606,9 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
               
 
               contentPadding: EdgeInsets.zero,
-              fillColor: formFieldState.hasError ? Colors.transparent : decoration?.closedFillColor,
-              filled: true,
+              fillColor: Colors.transparent,
+              // formFieldState.hasError ? Colors.transparent : decoration?.closedFillColor,
+              filled: false,
             ),
             child: _OverlayBuilder(
               overlayPortalController: widget.overlayController,
@@ -673,9 +674,7 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
                     selectedItemNotifier: selectedItemNotifier,
                     border: formFieldState.hasError
                         ? (decoration?.closedErrorBorder ?? _defaultErrorBorder)
-                        : enabled
-                            ? decoration?.closedBorder
-                            : disabledDecoration?.border,
+                        : enabled ? decoration?.closedBorder : disabledDecoration?.border,
                     borderRadius: formFieldState.hasError
                         ? decoration?.closedErrorBorderRadius
                         : enabled

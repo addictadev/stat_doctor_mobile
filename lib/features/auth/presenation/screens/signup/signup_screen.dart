@@ -1,12 +1,17 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stat_doctor/core/config/styles/styles.dart';
 import 'package:stat_doctor/core/widgets/align_text.dart';
+import 'package:stat_doctor/features/auth/data/objects_value/register_params.dart';
 import 'package:stat_doctor/features/auth/presenation/screens/signup/documentation_screen.dart';
 import 'package:stat_doctor/features/auth/presenation/screens/signup/medical_info_screen.dart';
 import 'package:stat_doctor/features/auth/presenation/screens/signup/personal_info_screen.dart';
 import 'package:stat_doctor/features/auth/presenation/screens/signup/references_screen.dart';
 import 'package:stat_doctor/features/auth/presenation/widgets/signup_stepper.dart';
 import 'package:flutter/material.dart';
+import 'package:stat_doctor/features/options/data/model/options.dart';
+import 'package:stat_doctor/features/options/presentation/cubit/options_cubit.dart';
+import 'package:stat_doctor/features/upload_file/model/upload_file.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -31,14 +36,24 @@ class _SignupScreenState extends State<SignupScreen> {
   ValueNotifier<bool> touchIdEnabled = ValueNotifier(false);
 
   // ! Medical Info
-
+  ValueNotifier<Options?> medicalDegree = ValueNotifier(null);
+  ValueNotifier<Options?> skillLevel = ValueNotifier(null);
+  ValueNotifier<Options?> specialties = ValueNotifier(null);
+  ValueNotifier<bool> haveRestrictions = ValueNotifier(true);
+  TextEditingController abnController = TextEditingController();
+  TextEditingController workBioController = TextEditingController();
+  ValueNotifier<UploadFile?> cvFile = ValueNotifier(null);
+  
   // ! References
+  List<ReferencesDTO> references = [ReferencesDTO(seq: 1),];
 
   // ! Documentation
 
 
   @override
   void initState() {
+    context.read<OptionsCubit>().getAllOptions();
+
     screens = [
       // ! Personal Info
       PersonalInfoScreen(
@@ -56,10 +71,22 @@ class _SignupScreenState extends State<SignupScreen> {
       ),
 
       // ! Medical Info
-      MedicalInfoScreen(),
+      MedicalInfoScreen(
+        medicalDegree: medicalDegree,
+        skillLevel: skillLevel,
+        specialties: specialties,
+        haveRestrictions: haveRestrictions,
+        abnController: abnController,
+        workBioController: workBioController,
+        cvFile: cvFile,
+        onNext: () {setState(() {activeStep++;});},
+      ),
 
       // ! References
-      ReferencesScreen(),
+      ReferencesScreen(
+        references: references,
+        onNext: () {setState(() {activeStep++;});},
+      ),
 
       // ! Documentation
       DocumentationScreen(),
@@ -82,8 +109,16 @@ class _SignupScreenState extends State<SignupScreen> {
     touchIdEnabled.dispose();
 
     // ! Medical Info
+    medicalDegree.dispose();
+    skillLevel.dispose();
+    specialties.dispose();
+    haveRestrictions.dispose();
+    abnController.dispose();
+    workBioController.dispose();
+    cvFile.dispose();
 
     // ! References
+    references.clear();
 
     // ! Documentation
 
