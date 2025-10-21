@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stat_doctor/features/home/presentation/widgets/home_other_shifts_card.dart';
 
 class HomeOtherShiftsGridView extends StatelessWidget {
   const HomeOtherShiftsGridView({super.key,});
@@ -16,13 +17,7 @@ class HomeOtherShiftsGridView extends StatelessWidget {
           crossAxisSpacing: 10.w,
         ),
         itemCount: 10,
-        itemBuilder: (context, index) => Container(
-          padding: EdgeInsets.all(10.r),
-          decoration: BoxDecoration(
-            color: Theme.of(context).cardColor,
-            borderRadius: BorderRadius.circular(15.r),
-          ),
-        ),
+        itemBuilder: (context, index) => HomeOtherShiftsCard(),
       ),
     );
   }

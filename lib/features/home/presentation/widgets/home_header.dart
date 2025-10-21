@@ -4,8 +4,11 @@ import 'package:stat_doctor/core/config/app_colors.dart';
 import 'package:stat_doctor/core/config/app_icons.dart';
 import 'package:stat_doctor/core/config/app_images.dart';
 import 'package:stat_doctor/core/config/styles/styles.dart';
+import 'package:stat_doctor/core/injection/injection_container.dart';
+import 'package:stat_doctor/core/navigation/app_navigator.dart';
 import 'package:stat_doctor/core/widgets/circle_container.dart';
 import 'package:stat_doctor/core/widgets/search_formfield.dart';
+import 'package:stat_doctor/features/home/presentation/screens/home_filter_screen.dart';
 
 class HomeHeader extends StatelessWidget {
   final TextEditingController searchController;
@@ -42,6 +45,7 @@ class HomeHeader extends StatelessWidget {
                     )
                   ),
                   CircleContainer(
+                    onTap: () {sl<AppNavigator>().push(screen: HomeFilterScreen());},
                     size: 50,
                     color: AppColors.cardColorLight,
                     child: AppIcons.icon(icon: AppIcons.filter, color: AppColors.green),

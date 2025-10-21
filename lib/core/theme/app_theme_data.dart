@@ -14,9 +14,9 @@ class AppThemeData {
 
   static AppBarTheme appBarTheme({required Color texColor, backgroundColor,}) => AppBarTheme(
     elevation: 0,
-    centerTitle: false,
+    centerTitle: true,
     titleSpacing: 0,
-    titleTextStyle: TextStyles.textViewMedium14.copyWith(color: texColor, fontFamily: AppFont.fontFamily),
+    titleTextStyle: TextStyles.textViewMedium18.copyWith(color: texColor, fontFamily: AppFont.fontFamily),
     backgroundColor: backgroundColor,
     surfaceTintColor: backgroundColor,
     shadowColor: AppColors.transparent,

@@ -199,6 +199,12 @@ class TextStyles {
   );
 
   // Semi Bold Styles
+  static TextStyle textViewSemiBold8 = TextStyle(
+    fontSize: FontSizes.s8,
+    fontWeight: AppFont.semiBold,
+    fontFamily: AppFont.fontFamily,
+  );
+
   static TextStyle textViewSemiBold10 = TextStyle(
     fontSize: FontSizes.s10,
     fontWeight: AppFont.semiBold,
