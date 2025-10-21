@@ -49,6 +49,7 @@ class AppIcons {
   static const String lightMode = '${_path}light_mode.svg';
   static const String language = '${_path}language.svg';
   static const String info = '${_path}info.svg';
+  static const String messageQuestion = '${_path}message_question.svg';
 
 
   // Method to render SVG as a widget

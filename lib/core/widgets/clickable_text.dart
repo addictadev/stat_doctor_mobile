@@ -10,6 +10,7 @@ class ClickableText extends StatelessWidget {
   final TextStyle? textStyle;
   final Function()? onTap;
   final Widget? icon;
+  final EdgeInsetsGeometry? padding;
   const ClickableText({
     this.color,
     this.child,
@@ -18,24 +19,28 @@ class ClickableText extends StatelessWidget {
     this.onTap,
     this.icon,
     super.key,
+    this.padding,
   });
 
   @override
   Widget build(BuildContext context) {
 
-    return InkWell(
-      onTap: onTap,
-      splashColor: AppColors.transparent,
-      highlightColor: AppColors.transparent,
-      splashFactory: NoSplash.splashFactory,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        spacing: 10.w,
-        children: [
-          if (icon != null) icon!,
-          if(text != null) Text(text!, style: textStyle ?? TextStyles.textViewRegular14.copyWith(color: color ?? Theme.of(context).primaryColor,),),
-          if(child != null) child!,
-        ],
+    return Padding(
+      padding: padding ?? EdgeInsets.zero,
+      child: InkWell(
+        onTap: onTap,
+        splashColor: AppColors.transparent,
+        highlightColor: AppColors.transparent,
+        splashFactory: NoSplash.splashFactory,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          spacing: 10.w,
+          children: [
+            if (icon != null) icon!,
+            if(text != null) Text(text!, style: textStyle ?? TextStyles.textViewRegular14.copyWith(color: color ?? Theme.of(context).primaryColor,),),
+            if(child != null) child!,
+          ],
+        ),
       ),
     );
   }

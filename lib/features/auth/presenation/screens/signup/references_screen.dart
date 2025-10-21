@@ -46,8 +46,7 @@ class _ReferencesScreenState extends State<ReferencesScreen> {
           ),      
           AddRefernces(onAdd: () {setState(() {widget.references.add(ReferencesDTO(seq: widget.references.length + 1));});},),
           AppButton(
-            onTap: widget.onNext,
-            // onTap: () {if(formKey.currentState!.validate()) {widget.onNext();}},
+            onTap: () {if(formKey.currentState!.validate()) {widget.onNext();}},
             text: 'Next',
           ),
         ],

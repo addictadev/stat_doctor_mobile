@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stat_doctor/core/config/styles/styles.dart';
 import 'package:stat_doctor/core/widgets/align_text.dart';
 import 'package:stat_doctor/features/auth/data/objects_value/register_params.dart';
+import 'package:stat_doctor/features/auth/presenation/cubit/auth_cubit.dart';
 import 'package:stat_doctor/features/auth/presenation/screens/signup/documentation_screen.dart';
 import 'package:stat_doctor/features/auth/presenation/screens/signup/medical_info_screen.dart';
 import 'package:stat_doctor/features/auth/presenation/screens/signup/personal_info_screen.dart';
@@ -48,6 +49,19 @@ class _SignupScreenState extends State<SignupScreen> {
   List<ReferencesDTO> references = [ReferencesDTO(seq: 1),];
 
   // ! Documentation
+  ValueNotifier<bool> uploadOtherDocument = ValueNotifier(false);
+  ValueNotifier<Options?> primaryDocument = ValueNotifier(null);
+  ValueNotifier<Options?> otherDocument = ValueNotifier(null);
+  ValueNotifier<UploadFile?> primaryDocumentFile = ValueNotifier(null);
+  ValueNotifier<UploadFile?> otherDocumentFile = ValueNotifier(null);
+  ValueNotifier<UploadFile?> medicalDegreeFile = ValueNotifier(null);
+  ValueNotifier<UploadFile?> policeCheckFile = ValueNotifier(null);
+  ValueNotifier<UploadFile?> workVisaFile = ValueNotifier(null);
+  ValueNotifier<UploadFile?> medicalIndemnityInsuranceFile = ValueNotifier(null);
+  ValueNotifier<UploadFile?> workingWithChildrenCheckFile = ValueNotifier(null);
+  ValueNotifier<UploadFile?> vaccinationCertificateFile = ValueNotifier(null);
+  ValueNotifier<UploadFile?> medicareCardFile = ValueNotifier(null);
+  ValueNotifier<UploadFile?> approvalForSecondaryEmploymentFile = ValueNotifier(null);
 
 
   @override
@@ -89,7 +103,69 @@ class _SignupScreenState extends State<SignupScreen> {
       ),
 
       // ! Documentation
-      DocumentationScreen(),
+      DocumentationScreen(
+        uploadOtherDocument: uploadOtherDocument,
+        primaryDocument: primaryDocument,
+        otherDocument: otherDocument,
+        primaryDocumentFile: primaryDocumentFile,
+        otherDocumentFile: otherDocumentFile,
+        medicalDegreeFile: medicalDegreeFile,
+        policeCheckFile: policeCheckFile,
+        workVisaFile: workVisaFile,
+        medicalIndemnityInsuranceFile: medicalIndemnityInsuranceFile,
+        workingWithChildrenCheckFile: workingWithChildrenCheckFile,
+        vaccinationCertificateFile: vaccinationCertificateFile,
+        medicareCardFile: medicareCardFile,
+        approvalForSecondaryEmploymentFile: approvalForSecondaryEmploymentFile,
+        onNext: () {
+          context.read<AuthCubit>().register(
+            params: RegisterParams(
+              code: countryCodeController.text + phoneController.text,
+              email: emailAddressController.text,
+              firstName: firstNameController.text,
+              profilePic: photoProfilePathController.text,
+              surname: lastNameController.text,
+              medicalDTO: MedicalDTO(
+                abn: abnController.text,
+                ahpraLicense: '',
+                ahpraLicenseFlag: haveRestrictions.value,
+                ahpraNumber: '',
+                medicalDegree: medicalDegree.value?.id ?? '',
+                resumeFileName: cvFile.value?.name ?? '',
+                resumeFileUrl: cvFile.value?.url ?? '',
+                shortWork: workBioController.text,
+                skillLevel: skillLevel.value?.id ?? '',
+                specialties: specialties.value?.id ?? '',
+              ),
+              referencesDTOList: references,
+              docDTO: DocDTO(
+                approvalForSecondaryEmployment: approvalForSecondaryEmploymentFile.value?.url ?? '',
+                approvalForSecondaryEmploymentExt: approvalForSecondaryEmploymentFile.value?.name ?? '',
+                criminalHistoryCheck: policeCheckFile.value?.url ?? '',
+                criminalHistoryCheckExt: policeCheckFile.value?.name ?? '',
+                medicareCard: medicareCardFile.value?.url ?? '',
+                medicareCardExt: medicareCardFile.value?.name ?? '',
+                otherDocument: otherDocumentFile.value?.url ?? '',
+                otherDocumentExt: otherDocumentFile.value?.name ?? '',
+                medicalDegree: medicalDegreeFile.value?.url ?? '',
+                medicalDegreeExt: medicalDegreeFile.value?.name ?? '',
+                policeCheck: policeCheckFile.value?.url ?? '',
+                policeCheckExt: policeCheckFile.value?.name ?? '',
+                primaryDocument: primaryDocumentFile.value?.url ?? '' ,
+                primaryDocumentExt: primaryDocumentFile.value?.name ?? '',
+                threeDocument: medicalIndemnityInsuranceFile.value?.url ?? '',
+                threeDocumentExt: medicalIndemnityInsuranceFile.value?.name ?? '',
+                vaccinationCertificate: vaccinationCertificateFile.value?.url ?? '',
+                vaccinationCertificateExt: vaccinationCertificateFile.value?.name ?? '',
+                workVisa: workVisaFile.value?.url ?? '',
+                workVisaExt: workVisaFile.value?.name ?? '',
+                workingWithChildrenCheck: workingWithChildrenCheckFile.value?.url ?? '',
+                workingWithChildrenCheckExt: workingWithChildrenCheckFile.value?.name ?? '',
+              )
+            )
+          );
+        },
+      ),
     ];
     super.initState();
   }
@@ -121,6 +197,19 @@ class _SignupScreenState extends State<SignupScreen> {
     references.clear();
 
     // ! Documentation
+    uploadOtherDocument.dispose();
+    primaryDocument.dispose();
+    otherDocument.dispose();
+    primaryDocumentFile.dispose();
+    otherDocumentFile.dispose();
+    medicalDegreeFile.dispose();
+    policeCheckFile.dispose();
+    workVisaFile.dispose();
+    medicalIndemnityInsuranceFile.dispose();
+    workingWithChildrenCheckFile.dispose();
+    vaccinationCertificateFile.dispose();
+    medicareCardFile.dispose();
+    approvalForSecondaryEmploymentFile.dispose();
 
     super.dispose();
   }

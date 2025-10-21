@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stat_doctor/core/toast/app_toast.dart';
 import 'package:stat_doctor/core/widgets/app_button.dart';
 import 'package:stat_doctor/features/auth/presenation/widgets/login_method.dart';
 import 'package:stat_doctor/features/auth/presenation/widgets/personal_info_fields.dart';
@@ -61,11 +62,10 @@ class PersonalInfoScreen extends StatelessWidget {
             touchIdEnabled: touchIdEnabled,
           ),
           AppButton(
-            onTap: onNext,
-            // onTap: () {
-            //   if (formKey.currentState!.validate() && photoProfileController.text.isNotEmpty) {onNext();}
-            //   else if(photoProfileController.text.isEmpty) {appToast(context: context, type: ToastType.error, message: 'Please upload your profile picture');}
-            // },
+            onTap: () {
+              if (formKey.currentState!.validate() && photoProfileController.text.isNotEmpty) {onNext();}
+              else if(photoProfileController.text.isEmpty) {appToast(context: context, type: ToastType.error, message: 'Please upload your profile picture');}
+            },
             text: 'Next',
           ),
         ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stat_doctor/core/config/styles/styles.dart';
+import 'package:stat_doctor/core/toast/app_toast.dart';
 import 'package:stat_doctor/core/utils/validator.dart';
 import 'package:stat_doctor/core/widgets/align_text.dart';
 import 'package:stat_doctor/core/widgets/app_button.dart';
@@ -80,11 +81,10 @@ class MedicalInfoScreen extends StatelessWidget {
             ),
             DocumentCard(documentFile: cvFile),
             AppButton(
-              // onTap: () {
-              //   if (formKey.currentState!.validate() && cvFile.value != null) {onNext();}
-              //   else if(cvFile.value == null) {appToast(context: context, type: ToastType.error, message: 'Please upload your CV / Resume');}
-              // },
-              onTap: onNext,
+              onTap: () {
+                if (formKey.currentState!.validate() && cvFile.value != null) {onNext();}
+                else if(cvFile.value == null) {appToast(context: context, type: ToastType.error, message: 'Please upload your CV / Resume');}
+              },
               margin: EdgeInsets.only(top: 15.h),
               text: 'Next',
             )
