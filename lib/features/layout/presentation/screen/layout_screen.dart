@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stat_doctor/core/config/app_icons.dart';
 import 'package:stat_doctor/core/injection/injection_container.dart';
+import 'package:stat_doctor/features/home/presentation/screens/home_screen.dart';
 import 'package:stat_doctor/features/layout/presentation/cubit/bnb_cubit.dart';
 import 'package:stat_doctor/features/layout/presentation/widget/bnb_icon.dart';
 
@@ -18,7 +19,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
   @override
   void initState() {
     pages = [
-      Container(),
+      HomeScreen(),
       Container(),
       Container(),
       Container(),

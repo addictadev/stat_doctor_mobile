@@ -1,21 +1,34 @@
 import 'package:stat_doctor/core/storage/data/storage.dart';
 import 'package:hive/hive.dart';
+import 'package:stat_doctor/features/profile/data/models/user_model.dart';
 
 class StorageImpl implements Storage {
   final Box<String> stringBox;
   final Box<bool> boolBox;
+  final Box<UserModel> userBox;
 
   static final String _token = "token";
   static final String _language = "language";
   static final String _onboarding = "onboarding";
+  static final String _user = "user";
 
   StorageImpl({
     required this.stringBox,
     required this.boolBox,
+    required this.userBox,
   });
 
 
   //* user storage
+  @override
+  Future<void> storeUserData({required UserModel user}) async {await userBox.put(_user, user);}
+
+  @override
+  UserModel? getUserData() => userBox.get(_user);
+
+  @override
+  Future<void> deleteUserData() async {await userBox.delete(_user);}
+
 
 
 

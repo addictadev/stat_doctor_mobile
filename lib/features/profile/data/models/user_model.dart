@@ -47,10 +47,7 @@ class UserModel extends Equatable {
       userInfoVO: UserInfoVO.fromJson(json['userInfoVO'] ?? {}),
       medicalVO: MedicalVO.fromJson(json['medicalVO'] ?? {}),
       medicalLastTime: json['medicalLastTime'] ?? 0,
-      referencesVOList: (json['referencesVOList'] as List<dynamic>?)
-              ?.map((item) => ReferencesVO.fromJson(item as Map<String, dynamic>))
-              .toList() ??
-          [],
+      referencesVOList: (json['referencesVOList'] as List<dynamic>?)?.map((item) => ReferencesVO.fromJson(item as Map<String, dynamic>)).toList() ?? [],
       referencesLastTime: json['referencesLastTime'] ?? 0,
       docVO: DocVO.fromJson(json['docVO'] ?? {}),
       docLastTime: json['docLastTime'] ?? 0,

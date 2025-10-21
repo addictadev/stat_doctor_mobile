@@ -81,6 +81,18 @@ class _RefernceCardState extends State<RefernceCard> {
 
 
   @override
+  void dispose() {
+    fullNameController.dispose();
+    emailController.dispose();
+    hospitalCurrentController.dispose();
+    mobileController.dispose();
+    seniorityController.dispose();
+    specialtyController.dispose();
+    super.dispose();
+  }
+
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

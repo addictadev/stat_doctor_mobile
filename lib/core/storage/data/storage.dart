@@ -1,4 +1,12 @@
+import 'package:stat_doctor/features/profile/data/models/user_model.dart';
+
 abstract class Storage {
+  // User Storage
+  Future<void> storeUserData({required UserModel user});
+  UserModel? getUserData();
+  Future<void> deleteUserData();
+
+
   // Token Storage
   Future<void> storeToken({required String token});
   String? getToken();

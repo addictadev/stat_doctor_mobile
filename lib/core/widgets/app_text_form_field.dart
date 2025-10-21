@@ -36,6 +36,11 @@ class AppTextFormField extends StatelessWidget {
   final InputBorder? focusedErrorBorder;
   final InputBorder? disabledBorder;
   final InputBorder? enabledBorder;
+  final TextStyle? style;
+  final Color? prefixColor;
+  final Color? suffixColor;
+
+
 
   const AppTextFormField({
     this.hintText,
@@ -69,6 +74,9 @@ class AppTextFormField extends StatelessWidget {
     this.focusedErrorBorder,
     this.disabledBorder,
     this.enabledBorder,
+    this.style,
+    this.prefixColor,
+    this.suffixColor,
   });
 
   @override
@@ -81,7 +89,7 @@ class AppTextFormField extends StatelessWidget {
       validator: validator,
       onTap: onTap,
       readOnly: readOnly,
-      style: TextStyles.textViewMedium14,
+      style: style ?? TextStyles.textViewMedium14,
       onChanged: onChanged,
       inputFormatters:onlyDigit ? [FilteringTextInputFormatter.digitsOnly] : null,
       autovalidateMode: autovalidateMode ?? AutovalidateMode.onUserInteraction,
@@ -104,13 +112,13 @@ class AppTextFormField extends StatelessWidget {
           onPressed: () {},
           highlightColor: AppColors.transparent,
           splashColor: AppColors.transparent,
-          icon: AppIcons.icon(size: 18, icon: prefixIcon!, color: Theme.of(context).hintColor,),
+          icon: AppIcons.icon(size: 18, icon: prefixIcon!, color: prefixColor ?? Theme.of(context).hintColor,),
         )),
         suffixIcon: suffixWidget ?? (suffixIcon == null ? null : IconButton(
           onPressed: () {},
           highlightColor: AppColors.transparent,
           splashColor: AppColors.transparent,
-          icon: AppIcons.icon(size: 18, icon: suffixIcon!, color: Theme.of(context).hintColor,),
+          icon: AppIcons.icon(size: 18, icon: suffixIcon!, color: suffixColor ?? Theme.of(context).hintColor,),
         )),
         prefix: prefix,
         suffix: suffix,
