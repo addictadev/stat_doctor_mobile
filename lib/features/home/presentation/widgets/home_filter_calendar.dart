@@ -48,7 +48,6 @@ class _HomeFilterCalendarState extends State<HomeFilterCalendar> {
                 child: Text(day.day.toString(), style: TextStyles.textViewRegular16.copyWith(color: AppColors.cardColorLight)),
               ),
             ),
-
           ),
           availableGestures: AvailableGestures.none,
           headerStyle: HeaderStyle(
