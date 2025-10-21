@@ -6,6 +6,7 @@ import 'package:stat_doctor/core/injection/injection_container.dart';
 import 'package:stat_doctor/features/home/presentation/screens/home_screen.dart';
 import 'package:stat_doctor/features/layout/presentation/cubit/bnb_cubit.dart';
 import 'package:stat_doctor/features/layout/presentation/widget/bnb_icon.dart';
+import 'package:stat_doctor/features/options/presentation/cubit/options_cubit.dart';
 
 class LayoutScreen extends StatefulWidget {
   const LayoutScreen({super.key});
@@ -19,7 +20,10 @@ class _LayoutScreenState extends State<LayoutScreen> {
   @override
   void initState() {
     pages = [
-      HomeScreen(),
+      BlocProvider(
+        create: (context) => sl<OptionsCubit>(),
+        child: HomeScreen(),
+      ),
       Container(),
       Container(),
       Container(),
