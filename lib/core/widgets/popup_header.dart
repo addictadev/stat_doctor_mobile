@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stat_doctor/core/config/app_colors.dart';
 import 'package:stat_doctor/core/config/app_icons.dart';
 import 'package:stat_doctor/core/config/styles/styles.dart';
@@ -7,26 +8,35 @@ import 'package:flutter/material.dart';
 
 class PopupHeader extends StatelessWidget {
   final String title;
-  const PopupHeader({super.key, required this.title});
+  final bool showTopDivider;
+  const PopupHeader({super.key, required this.title, this.showTopDivider = true});
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Column(
+      spacing: 15.h,
       children: [
-        Expanded(flex: 1, child: SizedBox()),
-        Expanded(flex: 2, child: Text(title, style: TextStyles.textViewBold14, textAlign: TextAlign.center)),
-        Expanded(
-          flex: 1,
-          child: Align(
-            alignment: AlignmentDirectional.centerEnd,
-            child: InkWell(
-              onTap: sl<AppNavigator>().pop,
-              overlayColor: WidgetStatePropertyAll(AppColors.transparent),
-              child: AppIcons.icon(icon: AppIcons.close, size: 15, color: Theme.of(context).colorScheme.onSurface)
+        if(showTopDivider)
+        Center(
+          child: Container(
+            width: 50.w,
+            height: 4.h,
+            decoration: BoxDecoration(
+              color: Theme.of(context).disabledColor,
+              borderRadius: BorderRadius.circular(100.r),
             ),
           ),
-        )
+        ),
+        Row(
+          children: [
+            Expanded(child: Text(title, style: TextStyles.textViewBold16,)),
+            InkWell(
+              onTap: sl<AppNavigator>().pop,
+              overlayColor: WidgetStatePropertyAll(AppColors.transparent),
+              child: AppIcons.icon(icon: AppIcons.failure, size: 16, color: Theme.of(context).hintColor)
+            )
+          ],
+        ),
       ],
     );
   }

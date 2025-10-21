@@ -19,7 +19,7 @@ class HomeHospitalCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
         border: Border.all(color: Theme.of(context).dividerColor),
-        borderRadius: BorderRadius.circular(15.r),
+        borderRadius: BorderRadius.circular(20.r),
       ),
       child: Column(
         spacing: 15.h,

@@ -8,6 +8,7 @@ class AppButton extends StatelessWidget {
   final Widget? child;
   final Color? color;
   final Color? textColor;
+  final bool flexableWidth;
   final bool flexableHeight;
   final String? text;
   final Color? borderColor;
@@ -35,6 +36,7 @@ class AppButton extends StatelessWidget {
     this.border,
     this.boxShadow,
     this.flexableHeight = false,
+    this.flexableWidth = false,
     this.borderColor,
     this.radius,
     this.gradient,
@@ -53,7 +55,7 @@ class AppButton extends StatelessWidget {
         highlightColor: AppColors.transparent,
         onTap: onTap,
         child: Container(
-          width: width ?? double.infinity,
+          width: flexableWidth ? null : width ?? double.infinity,
           height: heigh,
           padding: padding ?? EdgeInsets.all(15.r),
           alignment: alignment ?? Alignment.center,
