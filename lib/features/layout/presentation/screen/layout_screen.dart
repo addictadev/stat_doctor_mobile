@@ -7,6 +7,7 @@ import 'package:stat_doctor/features/home/presentation/screens/home_screen.dart'
 import 'package:stat_doctor/features/layout/presentation/cubit/bnb_cubit.dart';
 import 'package:stat_doctor/features/layout/presentation/widget/bnb_icon.dart';
 import 'package:stat_doctor/features/options/presentation/cubit/options_cubit.dart';
+import 'package:stat_doctor/features/shifts/presentation/screens/my_shifts_screen.dart';
 
 class LayoutScreen extends StatefulWidget {
   const LayoutScreen({super.key});
@@ -24,7 +25,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
         create: (context) => sl<OptionsCubit>(),
         child: HomeScreen(),
       ),
-      Container(),
+      MyShiftsScreen(),
       Container(),
       Container(),
     ];

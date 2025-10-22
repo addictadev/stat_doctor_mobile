@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stat_doctor/core/config/app_colors.dart';
 import 'package:stat_doctor/core/config/styles/styles.dart';
 import 'package:stat_doctor/core/widgets/app_button.dart';
 import 'package:stat_doctor/core/widgets/popup_header.dart';

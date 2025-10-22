@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stat_doctor/core/config/app_colors.dart';
 import 'package:stat_doctor/core/config/app_icons.dart';
