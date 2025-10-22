@@ -1,0 +1,75 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stat_doctor/core/config/app_colors.dart';
+import 'package:stat_doctor/core/config/app_icons.dart';
+import 'package:stat_doctor/core/config/styles/styles.dart';
+import 'package:stat_doctor/core/widgets/custom_rich_text.dart';
+
+class MyShiftsCardRate extends StatelessWidget {
+  const MyShiftsCardRate({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(10.r),
+      decoration: BoxDecoration(
+        color: AppColors.green.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(15.r),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: 10.h,
+              children: [
+                Row(
+                  spacing: 10.w,
+                  children: [
+                    AppIcons.icon(icon: AppIcons.calendar, size: 18, color: Theme.of(context).hintColor),
+                    Expanded(child: Text("Mon, 26 Sep 2022", style: TextStyles.textViewSemiBold12,)),
+                  ],
+                ),
+                Row(
+                  spacing: 10.w,
+                  children: [
+                    AppIcons.icon(icon: AppIcons.clock, size: 18, color: Theme.of(context).hintColor),
+                    Expanded(child: Text("10:30 pm - 8:30 am (8 hrs)", style: TextStyles.textViewSemiBold12,)),
+                  ],
+                )
+              ],
+            ),
+          ),
+          Center(
+            child: Container(
+              width: 1.5.w,
+              height: 50.h,
+              margin: EdgeInsets.symmetric(horizontal: 5.w),
+              decoration: BoxDecoration(
+                color: Theme.of(context).hintColor,
+                borderRadius: BorderRadius.circular(100.r),
+              ),
+            ),
+          ),
+          
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 10.h,
+            children: [
+              Text("Rate:", style: TextStyles.textViewMedium14.copyWith(color: Theme.of(context).hintColor),),
+              CustomRichText(
+                startSubText: "\$200",
+                centerSubText: "/",
+                endSubText: "hr",
+                startSubTextStyle: TextStyles.textViewBold16.copyWith(color: AppColors.green),
+                centerSubTextStyle: TextStyles.textViewBold12.copyWith(color: AppColors.green),
+                endSubTextStyle: TextStyles.textViewBold12,
+              )
+            ],
+          )
+        ],
+      ),
+    );
+  }
+}

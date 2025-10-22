@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stat_doctor/features/shifts/presentation/widgets/my_shifts_appbar.dart';
+import 'package:stat_doctor/features/shifts/presentation/widgets/my_shifts_card.dart';
 import 'package:stat_doctor/features/shifts/presentation/widgets/select_my_shifts_status.dart';
 
 class MyShiftsScreen extends StatefulWidget {
@@ -30,6 +32,15 @@ class _MyShiftsScreenState extends State<MyShiftsScreen> {
             currentShiftStatusIndex: myShiftsStatusIndex,
             onShiftStatusChanged: (index) {setState(() {myShiftsStatusIndex = index;});},
           ),
+          SliverPadding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            sliver: SliverList.separated(
+              itemCount: 10,
+              itemBuilder: (context, index) => MyShiftsCard(),
+              separatorBuilder: (context, index) => SizedBox(height: 15.h,),
+            ),
+          ),
+          SliverToBoxAdapter(child: SizedBox(height: 125.h,),)
         ],
       ),
     );
