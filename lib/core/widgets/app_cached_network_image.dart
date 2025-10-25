@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 class AppCachedNetworkImage extends StatelessWidget {
   final String? imageUrl;
   final BoxFit fit;
-  const AppCachedNetworkImage({super.key, required this.imageUrl, this.fit = BoxFit.cover});
+  final double? width;
+  final double? height;
+  const AppCachedNetworkImage({super.key, required this.imageUrl, this.fit = BoxFit.cover, this.width, this.height});
 
   static ImageProvider getImageProvider(String imageUrl) {
     return CachedNetworkImageProvider(imageUrl);
@@ -18,6 +20,8 @@ class AppCachedNetworkImage extends StatelessWidget {
     return imageUrl == null ? Image.asset(AppImages.logo, fit: fit,) : CachedNetworkImage(
       imageUrl: imageUrl!,
       fit: fit,
+      width: width,
+      height: height,
       errorWidget: (context, url, error) => Image.asset(AppImages.logo),
       progressIndicatorBuilder: (context, url, downloadProgress) => AppShimmer(child: ShimmerShape()),
       placeholderFadeInDuration: const Duration(milliseconds: 300),

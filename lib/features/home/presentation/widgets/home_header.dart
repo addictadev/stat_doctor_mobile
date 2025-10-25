@@ -22,48 +22,49 @@ class HomeHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverFloatingHeader(
-      child: Container(
-        width: double.infinity,
-        height: MediaQuery.sizeOf(context).height * 0.3,
-        padding: EdgeInsets.all(15.r),
-        decoration: BoxDecoration(
-          color: Theme.of(context).scaffoldBackgroundColor,
-          borderRadius: BorderRadius.vertical(bottom: Radius.circular(25.r)),
-          image: DecorationImage(image: AssetImage(AppImages.homeBanner), fit: BoxFit.cover),
-        ),
-        child: SafeArea(
-          bottom: false,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 10.h,
-            children: [
-              Text("Welcome to", style: TextStyles.textViewMedium18.copyWith(color: AppColors.cardColorLight),),
-              Image.asset(AppImages.logoWhite, width: MediaQuery.sizeOf(context).width * 0.5),
-              Spacer(),
-              Row(
-                spacing: 10.w,
-                children: [
-                  Expanded(
-                    child: SearchFormField(
-                      controller: TextEditingController(),
-                      hintText: "Search hospital or location..."
+      child: IntrinsicHeight(
+        child: Container(
+          width: double.infinity,
+          padding: EdgeInsets.all(15.r),
+          decoration: BoxDecoration(
+            color: Theme.of(context).scaffoldBackgroundColor,
+            borderRadius: BorderRadius.vertical(bottom: Radius.circular(25.r)),
+            image: DecorationImage(image: AssetImage(AppImages.homeBanner), fit: BoxFit.cover),
+          ),
+          child: SafeArea(
+            bottom: false,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: 10.h,
+              children: [
+                Text("Welcome to", style: TextStyles.textViewMedium18.copyWith(color: AppColors.cardColorLight),),
+                Image.asset(AppImages.logoWhite, height: MediaQuery.sizeOf(context).height * 0.06,),
+                Row(
+                  spacing: 10.w,
+                  children: [
+                    Expanded(
+                      child: SearchFormField(
+                        controller: TextEditingController(),
+                        hintText: "Search hospital or location..."
+                      )
+                    ),
+                    CircleContainer(
+                      onTap: () {sl<AppNavigator>().push(screen: BlocProvider.value(
+                        value: context.read<OptionsCubit>(),
+                        child: HomeFilterScreen(
+                          filterParams: filterParams,
+                          onFilterParamsChanged: onFilterParamsChanged,
+                        ),
+                      ));},
+                      size: 50,
+                      color: AppColors.cardColorLight,
+                      child: AppIcons.icon(icon: AppIcons.filter, color: AppColors.green),
                     )
-                  ),
-                  CircleContainer(
-                    onTap: () {sl<AppNavigator>().push(screen: BlocProvider.value(
-                      value: context.read<OptionsCubit>(),
-                      child: HomeFilterScreen(
-                        filterParams: filterParams,
-                        onFilterParamsChanged: onFilterParamsChanged,
-                      ),
-                    ));},
-                    size: 50,
-                    color: AppColors.cardColorLight,
-                    child: AppIcons.icon(icon: AppIcons.filter, color: AppColors.green),
-                  )
-                ],
-              )
-            ],
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),

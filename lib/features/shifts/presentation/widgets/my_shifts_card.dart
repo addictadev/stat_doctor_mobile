@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stat_doctor/core/config/app_colors.dart';
 import 'package:stat_doctor/core/config/styles/styles.dart';
+import 'package:stat_doctor/core/injection/injection_container.dart';
+import 'package:stat_doctor/core/navigation/app_navigator.dart';
+import 'package:stat_doctor/features/shifts/presentation/screens/my_shifts_details_screen.dart';
 import 'package:stat_doctor/features/shifts/presentation/widgets/my_shifts_card_image.dart';
 import 'package:stat_doctor/features/shifts/presentation/widgets/my_shifts_card_rate.dart';
 
@@ -11,21 +15,25 @@ class MyShiftsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.all(15.r),
-      decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
-        border: Border.all(color: Theme.of(context).dividerColor),
-        borderRadius: BorderRadius.circular(20.r),
-      ),
-      child: Column(
-        spacing: 7.h,
-        children: [
-          MyShiftsCardImage(image: image),
-          Text("St Vincent’s Public Hospital  Melbourne", style: TextStyles.textViewBold16,),
-          MyShiftsCardRate(),
-        ],
+    return InkWell(
+      onTap: () {sl<AppNavigator>().push(screen: MyShiftsDetailsScreen());},
+      overlayColor: WidgetStatePropertyAll(AppColors.transparent),
+      child: Container(
+        width: double.infinity,
+        padding: EdgeInsets.all(15.r),
+        decoration: BoxDecoration(
+          color: Theme.of(context).cardColor,
+          border: Border.all(color: Theme.of(context).dividerColor),
+          borderRadius: BorderRadius.circular(20.r),
+        ),
+        child: Column(
+          spacing: 7.h,
+          children: [
+            MyShiftsCardImage(image: image),
+            Text("St Vincent’s Public Hospital  Melbourne", style: TextStyles.textViewBold16,),
+            MyShiftsCardRate(),
+          ],
+        ),
       ),
     );
   }
