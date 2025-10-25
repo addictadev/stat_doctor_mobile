@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stat_doctor/core/widgets/app_appbar.dart';
 import 'package:stat_doctor/features/shifts/datat/enums/my_shifts_status.dart';
+import 'package:stat_doctor/features/shifts/presentation/widgets/my_shifts_details_contact.dart';
 import 'package:stat_doctor/features/shifts/presentation/widgets/my_shifts_details_description.dart';
 import 'package:stat_doctor/features/shifts/presentation/widgets/my_shifts_details_info.dart';
+import 'package:stat_doctor/features/shifts/presentation/widgets/my_shifts_details_rate.dart';
+import 'package:stat_doctor/features/shifts/presentation/widgets/my_shifts_details_requirements.dart';
 
 class MyShiftsDetailsScreen extends StatefulWidget {
   const MyShiftsDetailsScreen({super.key});
@@ -22,12 +25,15 @@ class _MyShiftsDetailsScreenState extends State<MyShiftsDetailsScreen> {
     return Scaffold(
       appBar: AppAppbar(title: Text("Shift Detials")),
       body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+        padding: EdgeInsets.only(left: 20.w, right: 20.w, top: 10.h, bottom: 30.h),
         child: Column(
           spacing: 15.h,
           children: [
             MyShiftsDetailsInfo(image: image,),
             MyShiftsDetailsDescription(),
+            MyShiftsDetailsRate(),
+            MyShiftsDetailsRequirements(),
+            MyShiftsDetailsContact(),
           ],
         ),
       )
