@@ -7,6 +7,7 @@ import 'package:stat_doctor/features/shifts/presentation/widgets/my_shifts_detai
 import 'package:stat_doctor/features/shifts/presentation/widgets/my_shifts_details_info.dart';
 import 'package:stat_doctor/features/shifts/presentation/widgets/my_shifts_details_rate.dart';
 import 'package:stat_doctor/features/shifts/presentation/widgets/my_shifts_details_requirements.dart';
+import 'package:stat_doctor/features/shifts/presentation/widgets/my_shifts_details_reviews.dart';
 
 class MyShiftsDetailsScreen extends StatefulWidget {
   const MyShiftsDetailsScreen({super.key});
@@ -34,6 +35,7 @@ class _MyShiftsDetailsScreenState extends State<MyShiftsDetailsScreen> {
             MyShiftsDetailsRate(),
             MyShiftsDetailsRequirements(),
             MyShiftsDetailsContact(),
+            MyShiftsDetailsReviews(),
           ],
         ),
       )
