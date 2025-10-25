@@ -1,5 +1,4 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:stat_doctor/core/methods/app_state.dart';
 import 'package:stat_doctor/core/navigation/app_navigator.dart';
 import 'package:stat_doctor/core/network/network_service/api_basehelper.dart';
 import 'package:stat_doctor/core/translation/app_localizations.dart';
