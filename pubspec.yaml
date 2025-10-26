@@ -101,6 +101,7 @@ dependencies:
   package_info_plus: ^9.0.0           # App package information access
   flutter_rating_bar: ^4.0.1          # Rating bar widget for reviews
   table_calendar: ^3.2.0
+  local_auth: ^3.0.0
 
 
 # =============================================================================

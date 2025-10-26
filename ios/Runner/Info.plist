@@ -50,6 +50,8 @@
 		<string>This app needs access to your photo library to allow you to select and upload a venue map and uniform design and invoice photos for your orders.</string>
 		<key>NSPhotoLibraryUsageDescription</key>
 		<string>This app needs access to your photo library to allow you to select and upload a venue map and uniform design and invoice photos for your orders.</string>
+		<key>NSFaceIDUsageDescription</key>
+		<string>This app needs access to your face id to allow you to authenticate using face id.</string>
 
 
 		<key>UISupportedInterfaceOrientations</key>
