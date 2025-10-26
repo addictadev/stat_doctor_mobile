@@ -50,6 +50,20 @@ class AppIcons {
   static const String language = '${_path}language.svg';
   static const String info = '${_path}info.svg';
   static const String messageQuestion = '${_path}message_question.svg';
+  static const String notificationAccepted = '${_path}notification_accepted.svg';
+  static const String notificationRejected = '${_path}notification_rejected.svg';
+  static const String notificationOnhours = '${_path}notification_onhours.svg';
+  static const String notificationOnshifts = '${_path}notification_onshifts.svg';
+  static const String trash = '${_path}trash.svg';
+  static const String accountMedical = '${_path}account_medical.svg';
+  static const String accountReferences = '${_path}account_references.svg';
+  static const String accountDocuments = '${_path}account_documents.svg';
+  static const String accountNotifications = '${_path}account_notifications.svg';
+  static const String accountSettings = '${_path}account_settings.svg';
+
+
+
+
 
 
   // Method to render SVG as a widget

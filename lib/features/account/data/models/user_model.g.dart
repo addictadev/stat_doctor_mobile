@@ -17,15 +17,15 @@ class UserModelAdapter extends TypeAdapter<UserModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return UserModel(
-      userId: fields[0] as String,
+      userId: fields[0] as String?,
       registerFlag: fields[1] as bool,
-      userInfoVO: fields[2] as UserInfoVO,
-      medicalVO: fields[3] as MedicalVO,
-      medicalLastTime: fields[4] as int,
+      userInfoVO: fields[2] as UserInfoVO?,
+      medicalVO: fields[3] as MedicalVO?,
+      medicalLastTime: fields[4] as int?,
       referencesVOList: (fields[5] as List).cast<ReferencesVO>(),
-      referencesLastTime: fields[6] as int,
-      docVO: fields[7] as DocVO,
-      docLastTime: fields[8] as int,
+      referencesLastTime: fields[6] as int?,
+      docVO: fields[7] as DocVO?,
+      docLastTime: fields[8] as int?,
     );
   }
 
