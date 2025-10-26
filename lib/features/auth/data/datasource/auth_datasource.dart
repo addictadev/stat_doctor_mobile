@@ -4,7 +4,7 @@ import 'package:stat_doctor/core/storage/data/storage.dart';
 import 'package:stat_doctor/features/auth/data/objects_value/login_params.dart';
 import 'package:stat_doctor/features/auth/data/objects_value/register_params.dart';
 import 'package:stat_doctor/features/auth/data/objects_value/send_sms_params.dart';
-import 'package:stat_doctor/features/profile/data/models/user_model.dart';
+import 'package:stat_doctor/features/account/data/models/user_model.dart';
 
 abstract class AuthDatasource {
   Future<String> sendSmsLogin({required SendSmsParams params});

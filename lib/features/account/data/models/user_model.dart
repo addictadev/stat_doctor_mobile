@@ -10,23 +10,23 @@ part 'user_model.g.dart';
 @HiveType(typeId: 5)
 class UserModel extends Equatable {
   @HiveField(0)
-  final String userId;
+  final String? userId;
   @HiveField(1)
   final bool registerFlag;
   @HiveField(2)
-  final UserInfoVO userInfoVO;
+  final UserInfoVO? userInfoVO;
   @HiveField(3)
-  final MedicalVO medicalVO;
+  final MedicalVO? medicalVO;
   @HiveField(4)
-  final int medicalLastTime;
+  final int? medicalLastTime;
   @HiveField(5)
   final List<ReferencesVO> referencesVOList;
   @HiveField(6)
-  final int referencesLastTime;
+  final int? referencesLastTime;
   @HiveField(7)
-  final DocVO docVO;
+  final DocVO? docVO;
   @HiveField(8)
-  final int docLastTime;
+  final int? docLastTime;
 
   const UserModel({
     required this.userId,
@@ -42,15 +42,15 @@ class UserModel extends Equatable {
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
-      userId: json['userId'] ?? '',
-      registerFlag: json['registerFlag'] ?? false,
-      userInfoVO: UserInfoVO.fromJson(json['userInfoVO'] ?? {}),
-      medicalVO: MedicalVO.fromJson(json['medicalVO'] ?? {}),
-      medicalLastTime: json['medicalLastTime'] ?? 0,
-      referencesVOList: (json['referencesVOList'] as List<dynamic>?)?.map((item) => ReferencesVO.fromJson(item as Map<String, dynamic>)).toList() ?? [],
-      referencesLastTime: json['referencesLastTime'] ?? 0,
-      docVO: DocVO.fromJson(json['docVO'] ?? {}),
-      docLastTime: json['docLastTime'] ?? 0,
+      userId: json['userId'],
+      registerFlag: json['registerFlag'] ?? true,
+      userInfoVO: json['userInfoVO'] != null ? UserInfoVO.fromJson(json['userInfoVO']) : null,
+      medicalVO: json['medicalVO'] != null ? MedicalVO.fromJson(json['medicalVO']) : null,
+      medicalLastTime: json['medicalLastTime'],
+      referencesVOList: (json['referencesVOList'] as List?)?.map((item) => ReferencesVO.fromJson(item)).toList() ?? [],
+      referencesLastTime: json['referencesLastTime'],
+      docVO: json['docVO'] != null ? DocVO.fromJson(json['docVO']) : null,
+      docLastTime: json['docLastTime'],
     );
   }
 
@@ -58,12 +58,12 @@ class UserModel extends Equatable {
     return {
       'userId': userId,
       'registerFlag': registerFlag,
-      'userInfoVO': userInfoVO.toJson(),
-      'medicalVO': medicalVO.toJson(),
+      'userInfoVO': userInfoVO?.toJson(),
+      'medicalVO': medicalVO?.toJson(),
       'medicalLastTime': medicalLastTime,
       'referencesVOList': referencesVOList.map((item) => item.toJson()).toList(),
       'referencesLastTime': referencesLastTime,
-      'docVO': docVO.toJson(),
+      'docVO': docVO?.toJson(),
       'docLastTime': docLastTime,
     };
   }
@@ -94,14 +94,14 @@ class UserModel extends Equatable {
 
   @override
   List<Object?> get props => [
-        userId,
-        registerFlag,
-        userInfoVO,
-        medicalVO,
-        medicalLastTime,
-        referencesVOList,
-        referencesLastTime,
-        docVO,
-        docLastTime,
-      ];
+    userId,
+    registerFlag,
+    userInfoVO,
+    medicalVO,
+    medicalLastTime,
+    referencesVOList,
+    referencesLastTime,
+    docVO,
+    docLastTime,
+  ];
 }

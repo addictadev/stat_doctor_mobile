@@ -3,11 +3,11 @@ import 'package:stat_doctor/core/storage/data/storage.dart';
 import 'package:stat_doctor/core/storage/data/storage_impl.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:stat_doctor/features/profile/data/models/doc_vo.dart';
-import 'package:stat_doctor/features/profile/data/models/medical_vo.dart';
-import 'package:stat_doctor/features/profile/data/models/references_vo.dart';
-import 'package:stat_doctor/features/profile/data/models/user_info_vo.dart';
-import 'package:stat_doctor/features/profile/data/models/user_model.dart';
+import 'package:stat_doctor/features/account/data/models/doc_vo.dart';
+import 'package:stat_doctor/features/account/data/models/medical_vo.dart';
+import 'package:stat_doctor/features/account/data/models/references_vo.dart';
+import 'package:stat_doctor/features/account/data/models/user_info_vo.dart';
+import 'package:stat_doctor/features/account/data/models/user_model.dart';
 
 
 Future<void> initStorageInjection(GetIt sl) async {

@@ -3,9 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stat_doctor/core/config/app_icons.dart';
 import 'package:stat_doctor/core/injection/injection_container.dart';
+import 'package:stat_doctor/features/account/presentation/screens/account_screen.dart';
 import 'package:stat_doctor/features/home/presentation/screens/home_screen.dart';
 import 'package:stat_doctor/features/layout/presentation/cubit/bnb_cubit.dart';
 import 'package:stat_doctor/features/layout/presentation/widget/bnb_icon.dart';
+import 'package:stat_doctor/features/notification/presentation/screens/notification_screen.dart';
 import 'package:stat_doctor/features/options/presentation/cubit/options_cubit.dart';
 import 'package:stat_doctor/features/shifts/presentation/screens/my_shifts_screen.dart';
 
@@ -26,8 +28,8 @@ class _LayoutScreenState extends State<LayoutScreen> {
         child: HomeScreen(),
       ),
       MyShiftsScreen(),
-      Container(),
-      Container(),
+      NotificationScreen(),
+      AccountScreen(),
     ];
     super.initState();
   }

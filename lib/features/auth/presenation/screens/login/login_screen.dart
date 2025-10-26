@@ -1,5 +1,7 @@
+import 'package:stat_doctor/core/config/app_icons.dart';
 import 'package:stat_doctor/core/config/styles/styles.dart';
 import 'package:stat_doctor/core/injection/injection_container.dart';
+import 'package:stat_doctor/core/methods/biometric_authentication.dart';
 import 'package:stat_doctor/core/navigation/app_navigator.dart';
 import 'package:stat_doctor/core/toast/app_toast.dart';
 import 'package:stat_doctor/core/utils/validator.dart';
@@ -94,6 +96,23 @@ class _LoginScreenState extends State<LoginScreen> {
                         text: "Continue",
                       );
                     },
+                  ),
+                  if (BiometricAuthenticationService.instance.hasBiometricAuthentication)
+                  AppButton(
+                    color: Theme.of(context).colorScheme.secondary,
+                    onTap: () async{
+                      final result = await BiometricAuthenticationService.instance.authenticate();
+                      debugPrint("result: $result");
+
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      spacing: 15.w,
+                      children: [
+                        AppIcons.icon(icon: BiometricAuthenticationService.instance.isTouchIdAvailable ? AppIcons.touchId : AppIcons.faceId, color: Theme.of(context).colorScheme.onSurface),
+                        Text("Login with ${BiometricAuthenticationService.instance.isTouchIdAvailable ? "TouchID" : "FaceID"}", style: TextStyles.textViewMedium14),
+                      ],
+                    ),
                   ),
                   CustomRichText(
                     textAlign: TextAlign.center,
