@@ -7,6 +7,7 @@ import 'package:stat_doctor/core/widgets/otp_text_form_field.dart';
 import 'package:stat_doctor/features/auth/data/objects_value/login_params.dart';
 import 'package:stat_doctor/features/auth/data/objects_value/send_sms_params.dart';
 import 'package:stat_doctor/features/auth/presenation/cubit/auth_cubit.dart';
+import 'package:stat_doctor/features/auth/presenation/screens/signup/signup_screen.dart';
 import 'package:stat_doctor/features/auth/presenation/widgets/auth_appbar.dart';
 import 'package:stat_doctor/features/auth/presenation/widgets/auth_header.dart';
 import 'package:stat_doctor/features/auth/presenation/widgets/verify_timer.dart';
@@ -14,7 +15,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stat_doctor/features/layout/layout_inj.dart';
 import 'package:stat_doctor/features/layout/presentation/screen/layout_screen.dart';
+import 'package:stat_doctor/features/options/presentation/cubit/options_cubit.dart';
 
 
 class VerifyLoginScreen extends StatefulWidget {
@@ -39,8 +42,17 @@ class _VerifyLoginScreenState extends State<VerifyLoginScreen> {
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is LoginSuccess) {
-          // appToast(context: context, type: ToastType.success, message: state.message);
-          sl<AppNavigator>().pushAndRemoveUntil(screen: LayoutScreen());
+          if(state.user.registerFlag) {
+            sl<AppNavigator>().pushReplacement(screen: MultiBlocProvider(
+              providers: [
+                BlocProvider(create: (context) => sl<AuthCubit>(),),
+                BlocProvider(create: (context) => sl<OptionsCubit>(),),
+              ],
+              child: SignupScreen(code: otpController.text,),
+            ));
+          } else {
+            sl<AppNavigator>().pushAndRemoveUntil(screen: MultiBlocProvider(providers: appLayoutBlocs(context), child: LayoutScreen(),));
+          }
         } else if (state is LoginFailure) {
           appToast(context: context, type: ToastType.error, message: state.message);
         } else if (state is SendSmsSuccess) {

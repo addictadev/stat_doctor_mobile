@@ -20,7 +20,11 @@ class AuthRepository with RepositoryHelper{
     return handleEither(() => authDatasource.login(params: params));
   }
 
-  Future<Either<Failure, String>> register({required RegisterParams params}) async{
+  Future<Either<Failure, UserModel>> register({required RegisterParams params}) async{
     return handleEither(() => authDatasource.register(params: params));
+  }
+
+  Future<Either<Failure, String>> biometricLogin() async{
+    return handleEither(() => authDatasource.biometricLogin());
   }
 }

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stat_doctor/core/config/app_icons.dart';
 import 'package:stat_doctor/core/config/styles/styles.dart';
+import 'package:stat_doctor/core/injection/injection_container.dart';
 import 'package:stat_doctor/core/methods/biometric_authentication.dart';
+import 'package:stat_doctor/core/storage/data/storage.dart';
 import 'package:stat_doctor/features/auth/presenation/widgets/biometric_switch.dart';
 
 class LoginMethod extends StatefulWidget {
@@ -27,7 +29,12 @@ class _LoginMethodState extends State<LoginMethod> {
           description: 'Do you want to use FaceID for logging on in the future?',
           icon: AppIcons.faceId,
           value: widget.faceIdEnabled.value,
-          onChanged: (value) async{setState(() {widget.faceIdEnabled.value = value;});},
+          onChanged: (value) async{
+            setState(() {
+              sl<Storage>().storeFaceIdEnabled(isFaceIdEnabled: value);
+              widget.faceIdEnabled.value = value;
+            });
+          },
         ),
         if(BiometricAuthenticationService.instance.isTouchIdAvailable)
         BiometricSwitch(
@@ -35,7 +42,12 @@ class _LoginMethodState extends State<LoginMethod> {
           description: 'Do you want to use Fingerprint for logging on in the future?',
           icon: AppIcons.touchId,
           value: widget.touchIdEnabled.value,
-          onChanged: (value) {setState(() {widget.touchIdEnabled.value = value;});},
+          onChanged: (value) {
+            setState(() {
+              sl<Storage>().storeTouchIdEnabled(isTouchIdEnabled: value);
+              widget.touchIdEnabled.value = value;
+            });
+          },
         ),
       ],
     );

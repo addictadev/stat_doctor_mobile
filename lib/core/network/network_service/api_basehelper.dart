@@ -80,7 +80,7 @@ class ApiBaseHelper {
     try {
       final dio = getDio(environment);
       String? token = sl<Storage>().getToken();
-      if(token != null) {dio.options.headers['doctor-app-token'] = 'Bearer $token';}
+      if(token != null) {dio.options.headers['doctor-app-token'] = token;}
       final response = await request();
       await _checkToken(response);
       _chckData(response);
@@ -106,7 +106,7 @@ class ApiBaseHelper {
 
   void _chckData(Response response) {
     final responseData = response.data as Map<String, dynamic>?;
-    if(responseData?['data'] == null || responseData?['data'] == '') {
+    if(responseData?['data'] == null) {
       throw ValidationException(responseData?['message'] ?? _context.tr.errorUnexpectedError);
     }
   }

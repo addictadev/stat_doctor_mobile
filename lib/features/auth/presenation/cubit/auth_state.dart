@@ -45,11 +45,25 @@ final class SendSmsFailure extends AuthState {
 final class RegisterLoading extends AuthState {}
 
 final class RegisterSuccess extends AuthState {
-  final String message;
-  const RegisterSuccess({required this.message});
+  final UserModel user;
+  const RegisterSuccess({required this.user});
 }
 
 final class RegisterFailure extends AuthState {
   final String message;
   const RegisterFailure({required this.message});
+}
+
+//! ================== Biometric Login State ==================
+
+final class BiometricLoginLoading extends AuthState {}
+
+final class BiometricLoginSuccess extends AuthState {
+  final String message;
+  const BiometricLoginSuccess({required this.message});
+}
+
+final class BiometricLoginFailure extends AuthState {
+  final String message;
+  const BiometricLoginFailure({required this.message});
 }

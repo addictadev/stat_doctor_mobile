@@ -40,9 +40,19 @@ class AuthCubit extends Cubit<AuthState> {
     if (!isClosed) {
       result.fold(
         (failure) => emit(RegisterFailure(message: failure.message)),
-        (success) => emit(RegisterSuccess(message: success)),
+        (success) => emit(RegisterSuccess(user: success)),
       );  
     }
   }
 
+  Future<void> biometricLogin() async{
+    emit(BiometricLoginLoading());
+    final result = await authRepository.biometricLogin();
+    if (!isClosed) {
+      result.fold(
+        (failure) => emit(BiometricLoginFailure(message: failure.message)),
+        (success) => emit(BiometricLoginSuccess(message: success)),
+      );  
+    }
+  }
 }

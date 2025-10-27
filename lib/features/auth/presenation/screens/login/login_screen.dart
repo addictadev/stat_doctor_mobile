@@ -1,8 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:stat_doctor/core/config/app_icons.dart';
 import 'package:stat_doctor/core/config/styles/styles.dart';
 import 'package:stat_doctor/core/injection/injection_container.dart';
 import 'package:stat_doctor/core/methods/biometric_authentication.dart';
 import 'package:stat_doctor/core/navigation/app_navigator.dart';
+import 'package:stat_doctor/core/storage/data/storage.dart';
 import 'package:stat_doctor/core/toast/app_toast.dart';
 import 'package:stat_doctor/core/utils/validator.dart';
 import 'package:stat_doctor/core/widgets/app_button.dart';
@@ -12,13 +15,13 @@ import 'package:stat_doctor/core/widgets/textformfield_phone.dart';
 import 'package:stat_doctor/features/auth/data/objects_value/send_sms_params.dart';
 import 'package:stat_doctor/features/auth/presenation/cubit/auth_cubit.dart';
 import 'package:stat_doctor/features/auth/presenation/screens/login/verify_login_screen.dart';
-import 'package:stat_doctor/features/auth/presenation/screens/signup/signup_screen.dart';
 import 'package:stat_doctor/features/auth/presenation/widgets/auth_appbar.dart';
 import 'package:stat_doctor/features/auth/presenation/widgets/auth_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stat_doctor/features/options/presentation/cubit/options_cubit.dart';
+import 'package:stat_doctor/features/layout/layout_inj.dart';
+import 'package:stat_doctor/features/layout/presentation/screen/layout_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -97,39 +100,34 @@ class _LoginScreenState extends State<LoginScreen> {
                       );
                     },
                   ),
-                  if (BiometricAuthenticationService.instance.hasBiometricAuthentication)
-                  AppButton(
-                    color: Theme.of(context).colorScheme.secondary,
-                    onTap: () async{
-                      final result = await BiometricAuthenticationService.instance.authenticate();
-                      debugPrint("result: $result");
-
+                  if (BiometricAuthenticationService.instance.hasBiometricAuthentication && (sl<Storage>().getFaceIdEnabled() || sl<Storage>().getTouchIdEnabled()))
+                  BlocConsumer<AuthCubit, AuthState>(
+                    listener: (context, state) {
+                      if (state is BiometricLoginSuccess) {
+                        sl<AppNavigator>().pushAndRemoveUntil(screen: MultiBlocProvider(providers: appLayoutBlocs(context), child: LayoutScreen(),));
+                      } else if (state is BiometricLoginFailure) {
+                        appToast(context: context, type: ToastType.error, message: state.message);
+                      }
                     },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      spacing: 15.w,
-                      children: [
-                        AppIcons.icon(icon: BiometricAuthenticationService.instance.isTouchIdAvailable ? AppIcons.touchId : AppIcons.faceId, color: Theme.of(context).colorScheme.onSurface),
-                        Text("Login with ${BiometricAuthenticationService.instance.isTouchIdAvailable ? "TouchID" : "FaceID"}", style: TextStyles.textViewMedium14),
-                      ],
-                    ),
+                    builder: (context, state) {
+                      if (state is BiometricLoginLoading) {return const CustomLoading();}
+                      return AppButton(
+                        color: Theme.of(context).colorScheme.secondary,
+                        onTap: () async{
+                          bool authenticate = await BiometricAuthenticationService.instance.authenticate();
+                          if(authenticate) {context.read<AuthCubit>().biometricLogin();}
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          spacing: 15.w,
+                          children: [
+                            AppIcons.icon(icon: BiometricAuthenticationService.instance.isTouchIdAvailable ? AppIcons.touchId : AppIcons.faceId, color: Theme.of(context).colorScheme.onSurface),
+                            Text("Login with ${BiometricAuthenticationService.instance.isTouchIdAvailable ? "TouchID" : "FaceID"}", style: TextStyles.textViewMedium14),
+                          ],
+                        ),
+                      );
+                    },
                   ),
-                  CustomRichText(
-                    textAlign: TextAlign.center,
-                    startSubText: "Don't have an account? ",
-                    centerSubText: "Signup",
-                    startSubTextStyle: TextStyles.textViewRegular13.copyWith(color: Theme.of(context).hintColor, height: 2.5),
-                    centerSubTextStyle: TextStyles.textViewMedium14.copyWith(color: Theme.of(context).primaryColor),
-                    onCenterSubTextTap: () {
-                      sl<AppNavigator>().pushReplacement(screen: MultiBlocProvider(
-                        providers: [
-                          BlocProvider(create: (context) => sl<AuthCubit>(),),
-                          BlocProvider(create: (context) => sl<OptionsCubit>(),),
-                        ],
-                        child: SignupScreen(),
-                      ));
-                    },
-                  )
                 ],
               ),
             ],

@@ -11,6 +11,9 @@ class StorageImpl implements Storage {
   static final String _language = "language";
   static final String _onboarding = "onboarding";
   static final String _user = "user";
+  static final String _authorized = "authorized";
+  static final String _faceIdEnabled = "faceIdEnabled";
+  static final String _touchIdEnabled = "touchIdEnabled";
 
   StorageImpl({
     required this.stringBox,
@@ -19,7 +22,7 @@ class StorageImpl implements Storage {
   });
 
 
-  //* user storage
+  //! ================================================== user storage ==================================================
   @override
   Future<void> storeUserData({required UserModel user}) async {await userBox.put(_user, user);}
 
@@ -30,9 +33,7 @@ class StorageImpl implements Storage {
   Future<void> deleteUserData() async {await userBox.delete(_user);}
 
 
-
-
-  //* token storage
+  //! ================================================== token storage ==================================================
   @override
   Future<void> storeToken({required String token}) async {await stringBox.put(_token, token);}
 
@@ -43,10 +44,8 @@ class StorageImpl implements Storage {
   Future<void> deleteToken() async {await stringBox.delete(_token);}
 
 
-  //* authentication
 
-
-  //* language storage
+  //! ================================================== language storage ==================================================
   @override
   Future<void> storeLang({required String langCode}) async {
     await stringBox.put(_language, langCode);
@@ -63,12 +62,38 @@ class StorageImpl implements Storage {
   }
 
 
-  //* check language
+  //! ================================================== authorized storage ==================================================
   @override
-  bool isSelectLang() => stringBox.get(_language) != null;
+  bool isAuthorized() => boolBox.get(_authorized) ?? false;
+
+  @override
+  Future<void> storeAuthorized({required bool isAuthorized}) async {await boolBox.put(_authorized, isAuthorized);}
+
+  @override
+  Future<void> deleteAuthorized() async {await boolBox.delete(_authorized);}
 
 
-  //* onboarding storage
+  //! ================================================== biometric storage ==================================================
+  @override
+  bool getFaceIdEnabled() => boolBox.get(_faceIdEnabled) ?? false;
+
+  @override
+  bool getTouchIdEnabled() => boolBox.get(_touchIdEnabled) ?? false;
+
+  @override
+  Future<void> storeFaceIdEnabled({required bool isFaceIdEnabled}) async {await boolBox.put(_faceIdEnabled, isFaceIdEnabled);}
+
+  @override
+  Future<void> storeTouchIdEnabled({required bool isTouchIdEnabled}) async {await boolBox.put(_touchIdEnabled, isTouchIdEnabled);}
+
+  @override
+  Future<void> deleteFaceIdEnabled() async {await boolBox.delete(_faceIdEnabled);}
+
+  @override
+  Future<void> deleteTouchIdEnabled() async {await boolBox.delete(_touchIdEnabled);}
+
+
+  //! ================================================== onboarding storage ==================================================
   @override
   Future<void> storeOnboarding({required bool isCompleted}) async {await boolBox.put(_onboarding, isCompleted);}
 
@@ -77,4 +102,11 @@ class StorageImpl implements Storage {
 
   @override
   Future<void> deleteOnboarding() async {await boolBox.delete(_onboarding);}
+
+  //! ================================================== clear all storage ==================================================
+  @override
+  Future<void> logout() async {
+    await deleteUserData();
+    await deleteAuthorized();
+  }
 }

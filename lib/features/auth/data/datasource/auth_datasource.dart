@@ -9,7 +9,8 @@ import 'package:stat_doctor/features/account/data/models/user_model.dart';
 abstract class AuthDatasource {
   Future<String> sendSmsLogin({required SendSmsParams params});
   Future<UserModel> login({required LoginParams params});
-  Future<String> register({required RegisterParams params});
+  Future<UserModel> register({required RegisterParams params});
+  Future<String> biometricLogin();
 }
 
 class AuthDatasourceImpl implements AuthDatasource{
@@ -21,21 +22,36 @@ class AuthDatasourceImpl implements AuthDatasource{
   Future<UserModel> login({required LoginParams params}) async{
     final response = await apiBaseHelper.post(url: AppEndpoints.login, body: params.toJson());
     UserModel user = UserModel.fromJson(response['data']);
-    if(!user.registerFlag) {await storage.storeUserData(user: user);}
+    if(!user.registerFlag) {
+      await storage.storeUserData(user: user);
+      await storage.storeAuthorized(isAuthorized: true);
+    }
     return user;
   }
   
   @override
-  Future<String> register({required RegisterParams params}) async{
+  Future<UserModel> register({required RegisterParams params}) async{
     final response = await apiBaseHelper.post(url: AppEndpoints.register, body: params.toJson());
-    String result = response['message'];
-    return result;
+    UserModel user = UserModel.fromJson(response['data']);
+    if(!user.registerFlag) {
+      await storage.storeUserData(user: user);
+      await storage.storeAuthorized(isAuthorized: true);
+    }
+    return user;
   }
   
   @override
   Future<String> sendSmsLogin({required SendSmsParams params}) async{
     final response = await apiBaseHelper.get(url: AppEndpoints.sendSmsLogin(countryCode: params.countryCode, phone: params.phone), body: params.toJson());
     String result = response['message'];
+    return result;
+  }
+
+  @override
+  Future<String> biometricLogin() async{
+    final response = await apiBaseHelper.get(url: AppEndpoints.biometricLogin);
+    String result = response['message'];
+    await storage.storeAuthorized(isAuthorized: true);
     return result;
   }
 }

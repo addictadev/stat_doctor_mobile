@@ -9,7 +9,8 @@ import 'package:stat_doctor/features/auth/presenation/widgets/refernce_card.dart
 class ReferencesScreen extends StatefulWidget {
   final List<ReferencesDTO> references;
   final VoidCallback onNext;
-  const ReferencesScreen({required this.references, required this.onNext, super.key});
+  final VoidCallback onSkip;
+  const ReferencesScreen({required this.references, required this.onNext, required this.onSkip, super.key});
 
   @override
   State<ReferencesScreen> createState() => _ReferencesScreenState();
@@ -44,11 +45,21 @@ class _ReferencesScreenState extends State<ReferencesScreen> {
               ),
             ),
           ),      
-          AddRefernces(onAdd: () {setState(() {widget.references.add(ReferencesDTO(seq: widget.references.length + 1));});},),
+          AddRefernces(onAdd: () {setState(() {widget.references.add(ReferencesDTO(seq: widget.references.length));});},),
           AppButton(
             onTap: () {if(formKey.currentState!.validate()) {widget.onNext();}},
             text: 'Next',
           ),
+          AppButton(
+            onTap: () {
+              widget.references.clear();
+              widget.references.add(ReferencesDTO(seq: 0));
+              widget.onSkip();
+            },
+            color: Theme.of(context).colorScheme.secondary,
+            textColor: Theme.of(context).colorScheme.onSurface,
+            text: 'Skip',
+          )
         ],
       ),
     );
