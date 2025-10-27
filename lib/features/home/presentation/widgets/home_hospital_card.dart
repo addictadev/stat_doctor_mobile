@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stat_doctor/core/config/app_colors.dart';
 import 'package:stat_doctor/core/config/styles/styles.dart';
+import 'package:stat_doctor/core/injection/injection_container.dart';
+import 'package:stat_doctor/core/navigation/app_navigator.dart';
 import 'package:stat_doctor/features/home/presentation/widgets/home_hospital_card_buttons.dart';
 import 'package:stat_doctor/features/home/presentation/widgets/home_hospital_card_image.dart';
 import 'package:stat_doctor/features/home/presentation/widgets/home_hospital_card_rate.dart';
 import 'package:stat_doctor/features/home/presentation/widgets/home_hospital_info_item.dart';
+import 'package:stat_doctor/features/shifts/presentation/screens/shifts_details_screen.dart';
 
 class HomeHospitalCard extends StatelessWidget {
   const HomeHospitalCard({super.key});
@@ -13,31 +17,35 @@ class HomeHospitalCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.sizeOf(context).width * 0.8,
-      padding: EdgeInsets.all(15.r),
-      decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
-        border: Border.all(color: Theme.of(context).dividerColor),
-        borderRadius: BorderRadius.circular(20.r),
-      ),
-      child: Column(
-        spacing: 15.h,
-        children: [
-          HomeHospitalCardImage(image: image),
-          Text("St Vincent’s Public Hospital  Melbourne", style: TextStyles.textViewBold16,),
-          HomeHospitalCardRate(),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 15.h,
-            children: [
-              HomeHospitalInfoItem(title: "Min. skill level: ", value: "VMO/SMO"),
-              HomeHospitalInfoItem(title: "Specialty: ", value: "Emergency Medicine"),
-              HomeHospitalInfoItem(title: "Support level: ", value: "Senior on site"),
-            ],
-          ),
-          HomeHospitalCardButtons(),
-        ],
+    return InkWell(
+      onTap: () {sl<AppNavigator>().push(screen: ShiftsDetailsScreen());},
+      overlayColor: WidgetStatePropertyAll(AppColors.transparent),
+      child: Container(
+        width: MediaQuery.sizeOf(context).width * 0.8,
+        padding: EdgeInsets.all(15.r),
+        decoration: BoxDecoration(
+          color: Theme.of(context).cardColor,
+          border: Border.all(color: Theme.of(context).dividerColor),
+          borderRadius: BorderRadius.circular(20.r),
+        ),
+        child: Column(
+          spacing: 15.h,
+          children: [
+            HomeHospitalCardImage(image: image),
+            Text("St Vincent’s Public Hospital  Melbourne", style: TextStyles.textViewBold16,),
+            HomeHospitalCardRate(),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: 15.h,
+              children: [
+                HomeHospitalInfoItem(title: "Min. skill level: ", value: "VMO/SMO"),
+                HomeHospitalInfoItem(title: "Specialty: ", value: "Emergency Medicine"),
+                HomeHospitalInfoItem(title: "Support level: ", value: "Senior on site"),
+              ],
+            ),
+            HomeHospitalCardButtons(),
+          ],
+        ),
       ),
     );
   }
