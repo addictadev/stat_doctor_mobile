@@ -8,7 +8,7 @@ import 'package:stat_doctor/features/account/data/models/user_model.dart';
 
 abstract class AuthDatasource {
   Future<String> sendSmsLogin({required SendSmsParams params});
-  Future<String> login({required LoginParams params});
+  Future<UserModel> login({required LoginParams params});
   Future<String> register({required RegisterParams params});
 }
 
@@ -18,12 +18,11 @@ class AuthDatasourceImpl implements AuthDatasource{
   AuthDatasourceImpl({required this.storage, required this.apiBaseHelper});
 
   @override
-  Future<String> login({required LoginParams params}) async{
+  Future<UserModel> login({required LoginParams params}) async{
     final response = await apiBaseHelper.post(url: AppEndpoints.login, body: params.toJson());
     UserModel user = UserModel.fromJson(response['data']);
-    String result = response['message'];
-    await storage.storeUserData(user: user);
-    return result;
+    if(!user.registerFlag) {await storage.storeUserData(user: user);}
+    return user;
   }
   
   @override

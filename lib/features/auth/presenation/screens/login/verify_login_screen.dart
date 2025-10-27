@@ -39,7 +39,7 @@ class _VerifyLoginScreenState extends State<VerifyLoginScreen> {
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is LoginSuccess) {
-          appToast(context: context, type: ToastType.success, message: state.message);
+          // appToast(context: context, type: ToastType.success, message: state.message);
           sl<AppNavigator>().pushAndRemoveUntil(screen: LayoutScreen());
         } else if (state is LoginFailure) {
           appToast(context: context, type: ToastType.error, message: state.message);

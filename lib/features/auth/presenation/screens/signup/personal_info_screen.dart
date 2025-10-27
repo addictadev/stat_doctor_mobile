@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stat_doctor/core/methods/biometric_authentication.dart';
 import 'package:stat_doctor/core/toast/app_toast.dart';
 import 'package:stat_doctor/core/widgets/app_button.dart';
 import 'package:stat_doctor/features/auth/presenation/widgets/login_method.dart';
@@ -57,6 +58,7 @@ class PersonalInfoScreen extends StatelessWidget {
             emailAddressController: emailAddressController,
             formKey: formKey,
           ),
+          if(BiometricAuthenticationService.instance.hasBiometricAuthentication)
           LoginMethod(
             faceIdEnabled: faceIdEnabled,
             touchIdEnabled: touchIdEnabled,

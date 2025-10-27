@@ -1,3 +1,4 @@
+import 'package:stat_doctor/features/account/data/models/user_model.dart';
 import 'package:stat_doctor/features/auth/data/objects_value/login_params.dart';
 import 'package:stat_doctor/features/auth/data/objects_value/register_params.dart';
 import 'package:stat_doctor/features/auth/data/objects_value/send_sms_params.dart';
@@ -28,7 +29,7 @@ class AuthCubit extends Cubit<AuthState> {
     if (!isClosed) {
       result.fold(
         (failure) => emit(LoginFailure(message: failure.message)),
-        (success) => emit(LoginSuccess(message: success)),
+        (success) => emit(LoginSuccess(user: success)),
       );  
     }
   }
