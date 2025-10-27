@@ -7,8 +7,9 @@ class AppEndpoints {
   static String register = "/profile-info-register";
   static String logout = "/public/user-logout";
   static String uploadMultipleFiles = "/public/pic/upload-file-multiple";
+  static String biometricLogin = "/profile-refreshToken";
+  static String profile = "/profile-info-all";
   static String getOptions({required OptionType type}) => "/sys/get-type/${type.name}";
-
   static String sendSmsLogin({required String countryCode, required String phone}) => "/public/get-sms-code/$countryCode/$phone";
   static String sendSmsChange({required String countryCode, required String phone}) => "/profile-info-edit-get-sms-code/$countryCode/$phone";
 }

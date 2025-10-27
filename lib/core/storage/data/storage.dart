@@ -18,12 +18,24 @@ abstract class Storage {
   String getLang();
   Future<void> deleteLang();
 
-  // Check Language
-  bool isSelectLang();
+  // Check Authorized
+  bool isAuthorized();
+  Future<void> storeAuthorized({required bool isAuthorized});
+  Future<void> deleteAuthorized();
 
+  // Biometric Storage
+  bool getFaceIdEnabled();
+  bool getTouchIdEnabled();
+  Future<void> storeFaceIdEnabled({required bool isFaceIdEnabled});
+  Future<void> storeTouchIdEnabled({required bool isTouchIdEnabled});
+  Future<void> deleteFaceIdEnabled();
+  Future<void> deleteTouchIdEnabled();
 
   // Onboarding Storage
   Future<void> storeOnboarding({required bool isCompleted});
   bool getOnboarding();
   Future<void> deleteOnboarding();
+
+  // Clear All Storage
+  Future<void> logout();
 }

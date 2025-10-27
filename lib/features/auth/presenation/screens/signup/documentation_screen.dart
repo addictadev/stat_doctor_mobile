@@ -7,15 +7,16 @@ import 'package:stat_doctor/core/toast/app_toast.dart';
 import 'package:stat_doctor/core/widgets/app_button.dart';
 import 'package:stat_doctor/core/widgets/custom_loading.dart';
 import 'package:stat_doctor/features/auth/presenation/cubit/auth_cubit.dart';
-import 'package:stat_doctor/features/auth/presenation/screens/login/login_screen.dart';
 import 'package:stat_doctor/features/auth/presenation/widgets/document_info.dart';
 import 'package:stat_doctor/features/auth/presenation/widgets/document_points.dart';
 import 'package:stat_doctor/features/auth/presenation/widgets/other_document.dart';
 import 'package:stat_doctor/features/auth/presenation/widgets/primary_document.dart';
+import 'package:stat_doctor/features/layout/layout_inj.dart';
+import 'package:stat_doctor/features/layout/presentation/screen/layout_screen.dart';
 import 'package:stat_doctor/features/options/data/model/options.dart';
 import 'package:stat_doctor/features/upload_file/model/upload_file.dart';
 
-class DocumentationScreen extends StatelessWidget {
+class DocumentationScreen extends StatefulWidget {
   final ValueNotifier<bool> uploadOtherDocument;
   final ValueNotifier<Options?> primaryDocument;
   final ValueNotifier<Options?> otherDocument;
@@ -30,6 +31,7 @@ class DocumentationScreen extends StatelessWidget {
   final ValueNotifier<UploadFile?> medicareCardFile;
   final ValueNotifier<UploadFile?> approvalForSecondaryEmploymentFile;
   final VoidCallback onNext;
+
 
   const DocumentationScreen({
     required this.uploadOtherDocument,
@@ -49,16 +51,21 @@ class DocumentationScreen extends StatelessWidget {
     super.key,
   });
 
+  @override
+  State<DocumentationScreen> createState() => _DocumentationScreenState();
+}
+
+class _DocumentationScreenState extends State<DocumentationScreen> {
   bool _hasValidDocuments() {
-   bool isValid = medicalDegreeFile.value != null && policeCheckFile.value != null && medicalIndemnityInsuranceFile.value != null && workingWithChildrenCheckFile.value != null && vaccinationCertificateFile.value != null && medicareCardFile.value != null;
+   bool isValid = widget.medicalDegreeFile.value != null && widget.policeCheckFile.value != null && widget.medicalIndemnityInsuranceFile.value != null && widget.workingWithChildrenCheckFile.value != null && widget.vaccinationCertificateFile.value != null && widget.medicareCardFile.value != null;
    return isValid;
   }
 
   bool _hasValidOtherDocuments() {
-    if(uploadOtherDocument.value) {
-      return primaryDocumentFile.value != null && otherDocumentFile.value != null;
+    if(widget.uploadOtherDocument.value) {
+      return widget.primaryDocumentFile.value != null && widget.otherDocumentFile.value != null;
     }
-    return primaryDocumentFile.value != null;
+    return widget.primaryDocumentFile.value != null;
   }
 
   @override
@@ -71,52 +78,78 @@ class DocumentationScreen extends StatelessWidget {
         children: [
           DocumentInfo(),
           PrimaryDocument(
-            uploadOtherDocument: uploadOtherDocument,
-            primaryDocument: primaryDocument,
-            otherDocument: otherDocument,
-            primaryDocumentFile: primaryDocumentFile,
-            otherDocumentFile: otherDocumentFile,
+            uploadOtherDocument: widget.uploadOtherDocument,
+            primaryDocument: widget.primaryDocument,
+            otherDocument: widget.otherDocument,
+            primaryDocumentFile: widget.primaryDocumentFile,
+            otherDocumentFile: widget.otherDocumentFile,
           ),
           DocumentPoints(
-            primaryDocumentFile: primaryDocumentFile,
-            otherDocumentFile: otherDocumentFile,
+            primaryDocumentFile: widget.primaryDocumentFile,
+            otherDocumentFile: widget.otherDocumentFile,
           ),
           OtherDocument(
-            medicalDegreeFile: medicalDegreeFile,
-            policeCheckFile: policeCheckFile,
-            workVisaFile: workVisaFile,
-            medicalIndemnityInsuranceFile: medicalIndemnityInsuranceFile,
-            workingWithChildrenCheckFile: workingWithChildrenCheckFile,
-            vaccinationCertificateFile: vaccinationCertificateFile,
-            medicareCardFile: medicareCardFile,
-            approvalForSecondaryEmploymentFile: approvalForSecondaryEmploymentFile,
+            medicalDegreeFile: widget.medicalDegreeFile,
+            policeCheckFile: widget.policeCheckFile,
+            workVisaFile: widget.workVisaFile,
+            medicalIndemnityInsuranceFile: widget.medicalIndemnityInsuranceFile,
+            workingWithChildrenCheckFile: widget.workingWithChildrenCheckFile,
+            vaccinationCertificateFile: widget.vaccinationCertificateFile,
+            medicareCardFile: widget.medicareCardFile,
+            approvalForSecondaryEmploymentFile: widget.approvalForSecondaryEmploymentFile,
           ),
           BlocConsumer<AuthCubit, AuthState>(
             listener: (context, state) {
               if(state is RegisterSuccess) {
-                appToast(context: context, type: ToastType.success, message: state.message);
-                sl<AppNavigator>().pushAndRemoveUntil(screen: BlocProvider(
-                  create: (context) => sl<AuthCubit>(),
-                  child: LoginScreen(),
-                ));
+                if(!state.user.registerFlag) {
+                  sl<AppNavigator>().pushAndRemoveUntil(screen: MultiBlocProvider(providers: appLayoutBlocs(context), child: LayoutScreen(),));
+                }
               } else if(state is RegisterFailure) {
                 appToast(context: context, type: ToastType.error, message: state.message);
               }
             },
             builder: (context, state) {
               if(state is RegisterLoading) {return const CustomLoading();}
-              return AppButton(
-                onTap: () {
-                  if(_hasValidDocuments() && _hasValidOtherDocuments()) {
-                    onNext();
-                  }
-                   else if(!_hasValidDocuments()) {
-                    appToast(context: context, type: ToastType.error, message: 'Please upload all documents');
-                  } else if(!_hasValidOtherDocuments()) {
-                    appToast(context: context, type: ToastType.error, message: 'Please upload all other documents');
-                  }
-                },
-                text: 'Finish',
+              return Column(
+                spacing: 10.h,
+                children: [
+                  AppButton(
+                    onTap: () {
+                      if(_hasValidDocuments() && _hasValidOtherDocuments()) {
+                        widget.onNext();
+                      }
+                       else if(!_hasValidDocuments()) {
+                        appToast(context: context, type: ToastType.error, message: 'Please upload all documents');
+                      } else if(!_hasValidOtherDocuments()) {
+                        appToast(context: context, type: ToastType.error, message: 'Please upload all other documents');
+                      }
+                    },
+                    text: 'Finish',
+                  ),
+                  AppButton(
+                    onTap: () {
+                      setState(() {
+                        widget.uploadOtherDocument.value = false;
+                        widget.primaryDocument.value = null;
+                        widget.otherDocument.value = null;
+                        widget.primaryDocumentFile.value = null;
+                        widget.otherDocumentFile.value = null;
+                        widget.medicalDegreeFile.value = null;
+                        widget.policeCheckFile.value = null;
+                        widget.workVisaFile.value = null;
+                        widget.medicalIndemnityInsuranceFile.value = null;
+                        widget.workingWithChildrenCheckFile.value = null;
+                        widget.vaccinationCertificateFile.value = null;
+                        widget.medicareCardFile.value = null;
+                        widget.approvalForSecondaryEmploymentFile.value = null;
+                      });
+                      widget.onNext();
+                    },
+                    color: Theme.of(context).colorScheme.secondary,
+                    textColor: Theme.of(context).colorScheme.onSurface,
+                    text: 'Skip',
+                  ),
+                ],
               );
             },
           )

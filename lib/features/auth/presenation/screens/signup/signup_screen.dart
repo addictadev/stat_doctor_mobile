@@ -15,7 +15,8 @@ import 'package:stat_doctor/features/options/presentation/cubit/options_cubit.da
 import 'package:stat_doctor/features/upload_file/model/upload_file.dart';
 
 class SignupScreen extends StatefulWidget {
-  const SignupScreen({super.key});
+  final String code;
+  const SignupScreen({required this.code, super.key});
   @override
   State<SignupScreen> createState() => _SignupScreenState();
 }
@@ -30,8 +31,6 @@ class _SignupScreenState extends State<SignupScreen> {
   TextEditingController photoProfileNameController = TextEditingController();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
-  TextEditingController countryCodeController = TextEditingController(text: "+61");
-  TextEditingController phoneController = TextEditingController();
   TextEditingController emailAddressController = TextEditingController();
   ValueNotifier<bool> faceIdEnabled = ValueNotifier(false);
   ValueNotifier<bool> touchIdEnabled = ValueNotifier(false);
@@ -46,7 +45,7 @@ class _SignupScreenState extends State<SignupScreen> {
   ValueNotifier<UploadFile?> cvFile = ValueNotifier(null);
   
   // ! References
-  List<ReferencesDTO> references = [ReferencesDTO(seq: 1),];
+  List<ReferencesDTO> references = [ReferencesDTO(seq: 0),];
 
   // ! Documentation
   ValueNotifier<bool> uploadOtherDocument = ValueNotifier(false);
@@ -64,6 +63,18 @@ class _SignupScreenState extends State<SignupScreen> {
   ValueNotifier<UploadFile?> approvalForSecondaryEmploymentFile = ValueNotifier(null);
 
 
+  bool referencesIsEmpty(List<ReferencesDTO> references) {
+    ReferencesDTO reference = references.first;
+    return (reference.email == null ||
+    reference.fullName == null ||
+    reference.hospitalCurrent == null ||
+    reference.mobile == null ||
+    reference.seniority == null ||
+    reference.specialty == null) &&
+    (reference.seq == null || reference.seq == 0);
+  }
+
+
   @override
   void initState() {
     context.read<OptionsCubit>().getAllOptions();
@@ -76,8 +87,6 @@ class _SignupScreenState extends State<SignupScreen> {
         photoProfileNameController: photoProfileNameController,
         firstNameController: firstNameController,
         lastNameController: lastNameController,
-        countryCodeController: countryCodeController,
-        phoneController: phoneController,
         emailAddressController: emailAddressController,
         faceIdEnabled: faceIdEnabled,
         touchIdEnabled: touchIdEnabled,
@@ -100,6 +109,7 @@ class _SignupScreenState extends State<SignupScreen> {
       ReferencesScreen(
         references: references,
         onNext: () {setState(() {activeStep++;});},
+        onSkip: () {setState(() {activeStep++;});},
       ),
 
       // ! Documentation
@@ -120,10 +130,10 @@ class _SignupScreenState extends State<SignupScreen> {
         onNext: () {
           context.read<AuthCubit>().register(
             params: RegisterParams(
-              code: countryCodeController.text + phoneController.text,
+              code: widget.code,
               email: emailAddressController.text,
               firstName: firstNameController.text,
-              profilePic: photoProfilePathController.text,
+              profilePic: photoProfileController.text,
               surname: lastNameController.text,
               medicalDTO: MedicalDTO(
                 abn: abnController.text,
@@ -137,7 +147,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 skillLevel: skillLevel.value?.id ?? '',
                 specialties: specialties.value?.id ?? '',
               ),
-              referencesDTOList: references,
+              referencesDTOList: referencesIsEmpty(references) ? [] : references,
               docDTO: DocDTO(
                 approvalForSecondaryEmployment: approvalForSecondaryEmploymentFile.value?.url ?? '',
                 approvalForSecondaryEmploymentExt: approvalForSecondaryEmploymentFile.value?.name ?? '',
@@ -178,8 +188,6 @@ class _SignupScreenState extends State<SignupScreen> {
     photoProfileNameController.dispose();
     firstNameController.dispose();
     lastNameController.dispose();
-    countryCodeController.dispose();
-    phoneController.dispose();
     emailAddressController.dispose();
     faceIdEnabled.dispose();
     touchIdEnabled.dispose();

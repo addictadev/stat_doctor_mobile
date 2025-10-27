@@ -1,3 +1,4 @@
+import 'package:stat_doctor/features/account/data/models/user_model.dart';
 import 'package:stat_doctor/features/auth/data/objects_value/login_params.dart';
 import 'package:stat_doctor/features/auth/data/objects_value/register_params.dart';
 import 'package:stat_doctor/features/auth/data/objects_value/send_sms_params.dart';
@@ -28,7 +29,7 @@ class AuthCubit extends Cubit<AuthState> {
     if (!isClosed) {
       result.fold(
         (failure) => emit(LoginFailure(message: failure.message)),
-        (success) => emit(LoginSuccess(message: success)),
+        (success) => emit(LoginSuccess(user: success)),
       );  
     }
   }
@@ -39,9 +40,19 @@ class AuthCubit extends Cubit<AuthState> {
     if (!isClosed) {
       result.fold(
         (failure) => emit(RegisterFailure(message: failure.message)),
-        (success) => emit(RegisterSuccess(message: success)),
+        (success) => emit(RegisterSuccess(user: success)),
       );  
     }
   }
 
+  Future<void> biometricLogin() async{
+    emit(BiometricLoginLoading());
+    final result = await authRepository.biometricLogin();
+    if (!isClosed) {
+      result.fold(
+        (failure) => emit(BiometricLoginFailure(message: failure.message)),
+        (success) => emit(BiometricLoginSuccess(message: success)),
+      );  
+    }
+  }
 }

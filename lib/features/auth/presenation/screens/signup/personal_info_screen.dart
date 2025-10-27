@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stat_doctor/core/methods/biometric_authentication.dart';
 import 'package:stat_doctor/core/toast/app_toast.dart';
 import 'package:stat_doctor/core/widgets/app_button.dart';
 import 'package:stat_doctor/features/auth/presenation/widgets/login_method.dart';
@@ -12,8 +13,6 @@ class PersonalInfoScreen extends StatelessWidget {
   final TextEditingController photoProfileNameController;
   final TextEditingController firstNameController;
   final TextEditingController lastNameController;
-  final TextEditingController countryCodeController;
-  final TextEditingController phoneController;
   final TextEditingController emailAddressController;
   final ValueNotifier<bool> faceIdEnabled;
   final ValueNotifier<bool> touchIdEnabled;
@@ -25,8 +24,6 @@ class PersonalInfoScreen extends StatelessWidget {
     required this.photoProfileNameController,
     required this.firstNameController,
     required this.lastNameController,
-    required this.countryCodeController,
-    required this.phoneController,
     required this.emailAddressController,
     required this.faceIdEnabled,
     required this.touchIdEnabled,
@@ -52,11 +49,10 @@ class PersonalInfoScreen extends StatelessWidget {
           PersonalInfoFields(
             firstNameController: firstNameController,
             lastNameController: lastNameController,
-            countryCodeController: countryCodeController,
-            phoneController: phoneController,
             emailAddressController: emailAddressController,
             formKey: formKey,
           ),
+          if(BiometricAuthenticationService.instance.hasBiometricAuthentication)
           LoginMethod(
             faceIdEnabled: faceIdEnabled,
             touchIdEnabled: touchIdEnabled,

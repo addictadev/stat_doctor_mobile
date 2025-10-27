@@ -2,6 +2,7 @@ import 'package:stat_doctor/core/navigation/navigation_inj.dart';
 import 'package:stat_doctor/core/network/network_service_inj.dart';
 import 'package:stat_doctor/core/services/media_service_inj.dart';
 import 'package:stat_doctor/core/storage/storage_inj.dart';
+import 'package:stat_doctor/features/account/account_inj.dart';
 import 'package:stat_doctor/features/options/options_inj.dart';
 import 'package:stat_doctor/features/upload_file/upload_file_inj.dart';
 import 'package:get_it/get_it.dart';
@@ -19,4 +20,5 @@ Future<void> init() async {
   initAuthInjection(sl);
   initUploadFileInjection(sl);
   initOptionsInjection(sl);
+  initAccountInjection(sl);
 }

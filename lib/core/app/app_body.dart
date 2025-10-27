@@ -8,7 +8,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stat_doctor/core/storage/data/storage.dart';
 import 'package:stat_doctor/core/theme/app_theme.dart';
 import 'package:stat_doctor/core/injection/injection_container.dart';
-import 'package:stat_doctor/features/layout/presentation/screen/layout_screen.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -45,7 +44,7 @@ class MyAppState extends State<MyApp> {
           supportedLocales: AppLocalizations.supportedLocales,
           locale: _locale,
           navigatorKey: sl<AppNavigator>().navigatorKey,
-          home: AppState.currentScreen()
+          home: AppState.currentScreen(context),
           // home: LayoutScreen()
         )
       )

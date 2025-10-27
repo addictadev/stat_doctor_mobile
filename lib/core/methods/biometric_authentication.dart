@@ -30,6 +30,7 @@ class BiometricAuthenticationInstance {
       _hasBiometricAuthentication = canAuthenticate;
       if (canAuthenticate) {
         final List<BiometricType> availableBiometrics = await _localAuth.getAvailableBiometrics();
+        debugPrint('Available biometrics: $availableBiometrics');
         _isFaceIdAvailable = availableBiometrics.contains(BiometricType.face);
         _isTouchIdAvailable = availableBiometrics.contains(BiometricType.fingerprint);
         _isInitialized = true;
