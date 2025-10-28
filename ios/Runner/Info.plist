@@ -38,12 +38,6 @@
 		<string>App requires access to the documents directory</string>
 		<key>NSDownloadsUsageDescription</key>
 		<string>App requires access to the downloads folder</string>
-		<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-		<string>This app needs access to location to request aservice and add gate location.</string>
-		<key>NSLocationAlwaysUsageDescription</key>
-		<string>This app needs access to location when in the background to request aservice and add gate location.</string>
-		<key>NSLocationWhenInUseUsageDescription</key>
-		<string>This app needs access to location when open request service.</string>
 		<key>NSMicrophoneUsageDescription</key>
 		<string>We require access to your Apple Music library to enhance your experience with our app.</string>
 		<key>NSPhotoLibraryAddUsageDescription</key>
@@ -52,6 +46,8 @@
 		<string>This app needs access to your photo library to allow you to select and upload a venue map and uniform design and invoice photos for your orders.</string>
 		<key>NSFaceIDUsageDescription</key>
 		<string>This app needs access to your face id to allow you to authenticate using face id.</string>
+		<key>NSLocationWhenInUseUsageDescription</key>
+		<string>This app needs access to location when open home page to get current location and get nearest hospitals.</string>
 
 
 		<key>UISupportedInterfaceOrientations</key>

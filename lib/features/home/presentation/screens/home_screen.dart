@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stat_doctor/features/home/data/objects_value/filter_params.dart';
-import 'package:stat_doctor/features/home/presentation/widgets/home_header.dart';
-import 'package:stat_doctor/features/home/presentation/widgets/home_interested_shifts.dart';
-import 'package:stat_doctor/features/home/presentation/widgets/home_other_shifts_filter.dart';
-import 'package:stat_doctor/features/home/presentation/widgets/home_other_shifts_grid_view.dart';
-import 'package:stat_doctor/features/home/presentation/widgets/home_worked_hospitals.dart';
-import 'package:stat_doctor/features/options/presentation/cubit/options_cubit.dart';
+import 'package:stat_doctor/core/widgets/custom_animation_loading.dart';
+import 'package:stat_doctor/features/home/presentation/cubit/location_cubit.dart';
+import 'package:stat_doctor/features/home/presentation/screens/active_home_screen.dart';
+import 'package:stat_doctor/features/home/presentation/screens/location_permission_denied_screen.dart';
+import 'package:stat_doctor/features/home/presentation/screens/location_service_disabled_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,49 +13,28 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final TextEditingController searchController = TextEditingController();
-  int otherShiftsIndex = 0;
-  int shiftsLocationsIndex = 0;
-  List<String> otherShiftsTitles = ["All", "Morning", "Evening", "Night", "Bridging"];
-  List<String> shiftsLocationsTitles = ["Closest to me", "Maximum rate"];
-  FilterParams filterParams = FilterParams();
 
   @override
   void initState() {
     super.initState();
-    context.read<OptionsCubit>().getSpecialtiesOptions();
-    context.read<OptionsCubit>().getSkillOptions();
-  }
-
-  @override
-  void dispose() {
-    searchController.dispose();
-    super.dispose();
+    context.read<LocationCubit>().startGetCurrentLocation();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          HomeHeader(
-            searchController: searchController,
-            filterParams: filterParams,
-            onFilterParamsChanged: (params) {setState(() {filterParams = params;});},
-          ),
-          HomeWorkedHospitals(),
-          HomeInterestedShifts(),
-          HomeOtherShiftsFilter(
-            otherShiftsTitles: otherShiftsTitles,
-            otherShiftsIndex: otherShiftsIndex,
-            onOtherShiftsChanged: (index) {setState(() {otherShiftsIndex = index;});},
-            shiftsLocationsTitles: shiftsLocationsTitles,
-            shiftsLocationsIndex: shiftsLocationsIndex,
-            onShiftsLocationsChanged: (index) {setState(() {shiftsLocationsIndex = index;});},
-          ),
-          HomeOtherShiftsGridView(),
-          SliverToBoxAdapter(child: SizedBox(height: 125.h,),)
-        ],
+      body: BlocBuilder<LocationCubit, LocationState>(
+        buildWhen: (previous, current) => current is GetCurrentLocationLoaded || current is LocationPermissionDenied || current is LocationServiceDisabled,
+        builder: (context, state) {
+          if(state is GetCurrentLocationLoaded) {
+            return ActiveHomeScreen(position: state.position);
+          } else if(state is LocationPermissionDenied) {
+            return LocationPermissionDeniedScreen();
+          } else if(state is LocationServiceDisabled) {
+            return LocationServiceDisabledScreen();
+          }
+          return CustomAnimationLoading(color: Theme.of(context).scaffoldBackgroundColor);
+        },
       ),
     );
   }

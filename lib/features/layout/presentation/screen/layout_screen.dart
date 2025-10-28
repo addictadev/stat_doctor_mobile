@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stat_doctor/core/injection/injection_container.dart';
 import 'package:stat_doctor/core/toast/app_toast.dart';
 import 'package:stat_doctor/core/widgets/custom_animation_loading.dart';
 import 'package:stat_doctor/features/account/presentation/cubit/account_cubit.dart';
 import 'package:stat_doctor/features/account/presentation/screens/account_screen.dart';
+import 'package:stat_doctor/features/home/home_inj.dart';
 import 'package:stat_doctor/features/home/presentation/screens/home_screen.dart';
 import 'package:stat_doctor/features/layout/presentation/cubit/bnb_cubit.dart';
 import 'package:stat_doctor/features/layout/presentation/widget/layout_bnb.dart';
 import 'package:stat_doctor/features/notification/presentation/screens/notification_screen.dart';
-import 'package:stat_doctor/features/options/presentation/cubit/options_cubit.dart';
 import 'package:stat_doctor/features/shifts/presentation/screens/my_shifts_screen.dart';
 
 class LayoutScreen extends StatefulWidget {
@@ -41,7 +40,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
                 extendBody: true,
                 bottomNavigationBar: LayoutBnb(state: bnbState),
                 body: <Widget>[
-                  BlocProvider(create: (context) => sl<OptionsCubit>(), child: HomeScreen(),),
+                  MultiBlocProvider(providers: appHomeBlocs(context), child: HomeScreen(),),
                   MyShiftsScreen(),
                   NotificationScreen(),
                   AccountScreen(user: state.user),
