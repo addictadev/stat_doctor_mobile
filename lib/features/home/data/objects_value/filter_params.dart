@@ -2,14 +2,14 @@ import 'package:equatable/equatable.dart';
 import 'package:stat_doctor/features/options/data/model/options.dart';
 
 class FilterParams extends Equatable {
-  final DateTime? selectedDay;
+  final List<DateTime> selectedDates;
   final int? selectedShiftIndex;
   final double? distanceValue;
   final Options? selectedSkill;
   final Options? selectedSpecialty;
   
   const FilterParams({
-    this.selectedDay,
+    this.selectedDates = const [],
     this.selectedShiftIndex,
     this.distanceValue = 0,
     this.selectedSkill,
@@ -17,14 +17,14 @@ class FilterParams extends Equatable {
   });
 
   FilterParams copyWith({
-    DateTime? selectedDay,
+    List<DateTime>? selectedDates,
     int? selectedShiftIndex,
     double? distanceValue,
     Options? selectedSkill,
     Options? selectedSpecialty
   }) {
     return FilterParams(
-      selectedDay: selectedDay ?? this.selectedDay,
+      selectedDates: selectedDates ?? this.selectedDates,
       selectedShiftIndex: selectedShiftIndex ?? this.selectedShiftIndex,
       distanceValue: distanceValue ?? this.distanceValue,
       selectedSkill: selectedSkill ?? this.selectedSkill,
@@ -33,5 +33,5 @@ class FilterParams extends Equatable {
   }
 
   @override
-  List<Object?> get props => [selectedDay, selectedShiftIndex, distanceValue, selectedSkill, selectedSpecialty];
+  List<Object?> get props => [selectedDates, selectedShiftIndex, distanceValue, selectedSkill, selectedSpecialty];
 }

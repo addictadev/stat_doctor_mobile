@@ -102,6 +102,7 @@ dependencies:
   table_calendar: ^3.2.0
   local_auth: ^3.0.0
   geolocator: ^14.0.1
+  calendar_date_picker2: ^2.0.1
 
 
 # =============================================================================
