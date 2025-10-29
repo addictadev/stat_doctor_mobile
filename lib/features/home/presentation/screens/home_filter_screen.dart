@@ -1,7 +1,5 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stat_doctor/core/config/styles/styles.dart';
 import 'package:stat_doctor/core/injection/injection_container.dart';
@@ -11,23 +9,22 @@ import 'package:stat_doctor/core/widgets/app_appbar.dart';
 import 'package:stat_doctor/core/widgets/app_button.dart';
 import 'package:stat_doctor/core/widgets/app_dropdown.dart';
 import 'package:stat_doctor/core/widgets/clickable_text.dart';
+import 'package:stat_doctor/features/home/data/models/home_filter_model.dart';
 import 'package:stat_doctor/features/home/data/objects_value/filter_params.dart';
 import 'package:stat_doctor/features/home/presentation/widgets/filter_available_shifts.dart';
 import 'package:stat_doctor/features/home/presentation/widgets/home_filter_calendar.dart';
-import 'package:stat_doctor/features/options/presentation/cubit/options_cubit.dart';
 
 class HomeFilterScreen extends StatefulWidget {
   final FilterParams filterParams;
   final Function(FilterParams) onFilterParamsChanged;
-  const HomeFilterScreen({super.key, required this.filterParams, required this.onFilterParamsChanged});
+  final HomeFilterModel homeFilterModel;
+  const HomeFilterScreen({super.key, required this.filterParams, required this.onFilterParamsChanged, required this.homeFilterModel});
   @override
   State<HomeFilterScreen> createState() => _HomeFilterScreenState();
 }
 
 class _HomeFilterScreenState extends State<HomeFilterScreen> {
-  List<String> availableShifts = ["Morning", "Evening", "Night", "Bridging"];
   FilterParams filterParams = FilterParams();
-  
 
   @override
   void initState() {
@@ -59,13 +56,13 @@ class _HomeFilterScreenState extends State<HomeFilterScreen> {
               padding: EdgeInsetsDirectional.only(start: 5.w, top: 15.h, bottom: 10.h),
             ),
             FilterAvailableShifts(
-              availableShifts: availableShifts,
-              onShiftSelected: (index) {
+              availableShifts: widget.homeFilterModel.timeType,
+              onShiftSelected: (shiftType) {
                 setState(() {
-                  filterParams = filterParams.copyWith(selectedShiftIndex: index);
+                  filterParams = filterParams.copyWith(selectedShift: shiftType);
                 });
               },
-              selectedShift: filterParams.selectedShiftIndex,
+              selectedShift: filterParams.selectedShift,
             ),
             AlignText(
               text: "Distance from current location",
@@ -89,14 +86,14 @@ class _HomeFilterScreenState extends State<HomeFilterScreen> {
               padding: EdgeInsetsDirectional.only(start: 5.w, top: 15.h, bottom: 5.h),
             ),
             AppDropdown(
-              items: context.read<OptionsCubit>().specialtiesOptions.map((e) => e.name).toList(),
+              items: widget.homeFilterModel.filterSpecialties.map((e) => e.name).toList(),
               initialItem: filterParams.selectedSpecialty?.name,
               hintText: "Select...",
               onChanged: (value) {
                 if(value != null) {
                   setState(() {
                     filterParams = filterParams.copyWith(
-                      selectedSpecialty: context.read<OptionsCubit>().specialtiesOptions.firstWhere((e) => e.name == value)
+                      selectedSpecialty: widget.homeFilterModel.filterSpecialties.firstWhere((e) => e.name == value)
                     );
                   });
                 }
@@ -108,14 +105,14 @@ class _HomeFilterScreenState extends State<HomeFilterScreen> {
               padding: EdgeInsetsDirectional.only(start: 5.w, top: 15.h, bottom: 5.h),
             ),
             AppDropdown(
-              items: context.read<OptionsCubit>().skillOptions.map((e) => e.name).toList(),
+              items: widget.homeFilterModel.filterSkills.map((e) => e.name).toList(),
               initialItem: filterParams.selectedSkill?.name,
               hintText: "Select...",
               onChanged: (value) {
                 if(value != null) {
                   setState(() {
                     filterParams = filterParams.copyWith(
-                      selectedSkill: context.read<OptionsCubit>().skillOptions.firstWhere((e) => e.name == value)
+                      selectedSkill: widget.homeFilterModel.filterSkills.firstWhere((e) => e.name == value)
                     );
                   });
                 }

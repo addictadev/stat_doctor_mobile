@@ -9,9 +9,9 @@ class HomeFilterModel extends Equatable {
   const HomeFilterModel({required this.timeType, required this.filterSkills, required this.filterSpecialties});
 
   factory HomeFilterModel.fromJson(Map<String, dynamic> json) => HomeFilterModel(
-    timeType: json['timeType'],
-    filterSkills: json['skillLevelList'],
-    filterSpecialties: json['specialtyList'],
+    timeType: (json['timeType'] as List).map((e) => e.toString()).toList(),
+    filterSkills: (json['skillLevelList'] as List).map((e) => HomeFilterOptionModel.fromJson(e)).toList(),
+    filterSpecialties: (json['specialtyList'] as List).map((e) => HomeFilterOptionModel.fromJson(e)).toList(),
   );
 
   Map<String, dynamic> toJson() => {
