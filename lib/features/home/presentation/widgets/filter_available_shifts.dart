@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stat_doctor/features/home/presentation/widgets/available_shift_button.dart';
 
 
@@ -13,7 +14,13 @@ class FilterAvailableShifts extends StatelessWidget {
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        childAspectRatio: 3.25,
+        mainAxisSpacing: 10.h,
+        crossAxisSpacing: 10.w,
+      ),
+      itemCount: availableShifts.length,
       itemBuilder: (context, index) => AvailableShiftButton(
         onTap: () {onShiftSelected(availableShifts[index]);},
         text: availableShifts[index],
