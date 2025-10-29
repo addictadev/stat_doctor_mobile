@@ -14,6 +14,7 @@ class FilterAvailableShifts extends StatelessWidget {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+      itemCount: availableShifts.length,
       itemBuilder: (context, index) => AvailableShiftButton(
         onTap: () {onShiftSelected(availableShifts[index]);},
         text: availableShifts[index],
