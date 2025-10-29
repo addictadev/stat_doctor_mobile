@@ -13,7 +13,7 @@ class HomeDatasourceImpl implements HomeDatasource {
   @override
   Future<HomeFilterModel> getHomeFilter() async {
     final response = await apiBaseHelper.get(url: AppEndpoints.homeFilters);
-    HomeFilterModel result = HomeFilterModel.fromJson(response);
+    HomeFilterModel result = HomeFilterModel.fromJson(response['data']);
     return result;
   }
 }

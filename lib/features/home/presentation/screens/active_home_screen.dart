@@ -3,12 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:stat_doctor/features/home/data/objects_value/filter_params.dart';
+import 'package:stat_doctor/features/home/presentation/cubit/filter_cubit.dart';
 import 'package:stat_doctor/features/home/presentation/widgets/home_header.dart';
 import 'package:stat_doctor/features/home/presentation/widgets/home_interested_shifts.dart';
 import 'package:stat_doctor/features/home/presentation/widgets/home_other_shifts_filter.dart';
 import 'package:stat_doctor/features/home/presentation/widgets/home_other_shifts_grid_view.dart';
 import 'package:stat_doctor/features/home/presentation/widgets/home_worked_hospitals.dart';
-import 'package:stat_doctor/features/options/presentation/cubit/options_cubit.dart';
 
 class ActiveHomeScreen extends StatefulWidget {
   final Position position;
@@ -28,8 +28,7 @@ class _ActiveHomeScreenState extends State<ActiveHomeScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<OptionsCubit>().getSpecialtiesOptions();
-    context.read<OptionsCubit>().getSkillOptions();
+    context.read<FilterCubit>().getHomeFilter();
   }
 
   @override

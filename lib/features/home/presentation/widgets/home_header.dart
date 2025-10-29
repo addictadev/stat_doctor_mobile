@@ -10,8 +10,8 @@ import 'package:stat_doctor/core/navigation/app_navigator.dart';
 import 'package:stat_doctor/core/widgets/circle_container.dart';
 import 'package:stat_doctor/core/widgets/search_formfield.dart';
 import 'package:stat_doctor/features/home/data/objects_value/filter_params.dart';
+import 'package:stat_doctor/features/home/presentation/cubit/filter_cubit.dart';
 import 'package:stat_doctor/features/home/presentation/screens/home_filter_screen.dart';
-import 'package:stat_doctor/features/options/presentation/cubit/options_cubit.dart';
 
 class HomeHeader extends StatelessWidget {
   final FilterParams filterParams;
@@ -49,17 +49,21 @@ class HomeHeader extends StatelessWidget {
                         hintText: "Search hospital or location..."
                       )
                     ),
-                    CircleContainer(
-                      onTap: () {sl<AppNavigator>().push(screen: BlocProvider.value(
-                        value: context.read<OptionsCubit>(),
-                        child: HomeFilterScreen(
-                          filterParams: filterParams,
-                          onFilterParamsChanged: onFilterParamsChanged,
-                        ),
-                      ));},
-                      size: 50,
-                      color: AppColors.cardColorLight,
-                      child: AppIcons.icon(icon: AppIcons.filter, color: AppColors.green),
+                    BlocBuilder<FilterCubit, FilterState>(
+                      builder: (context, state) {
+                        return CircleContainer(
+                          onTap: () {sl<AppNavigator>().push(screen: 
+                          HomeFilterScreen(
+                            filterParams: filterParams,
+                            onFilterParamsChanged: onFilterParamsChanged,
+                            homeFilterModel: context.read<FilterCubit>().homeFilterModel,
+                          )
+                          );},
+                          size: 50,
+                          color: AppColors.cardColorLight,
+                          child: AppIcons.icon(icon: AppIcons.filter, color: AppColors.green),
+                        );
+                      },
                     )
                   ],
                 )
