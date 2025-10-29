@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -25,11 +27,7 @@ class HomeFilterScreen extends StatefulWidget {
 class _HomeFilterScreenState extends State<HomeFilterScreen> {
   List<String> availableShifts = ["Morning", "Evening", "Night", "Bridging"];
   FilterParams filterParams = FilterParams();
-  // DateTime? selectedDay;
-  // int? selectedShiftIndex;
-  // double distanceValue = 0;
-  // Options? selectedSkill;
-  // Options? selectedSpecialty;
+  
 
   @override
   void initState() {
@@ -52,8 +50,8 @@ class _HomeFilterScreenState extends State<HomeFilterScreen> {
               padding: EdgeInsetsDirectional.only(start: 5.w, bottom: 10.h),
             ),
             HomeFilterCalendar(
-              onDaySelected: (date) {setState(() {filterParams = filterParams.copyWith(selectedDay: date);});},
-              selectedDay: filterParams.selectedDay,
+              selectedDates: filterParams.selectedDates,
+              onSelectedDatesChanged: (dates) {setState(() {filterParams = filterParams.copyWith(selectedDates: dates);});},
             ),
             AlignText(
               text: "Available shifts",
@@ -75,10 +73,11 @@ class _HomeFilterScreenState extends State<HomeFilterScreen> {
               padding: EdgeInsetsDirectional.only(start: 5.w, top: 15.h, bottom: 10.h),
             ),
             Slider(
-              value: filterParams.distanceValue ?? 0,
+              value: (filterParams.distanceValue ?? 0) / 100,
               onChanged: (value) {
                 setState(() {
-                  filterParams = filterParams.copyWith(distanceValue: value);
+                  filterParams = filterParams.copyWith(distanceValue: value * 100);
+                  log(filterParams.distanceValue.toString());
                 });
               },
               inactiveColor: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.1),

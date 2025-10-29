@@ -97,11 +97,12 @@ dependencies:
   # =============================================================================
   flutter_launcher_icons: ^0.14.3     # App icon generation for all platforms
   flutter_native_splash: ^2.4.4       # Splash screen generation
-  permission_handler: ^12.0.0+1       # Runtime permission handling
   package_info_plus: ^9.0.0           # App package information access
   flutter_rating_bar: ^4.0.1          # Rating bar widget for reviews
   table_calendar: ^3.2.0
   local_auth: ^3.0.0
+  geolocator: ^14.0.1
+  calendar_date_picker2: ^2.0.1
 
 
 # =============================================================================

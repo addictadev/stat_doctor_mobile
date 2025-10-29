@@ -3,13 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DefaultContainer extends StatelessWidget {
   final Widget child;
-  const DefaultContainer({super.key, required this.child});
+  final EdgeInsetsGeometry? padding;
+  const DefaultContainer({super.key, required this.child, this.padding});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(15.r),
+      padding: padding ?? EdgeInsets.all(15.r),
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
         border: Border.all(color: Theme.of(context).dividerColor),

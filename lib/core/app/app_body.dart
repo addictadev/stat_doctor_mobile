@@ -45,7 +45,6 @@ class MyAppState extends State<MyApp> {
           locale: _locale,
           navigatorKey: sl<AppNavigator>().navigatorKey,
           home: AppState.currentScreen(context),
-          // home: LayoutScreen()
         )
       )
     );

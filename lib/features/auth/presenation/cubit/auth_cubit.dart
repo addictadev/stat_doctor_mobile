@@ -2,7 +2,7 @@ import 'package:stat_doctor/features/account/data/models/user_model.dart';
 import 'package:stat_doctor/features/auth/data/objects_value/login_params.dart';
 import 'package:stat_doctor/features/auth/data/objects_value/register_params.dart';
 import 'package:stat_doctor/features/auth/data/objects_value/send_sms_params.dart';
-import 'package:stat_doctor/features/auth/data/repository/auth_repository._impl.dart';
+import 'package:stat_doctor/features/auth/data/repository/auth_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 part 'auth_state.dart';
