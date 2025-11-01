@@ -20,6 +20,16 @@ class HomeFilterModel extends Equatable {
     'specialtyList': filterSpecialties,
   };
 
+  HomeFilterModel copyWith({
+    List<String>? timeType,
+    List<HomeFilterOptionModel>? filterSkills,
+    List<HomeFilterOptionModel>? filterSpecialties,
+  }) => HomeFilterModel(
+    timeType: timeType ?? this.timeType,
+    filterSkills: filterSkills ?? this.filterSkills,
+    filterSpecialties: filterSpecialties ?? this.filterSpecialties,
+  );
+
   @override
   List<Object?> get props => [timeType, filterSkills, filterSpecialties];
 }

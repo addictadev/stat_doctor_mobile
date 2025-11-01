@@ -127,7 +127,7 @@ class _HomeFilterScreenState extends State<HomeFilterScreen> {
               child: ClickableText(
                 text: "Reset",
                 textStyle: TextStyles.textViewMedium16.copyWith(color: Theme.of(context).hintColor),
-                onTap: () {widget.onFilterParamsChanged(FilterParams()); sl<AppNavigator>().pop();},
+                onTap: () {widget.onFilterParamsChanged(filterParams.reset()); sl<AppNavigator>().pop();},
               ),
             )
           ],

@@ -17,7 +17,8 @@ class HomeHeader extends StatelessWidget {
   final FilterParams filterParams;
   final Function(FilterParams) onFilterParamsChanged;
   final TextEditingController searchController;
-  const HomeHeader({super.key, required this.searchController, required this.filterParams, required this.onFilterParamsChanged});
+  final Function(String) onSearchChanged;
+  const HomeHeader({super.key, required this.searchController, required this.filterParams, required this.onFilterParamsChanged, required this.onSearchChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -45,8 +46,9 @@ class HomeHeader extends StatelessWidget {
                   children: [
                     Expanded(
                       child: SearchFormField(
-                        controller: TextEditingController(),
-                        hintText: "Search hospital or location..."
+                        controller: searchController,
+                        hintText: "Search hospital or location...",
+                        onChanged: onSearchChanged,
                       )
                     ),
                     BlocBuilder<FilterCubit, FilterState>(

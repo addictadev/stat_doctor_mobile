@@ -3,23 +3,23 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stat_doctor/core/config/styles/styles.dart';
 import 'package:stat_doctor/core/widgets/app_button.dart';
 import 'package:stat_doctor/core/widgets/popup_header.dart';
+import 'package:stat_doctor/features/home/data/objects_value/shift_status_params.dart';
 
 class HomeShiftLocationBottomSheet extends StatefulWidget {
-  final List<String> shiftsLocationsTitles;
-  final int shiftsLocationsIndex;
-  final Function(int) onShiftsLocationsChanged;
-  const HomeShiftLocationBottomSheet({super.key, required this.shiftsLocationsTitles, required this.shiftsLocationsIndex, required this.onShiftsLocationsChanged});
+  final ShiftStatusParams currentShiftsStatus;
+  final Function(ShiftStatusParams) onShiftsStatusChanged;
+  const HomeShiftLocationBottomSheet({super.key, required this.currentShiftsStatus, required this.onShiftsStatusChanged});
   @override
   State<HomeShiftLocationBottomSheet> createState() => _HomeShiftLocationBottomSheetState();
 }
 
 class _HomeShiftLocationBottomSheetState extends State<HomeShiftLocationBottomSheet> {
-  int selectedShiftsLocationsIndex = 0;
+  ShiftStatusParams selectedShiftsStatus = ShiftStatusParams.shiftStatusList.first;
   
   @override
   void initState() {
     super.initState();
-    selectedShiftsLocationsIndex = widget.shiftsLocationsIndex;
+    selectedShiftsStatus = widget.currentShiftsStatus;
   }
 
   @override
@@ -33,20 +33,20 @@ class _HomeShiftLocationBottomSheetState extends State<HomeShiftLocationBottomSh
         children: [
           PopupHeader(title: "Shifts near you",),
           ...List.generate(
-            widget.shiftsLocationsTitles.length,
+            ShiftStatusParams.shiftStatusList.length,
             (index) => AppButton(
-              onTap: () {setState(() {selectedShiftsLocationsIndex = index;});},
-              color: selectedShiftsLocationsIndex == index ? Theme.of(context).primaryColor.withValues(alpha: 0.1) : Theme.of(context).cardColor,
-              borderColor: selectedShiftsLocationsIndex == index ? Theme.of(context).primaryColor : Theme.of(context).dividerColor,
-              style: TextStyles.textViewMedium14.copyWith(color: selectedShiftsLocationsIndex == index ? Theme.of(context).primaryColor : Theme.of(context).colorScheme.onSurface),
-              text: widget.shiftsLocationsTitles[index],
+              onTap: () {setState(() {selectedShiftsStatus = ShiftStatusParams.shiftStatusList[index];});},
+              color: selectedShiftsStatus == ShiftStatusParams.shiftStatusList[index] ? Theme.of(context).primaryColor.withValues(alpha: 0.1) : Theme.of(context).cardColor,
+              borderColor: selectedShiftsStatus == ShiftStatusParams.shiftStatusList[index] ? Theme.of(context).primaryColor : Theme.of(context).dividerColor,
+              style: TextStyles.textViewMedium14.copyWith(color: selectedShiftsStatus == ShiftStatusParams.shiftStatusList[index] ? Theme.of(context).primaryColor : Theme.of(context).colorScheme.onSurface),
+              text: ShiftStatusParams.shiftStatusList[index].title,
             )
           ),
           AppButton(
             onTap: () {
               Navigator.pop(context);
-              if(selectedShiftsLocationsIndex != widget.shiftsLocationsIndex) {
-                widget.onShiftsLocationsChanged(selectedShiftsLocationsIndex);
+              if(selectedShiftsStatus != widget.currentShiftsStatus) {
+                widget.onShiftsStatusChanged(selectedShiftsStatus);
               }
             },
             margin: EdgeInsets.symmetric(vertical: 10.h),
