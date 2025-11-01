@@ -3,22 +3,20 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stat_doctor/core/config/app_colors.dart';
 import 'package:stat_doctor/core/config/app_icons.dart';
 import 'package:stat_doctor/core/config/styles/styles.dart';
-import 'package:stat_doctor/core/injection/injection_container.dart';
-import 'package:stat_doctor/core/navigation/app_navigator.dart';
 import 'package:stat_doctor/core/widgets/app_cached_network_image.dart';
 import 'package:stat_doctor/core/widgets/badge.dart';
 import 'package:stat_doctor/core/widgets/default_container.dart';
 import 'package:stat_doctor/features/home/data/models/home_shift_model.dart';
-import 'package:stat_doctor/features/hospital/presentation/screens/hospital_screen.dart';
 
 class MyShiftsDetailsInfo extends StatelessWidget {
+  final Function()? onTap;
   final HomeShiftModel homeShiftModel;
-  const MyShiftsDetailsInfo({required this.homeShiftModel, super.key});
+  const MyShiftsDetailsInfo({this.onTap, required this.homeShiftModel, super.key});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {sl<AppNavigator>().push(screen: HospitalScreen(homeShiftModel: homeShiftModel,));},
+      onTap: onTap,
       child: DefaultContainer(
         child: Column(
           spacing: 10.h,

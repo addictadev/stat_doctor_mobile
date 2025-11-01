@@ -7,6 +7,10 @@ import 'package:stat_doctor/features/home/data/objects_value/filter_params.dart'
 abstract class HomeDatasource {
   Future<HomeFilterModel> getHomeFilter();
   Future<HomeShiftsDataModel> getHomeShifts(FilterParams filterParams);
+  Future<String> addToFavorite({required String hospitalAccountId});
+  Future<String> removeFromFavorite({required String hospitalAccountId});
+
+
 }
 
 class HomeDatasourceImpl implements HomeDatasource {
@@ -30,5 +34,17 @@ class HomeDatasourceImpl implements HomeDatasource {
     HomeShiftsDataModel result = HomeShiftsDataModel.fromJson(response['data']);
     bool hasNextPage = result.interestedList.isNotEmpty || result.nearList.isNotEmpty || result.workedList.isNotEmpty;
     return result.copyWith(hasNextPage: hasNextPage);
+  }
+
+  @override
+  Future<String> addToFavorite({required String hospitalAccountId}) async {
+    final response = await apiBaseHelper.post(url: AppEndpoints.addToFavorite(hospitalAccountId: hospitalAccountId));
+    return response['message'];
+  }
+
+  @override
+  Future<String> removeFromFavorite({required String hospitalAccountId}) async {
+    final response = await apiBaseHelper.post(url: AppEndpoints.removeFromFavorite(hospitalAccountId: hospitalAccountId));
+    return response['message'];
   }
 }

@@ -5,7 +5,10 @@ class CustomLoading extends StatelessWidget {
   final double? size;
   final double? top;
   final double? bottom;
-  const CustomLoading({this.top, this.bottom, this.size, super.key});
+  final Color? color;
+  final Color? backgroundColor;
+  final double? strokeWidth;
+  const CustomLoading({this.top, this.bottom, this.size, this.color, this.backgroundColor, this.strokeWidth, super.key});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -15,9 +18,9 @@ class CustomLoading extends StatelessWidget {
           width: size?.w ?? 30.w,
           height: size?.h ?? 30.h,
           child: CircularProgressIndicator(
-            color: Theme.of(context).primaryColor,
-            backgroundColor: Theme.of(context).primaryColor.withValues(alpha: 0.25) ,
-            strokeWidth: 5.r,
+            color: color ?? Theme.of(context).primaryColor,
+            backgroundColor: backgroundColor ?? Theme.of(context).primaryColor.withValues(alpha: 0.25) ,
+            strokeWidth: strokeWidth?.r ?? 5.r,
           ),
         ),
       ),

@@ -18,4 +18,12 @@ class HomeRepository with RepositoryHelper{
   Future<Either<Failure, HomeShiftsDataModel>> getHomeShifts(FilterParams filterParams) async {
     return handleEither(() => homeDatasource.getHomeShifts(filterParams));
   }
+
+  Future<Either<Failure, String>> addToFavorite({required String hospitalAccountId}) async {
+    return handleEither(() => homeDatasource.addToFavorite(hospitalAccountId: hospitalAccountId));
+  }
+
+  Future<Either<Failure, String>> removeFromFavorite({required String hospitalAccountId}) async {
+    return handleEither(() => homeDatasource.removeFromFavorite(hospitalAccountId: hospitalAccountId));
+  }
 }

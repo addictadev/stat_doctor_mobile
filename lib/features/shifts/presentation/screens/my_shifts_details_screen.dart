@@ -5,10 +5,7 @@ import 'package:stat_doctor/core/widgets/app_appbar.dart';
 import 'package:stat_doctor/core/widgets/app_button.dart';
 import 'package:stat_doctor/core/widgets/clickable_text.dart';
 import 'package:stat_doctor/features/shifts/data/enums/my_shifts_status.dart';
-import 'package:stat_doctor/features/shifts/presentation/widgets/my_shifts_details_contact.dart';
 import 'package:stat_doctor/features/shifts/presentation/widgets/my_shifts_details_description.dart';
-import 'package:stat_doctor/features/shifts/presentation/widgets/my_shifts_details_rate.dart';
-import 'package:stat_doctor/features/shifts/presentation/widgets/my_shifts_details_requirements.dart';
 import 'package:stat_doctor/features/shifts/presentation/widgets/my_shifts_details_reviews.dart';
 
 class MyShiftsDetailsScreen extends StatefulWidget {

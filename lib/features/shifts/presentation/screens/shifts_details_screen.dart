@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stat_doctor/core/injection/injection_container.dart';
+import 'package:stat_doctor/core/navigation/app_navigator.dart';
 import 'package:stat_doctor/core/widgets/app_appbar.dart';
 import 'package:stat_doctor/core/widgets/app_button.dart';
 import 'package:stat_doctor/features/home/data/models/home_shift_model.dart';
 import 'package:stat_doctor/features/home/data/models/shift_day_vo.dart';
+import 'package:stat_doctor/features/home/presentation/cubit/home_cubit.dart';
+import 'package:stat_doctor/features/hospital/presentation/screens/hospital_screen.dart';
 import 'package:stat_doctor/features/shifts/presentation/widgets/my_shifts_details_contact.dart';
 import 'package:stat_doctor/features/shifts/presentation/widgets/my_shifts_details_description.dart';
 import 'package:stat_doctor/features/shifts/presentation/widgets/my_shifts_details_info.dart';
@@ -50,7 +55,13 @@ class _ShiftsDetailsScreenState extends State<ShiftsDetailsScreen> {
         child: Column(
           spacing: 15.h,
           children: [
-            MyShiftsDetailsInfo(homeShiftModel: widget.homeShiftModel,),
+            MyShiftsDetailsInfo(
+              onTap: () {sl<AppNavigator>().push(screen: BlocProvider.value(
+                value: context.read<HomeCubit>(),
+                child: HospitalScreen(homeShiftModel: widget.homeShiftModel,),
+              ));},
+              homeShiftModel: widget.homeShiftModel,
+            ),
             if(widget.homeShiftModel.shiftsDetailVO.shiftsDescription?.isNotEmpty ?? false)
             MyShiftsDetailsDescription(description: widget.homeShiftModel.shiftsDetailVO.shiftsDescription ?? "",),
             MyShiftsDetailsRequirements(shiftsDetailVO: widget.homeShiftModel.shiftsDetailVO,),

@@ -44,4 +44,26 @@ class HomeCubit extends Cubit<HomeState> {
       );
     }
   }
+
+  Future<void> addToFavorite({required String hospitalAccountId}) async {
+    emit(FavoriteLoading());
+    final result = await homeRepository.addToFavorite(hospitalAccountId: hospitalAccountId);
+    if (!isClosed) {
+      result.fold(
+        (failure) => emit(FavoriteFailure(message: failure.message)),
+        (success) => emit(AddToFavoriteSuccess(message: success)),
+      );
+    }
+  }
+
+  Future<void> removeFromFavorite({required String hospitalAccountId}) async {  
+    emit(FavoriteLoading());
+    final result = await homeRepository.removeFromFavorite(hospitalAccountId: hospitalAccountId);
+    if (!isClosed) {
+      result.fold(
+        (failure) => emit(FavoriteFailure(message: failure.message)),
+        (success) => emit(RemoveFromFavoriteSuccess(message: success)),
+      );
+    }
+  }
 }

@@ -37,7 +37,7 @@ class _HospitalScreenState extends State<HospitalScreen> {
         backgroundColor: AppColors.transparent,
         backButtonBackgroundColor: AppColors.textColorLight.withValues(alpha: 0.1),
         backButtonIconColor: AppColors.cardColorLight,
-        actions: [HospitalFavButton(isFav: widget.homeShiftModel.hospitalVO.favouritesFlag),],
+        actions: [HospitalFavButton(isFav: widget.homeShiftModel.hospitalVO.favouritesFlag, hospitalAccountId: widget.homeShiftModel.hospitalVO.accountId),],
       ),
       body: Stack(
         children: [

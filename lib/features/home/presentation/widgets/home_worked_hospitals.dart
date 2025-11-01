@@ -38,7 +38,7 @@ class HomeWorkedHospitals extends StatelessWidget {
                   separatorBuilder: (context, index) => SizedBox(width: 10.w),
                   itemBuilder: (context, index) {
                     if (index == context.read<HomeCubit>().workedList.length) {return AppShimmer(child: ShimmerShape(width: MediaQuery.sizeOf(context).width * 0.8, height: MediaQuery.sizeOf(context).height * 0.57, radius: 20.r,));}
-                    return HomeHospitalCard(homeShiftModel: context.read<HomeCubit>().workedList[index]);
+                    return HomeHospitalCard(homeShiftModel: context.read<HomeCubit>().workedList[index], toHospitalScreen: true);
                   } ,
                 ),
               );
