@@ -19,7 +19,7 @@ class HomeHospitalCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {sl<AppNavigator>().push(screen: ShiftsDetailsScreen());},
+      onTap: () {sl<AppNavigator>().push(screen: ShiftsDetailsScreen(homeShiftModel: homeShiftModel));},
       overlayColor: WidgetStatePropertyAll(AppColors.transparent),
       child: Container(
         width: MediaQuery.sizeOf(context).width * 0.8,
@@ -36,7 +36,7 @@ class HomeHospitalCard extends StatelessWidget {
           children: [
             HomeHospitalCardImage(homeShiftModel: homeShiftModel),
             Text(homeShiftModel.hospitalVO.hospitalName, style: TextStyles.textViewBold16, maxLines: 2, overflow: TextOverflow.ellipsis,),
-            HomeHospitalCardRate(),
+            HomeHospitalCardRate(homeShiftModel: homeShiftModel),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               spacing: 15.h,

@@ -103,6 +103,7 @@ dependencies:
   local_auth: ^3.0.0
   geolocator: ^14.0.1
   calendar_date_picker2: ^2.0.1
+  url_launcher: ^6.3.2
 
 
 # =============================================================================

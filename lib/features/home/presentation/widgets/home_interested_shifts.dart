@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stat_doctor/core/config/styles/styles.dart';
 import 'package:stat_doctor/core/widgets/align_text.dart';
 import 'package:stat_doctor/core/widgets/app_shimmer.dart';
-import 'package:stat_doctor/core/widgets/custom_loading.dart';
 import 'package:stat_doctor/core/widgets/shimmer_shape.dart';
 import 'package:stat_doctor/features/home/presentation/cubit/home_cubit.dart';
 import 'package:stat_doctor/features/home/presentation/widgets/home_horizontal_list_Loading.dart';

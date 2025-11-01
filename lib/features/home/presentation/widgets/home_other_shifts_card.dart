@@ -4,6 +4,7 @@ import 'package:stat_doctor/core/config/app_colors.dart';
 import 'package:stat_doctor/core/config/app_icons.dart';
 import 'package:stat_doctor/core/config/styles/styles.dart';
 import 'package:stat_doctor/core/injection/injection_container.dart';
+import 'package:stat_doctor/core/methods/covert_datetime_to_string.dart';
 import 'package:stat_doctor/core/navigation/app_navigator.dart';
 import 'package:stat_doctor/features/home/data/models/home_shift_model.dart';
 import 'package:stat_doctor/features/home/presentation/widgets/home_other_shifts_card_image.dart';
@@ -16,7 +17,7 @@ class HomeOtherShiftsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {sl<AppNavigator>().push(screen: ShiftsDetailsScreen());},
+      onTap: () {sl<AppNavigator>().push(screen: ShiftsDetailsScreen(homeShiftModel: homeShiftModel));},
       overlayColor: WidgetStatePropertyAll(AppColors.transparent),
       child: Container(
         padding: EdgeInsets.all(10.r),
@@ -25,6 +26,7 @@ class HomeOtherShiftsCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(15.r),
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 5.h,
           children: [
             HomeOtherShiftsCardImage(homeShiftModel: homeShiftModel),
@@ -35,7 +37,7 @@ class HomeOtherShiftsCard extends StatelessWidget {
                   spacing: 5.w,
                   children: [
                     AppIcons.icon(icon: AppIcons.calendar, size: 10, color: Theme.of(context).hintColor),
-                    Expanded(child: Text(homeShiftModel.shiftsDaysVOList.first.shiftsDays, style: TextStyles.textViewMedium10, maxLines: 1, overflow: TextOverflow.ellipsis,)),
+                    Expanded(child: Text(ConvertDateTime.formatDateTimeToDay(homeShiftModel.shiftsDaysVOList.first.shiftsDays), style: TextStyles.textViewMedium10, maxLines: 1, overflow: TextOverflow.ellipsis,)),
                   ],
                 ),
               ),

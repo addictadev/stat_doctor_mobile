@@ -30,6 +30,11 @@
 		<string>Main</string>
 
 
+		<key>LSApplicationQueriesSchemes</key>
+		<array>
+			<string>sms</string>
+			<string>tel</string>
+		</array>
 		<key>NSAppleMusicUsageDescription</key>
 		<string>We require access to your Apple Music library to enhance your experience with our app.</string>
 		<key>NSCameraUsageDescription</key>

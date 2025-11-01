@@ -2,25 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stat_doctor/core/widgets/app_appbar.dart';
 import 'package:stat_doctor/core/widgets/app_button.dart';
-import 'package:stat_doctor/features/shifts/data/enums/my_shifts_status.dart';
+import 'package:stat_doctor/features/home/data/models/home_shift_model.dart';
+import 'package:stat_doctor/features/home/data/models/shift_day_vo.dart';
 import 'package:stat_doctor/features/shifts/presentation/widgets/my_shifts_details_contact.dart';
 import 'package:stat_doctor/features/shifts/presentation/widgets/my_shifts_details_description.dart';
 import 'package:stat_doctor/features/shifts/presentation/widgets/my_shifts_details_info.dart';
-import 'package:stat_doctor/features/shifts/presentation/widgets/my_shifts_details_rate.dart';
 import 'package:stat_doctor/features/shifts/presentation/widgets/my_shifts_details_requirements.dart';
 import 'package:stat_doctor/features/shifts/presentation/widgets/my_shifts_details_similar_shifts.dart';
 
 class ShiftsDetailsScreen extends StatefulWidget {
-  const ShiftsDetailsScreen({super.key});
+  final HomeShiftModel homeShiftModel;
+  const ShiftsDetailsScreen({required this.homeShiftModel, super.key});
   @override
   State<ShiftsDetailsScreen> createState() => _ShiftsDetailsScreenState();
 }
 
 class _ShiftsDetailsScreenState extends State<ShiftsDetailsScreen> {
-  MyShiftsStatus myShiftsStatus = MyShiftsStatus.applied;
+  final List<ShiftDayVO> selectedShiftsDaysVOList = [];
 
-  static const String image = "https://plus.unsplash.com/premium_photo-1672097247893-4f8660247b1f?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1169";
-
+  String get buttonApplytitle => selectedShiftsDaysVOList.isNotEmpty ? "Apply (${selectedShiftsDaysVOList.length} ${selectedShiftsDaysVOList.length > 1 ? "shifts" : "shift"})" : "Apply";
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +36,11 @@ class _ShiftsDetailsScreenState extends State<ShiftsDetailsScreen> {
           mainAxisSize: MainAxisSize.min,
           spacing: 10.h,
           children: [
-            AppButton(text: "Apply (2 shifts)",),
+            AppButton(
+              onTap: () {
+              },
+              text: buttonApplytitle,
+            ),
           ],
         ),
       ),
@@ -45,12 +50,22 @@ class _ShiftsDetailsScreenState extends State<ShiftsDetailsScreen> {
         child: Column(
           spacing: 15.h,
           children: [
-            MyShiftsDetailsInfo(image: image,),
-            MyShiftsDetailsDescription(),
-            MyShiftsDetailsRate(),
-            MyShiftsDetailsRequirements(),
-            MyShiftsDetailsContact(),
-            MyShiftsDetailsSimilarShifts(),
+            MyShiftsDetailsInfo(homeShiftModel: widget.homeShiftModel,),
+            if(widget.homeShiftModel.shiftsDetailVO.shiftsDescription?.isNotEmpty ?? false)
+            MyShiftsDetailsDescription(description: widget.homeShiftModel.shiftsDetailVO.shiftsDescription ?? "",),
+            MyShiftsDetailsRequirements(shiftsDetailVO: widget.homeShiftModel.shiftsDetailVO,),
+            MyShiftsDetailsContact(homeShiftModel: widget.homeShiftModel,),
+            MyShiftsDetailsSimilarShifts(
+              homeShiftModel: widget.homeShiftModel,
+              selectedShiftsDaysVOList: selectedShiftsDaysVOList,
+              onSelected: (shift) {
+                setState(() {
+                  selectedShiftsDaysVOList.contains(shift)?
+                  selectedShiftsDaysVOList.remove(shift):
+                  selectedShiftsDaysVOList.add(shift);
+                });
+              },
+            ),
           ],
         ),
       )

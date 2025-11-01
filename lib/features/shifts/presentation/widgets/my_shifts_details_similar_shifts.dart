@@ -3,26 +3,21 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stat_doctor/core/config/styles/styles.dart';
 import 'package:stat_doctor/core/widgets/badge.dart';
 import 'package:stat_doctor/core/widgets/default_container.dart';
-import 'package:stat_doctor/features/shifts/data/model/similar_shift_model.dart';
+import 'package:stat_doctor/features/home/data/models/home_shift_model.dart';
+import 'package:stat_doctor/features/home/data/models/shift_day_vo.dart';
 import 'package:stat_doctor/features/shifts/presentation/widgets/similar_shift_item.dart';
 
 class MyShiftsDetailsSimilarShifts extends StatefulWidget {
-  const MyShiftsDetailsSimilarShifts({super.key});
+  final HomeShiftModel homeShiftModel;
+  final List<ShiftDayVO> selectedShiftsDaysVOList;
+  final Function(ShiftDayVO) onSelected;
+  const MyShiftsDetailsSimilarShifts({required this.homeShiftModel, required this.selectedShiftsDaysVOList, required this.onSelected, super.key});
 
   @override
   State<MyShiftsDetailsSimilarShifts> createState() => _MyShiftsDetailsSimilarShiftsState();
 }
 
 class _MyShiftsDetailsSimilarShiftsState extends State<MyShiftsDetailsSimilarShifts> {
-  final List<SimilarShift> similarShifts = [
-    SimilarShift(date: "Wed, 01 Nov 2022", rate: "\$200/hr"),
-    SimilarShift(date: "Wed, 01 Nov 2022", rate: "\$250/hr"),
-    SimilarShift(date: "Wed, 01 Nov 2022", rate: "\$300/hr"),
-    SimilarShift(date: "Wed, 01 Nov 2022", rate: "\$350/hr"),
-  ];
-
-  List<SimilarShift> selectedShifts = [];
-
   @override
   Widget build(BuildContext context) {
     return DefaultContainer(
@@ -37,7 +32,7 @@ class _MyShiftsDetailsSimilarShiftsState extends State<MyShiftsDetailsSimilarShi
               AppBadge(
                 color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
                 textColor: Theme.of(context).colorScheme.onSurface,
-                title: "Group (4)",
+                title: "Group (${widget.homeShiftModel.shiftsDaysVOList.length})",
               )
             ],
           ),
@@ -47,16 +42,10 @@ class _MyShiftsDetailsSimilarShiftsState extends State<MyShiftsDetailsSimilarShi
           ),
           Column(
             spacing: 10.h,
-            children: List.generate(4, (index) => SimilarShiftItem(
-              shift: similarShifts[index],
-              selected: selectedShifts.contains(similarShifts[index]),
-              onTap: () {
-                if(selectedShifts.contains(similarShifts[index])) {
-                  setState(() {selectedShifts.remove(similarShifts[index]);});
-                } else {
-                  setState(() {selectedShifts.add(similarShifts[index]);});
-                }
-              },
+            children: List.generate(widget.homeShiftModel.shiftsDaysVOList.length, (index) => SimilarShiftItem(
+              shift: widget.homeShiftModel.shiftsDaysVOList[index],
+              selected: widget.selectedShiftsDaysVOList.contains(widget.homeShiftModel.shiftsDaysVOList[index]),
+              onTap: () {widget.onSelected(widget.homeShiftModel.shiftsDaysVOList[index]); },
             )),
           ),
         ],

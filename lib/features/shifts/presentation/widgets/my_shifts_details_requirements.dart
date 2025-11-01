@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stat_doctor/core/config/styles/styles.dart';
 import 'package:stat_doctor/core/widgets/default_container.dart';
+import 'package:stat_doctor/features/home/data/models/shift_detail_vo.dart';
 
 class MyShiftsDetailsRequirements extends StatelessWidget {
-  const MyShiftsDetailsRequirements({super.key});
+  final ShiftDetailVO shiftsDetailVO;
+  const MyShiftsDetailsRequirements({required this.shiftsDetailVO, super.key});
 
   Widget _buildRequirement(String label, String value) {
     return Column(
@@ -24,11 +26,11 @@ class MyShiftsDetailsRequirements extends StatelessWidget {
         spacing: 10.h,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildRequirement("Skill level", "VMO/SMO"),
-          _buildRequirement("Specialty", "Emergency Medicine"),
-          _buildRequirement("Support level", "Senior on site"),
-          _buildRequirement("Travel provisions", "\$0.72/km, no flights included"),
-          _buildRequirement("Accommodation provisions", "Not included"),
+          _buildRequirement("Skill level", shiftsDetailVO.skillLevel),
+          _buildRequirement("Specialty", shiftsDetailVO.specialty),
+          _buildRequirement("Support level", shiftsDetailVO.supportLevel),
+          _buildRequirement("Travel provisions", shiftsDetailVO.travelFlag == 1 ? "${shiftsDetailVO.travel} / km" : shiftsDetailVO.travel),
+          _buildRequirement("Accommodation provisions", shiftsDetailVO.accommodation),
         ],
       ),
     );

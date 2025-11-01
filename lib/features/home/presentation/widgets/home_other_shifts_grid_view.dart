@@ -6,6 +6,7 @@ import 'package:stat_doctor/core/widgets/shimmer_shape.dart';
 import 'package:stat_doctor/features/home/presentation/cubit/home_cubit.dart';
 import 'package:stat_doctor/features/home/presentation/widgets/home_grid_loading.dart';
 import 'package:stat_doctor/features/home/presentation/widgets/home_other_shifts_card.dart';
+import 'package:stat_doctor/features/home/presentation/widgets/no_home_data.dart';
 
 class HomeOtherShiftsGridView extends StatelessWidget {
   const HomeOtherShiftsGridView({super.key,});
@@ -17,6 +18,7 @@ class HomeOtherShiftsGridView extends StatelessWidget {
       sliver: BlocBuilder<HomeCubit, HomeState>(
         builder: (context, state) {
           if(state is GetHomeShiftsLoading || state is GetHomeShiftsFailure) {return HomeGridLoading();} 
+          if(context.read<HomeCubit>().nearList.isEmpty) {return SliverToBoxAdapter(child: NoHomeData(margin: EdgeInsets.zero));}
           return SliverGrid.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,

@@ -5,11 +5,11 @@ class ShiftDayVO extends Equatable {
   final String shiftsDaysId;
   final int shiftsDaysNo;
   final int shiftsDay;
-  final String shiftsDays;
+  final DateTime shiftsDays;
   final int startTime;
   final int endTime;
-  final String startTimeS;
-  final String endTimeS;
+  final DateTime startTimeS;
+  final DateTime endTimeS;
   final String? rateType;
   final double? contractedRate;
   final String durationTime;
@@ -58,11 +58,11 @@ class ShiftDayVO extends Equatable {
     shiftsDaysId: json['shiftsDaysId'],
     shiftsDaysNo: json['shiftsDaysNo'],
     shiftsDay: json['shiftsDay'],
-    shiftsDays: json['shiftsDays'],
+    shiftsDays: DateTime.parse(json['shiftsDays']),
     startTime: json['startTime'],
     endTime: json['endTime'],
-    startTimeS: json['startTimeS'],
-    endTimeS: json['endTimeS'],
+    startTimeS: DateTime.parse(json['startTimeS']),
+    endTimeS: DateTime.parse(json['endTimeS']),
     rateType: json['rateType'],
     contractedRate: json['contractedRate'],
     durationTime: json['durationTime'],

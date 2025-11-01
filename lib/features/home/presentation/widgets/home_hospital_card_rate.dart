@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stat_doctor/core/config/app_icons.dart';
 import 'package:stat_doctor/core/config/styles/styles.dart';
+import 'package:stat_doctor/core/methods/covert_datetime_to_string.dart';
 import 'package:stat_doctor/core/widgets/custom_rich_text.dart';
+import 'package:stat_doctor/features/home/data/models/home_shift_model.dart';
 
 class HomeHospitalCardRate extends StatelessWidget {
-  const HomeHospitalCardRate({super.key});
+  final HomeShiftModel homeShiftModel;
+  const HomeHospitalCardRate({required this.homeShiftModel, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,14 +30,15 @@ class HomeHospitalCardRate extends StatelessWidget {
                   spacing: 10.w,
                   children: [
                     AppIcons.icon(icon: AppIcons.calendar, size: 18, color: Theme.of(context).hintColor),
-                    Expanded(child: Text("Mon, 26 Sep 2022", style: TextStyles.textViewSemiBold12,)),
+                    Expanded(child: Text(ConvertDateTime.formatDateTimeToDay(homeShiftModel.shiftsDaysVOList.first.shiftsDays), style: TextStyles.textViewSemiBold12,)),
                   ],
                 ),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   spacing: 10.w,
                   children: [
                     AppIcons.icon(icon: AppIcons.clock, size: 18, color: Theme.of(context).hintColor),
-                    Expanded(child: Text("10:30 pm - 8:30 am (8 hrs)", style: TextStyles.textViewSemiBold12,)),
+                    Expanded(child: Text("${ConvertDateTime.formatDateTimeToTime(homeShiftModel.shiftsDaysVOList.first.startTimeS)} - ${ConvertDateTime.formatDateTimeToTime(homeShiftModel.shiftsDaysVOList.first.endTimeS)} (${homeShiftModel.shiftsDaysVOList.first.durationTime})", style: TextStyles.textViewSemiBold12,)),
                   ],
                 )
               ],
@@ -58,7 +62,7 @@ class HomeHospitalCardRate extends StatelessWidget {
             children: [
               Text("Rate:", style: TextStyles.textViewMedium14.copyWith(color: Theme.of(context).hintColor),),
               CustomRichText(
-                startSubText: "\$200",
+                startSubText: "\$${homeShiftModel.shiftsDaysVOList.first.ratePerHour.toInt()}",
                 centerSubText: "/",
                 endSubText: "hr",
                 startSubTextStyle: TextStyles.textViewBold16.copyWith(color: Theme.of(context).primaryColor),
