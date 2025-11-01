@@ -1,27 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stat_doctor/core/config/styles/styles.dart';
 import 'package:stat_doctor/core/widgets/app_button.dart';
 import 'package:stat_doctor/core/widgets/custom_popup.dart';
 import 'package:stat_doctor/core/widgets/tab_selector.dart';
+import 'package:stat_doctor/features/home/data/objects_value/filter_params.dart';
+import 'package:stat_doctor/features/home/data/objects_value/shift_status_params.dart';
+import 'package:stat_doctor/features/home/presentation/cubit/filter_cubit.dart';
 import 'package:stat_doctor/features/home/presentation/widgets/home_shift_location_bottom_sheet.dart';
 
 class HomeOtherShiftsFilter extends StatelessWidget {
-  final List<String> otherShiftsTitles;
-  final int otherShiftsIndex;
-  final Function(int) onOtherShiftsChanged;
-  final List<String> shiftsLocationsTitles;
-  final int shiftsLocationsIndex;
-  final Function(int) onShiftsLocationsChanged;
+  final FilterParams filterParams;
+  final ShiftStatusParams currentShiftsStatus;
+  final Function(ShiftStatusParams) onShiftsStatusChanged;
+  final Function(String) onShiftChanged;
+  
 
   const HomeOtherShiftsFilter({
     super.key,
-    required this.otherShiftsTitles,
-    required this.otherShiftsIndex,
-    required this.onOtherShiftsChanged,
-    required this.shiftsLocationsTitles,
-    required this.shiftsLocationsIndex,
-    required this.onShiftsLocationsChanged,
+    required this.filterParams,
+    required this.currentShiftsStatus,
+    required this.onShiftsStatusChanged,
+    required this.onShiftChanged,
   });
 
   @override
@@ -40,9 +41,8 @@ class HomeOtherShiftsFilter extends StatelessWidget {
                     CustomPopup.appShowModalBottomSheet(
                       context: context,
                       builder: (ctx) => HomeShiftLocationBottomSheet(
-                        shiftsLocationsTitles: shiftsLocationsTitles,
-                        shiftsLocationsIndex: shiftsLocationsIndex,
-                        onShiftsLocationsChanged: onShiftsLocationsChanged,
+                        currentShiftsStatus: currentShiftsStatus,
+                        onShiftsStatusChanged: onShiftsStatusChanged,
                       ),
                     );
                   },
@@ -53,7 +53,7 @@ class HomeOtherShiftsFilter extends StatelessWidget {
                   child: Row(
                     spacing: 5.w,
                     children: [
-                      Text(shiftsLocationsTitles[shiftsLocationsIndex], style: TextStyles.textViewMedium13.copyWith(color: Theme.of(context).primaryColor),),
+                      Text(currentShiftsStatus.title, style: TextStyles.textViewMedium13.copyWith(color: Theme.of(context).primaryColor),),
                       Icon(Icons.keyboard_arrow_down_rounded, size: 20.r, color: Theme.of(context).primaryColor,),
                     ],
                   ),
@@ -61,13 +61,17 @@ class HomeOtherShiftsFilter extends StatelessWidget {
               ],
             ),
           ),
-          TabSelector(
-            height: 40.h,
-            viewBorder: false,
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
-            titles: otherShiftsTitles,
-            currentIndex: otherShiftsIndex,
-            onIndexChanged: onOtherShiftsChanged
+          BlocBuilder<FilterCubit, FilterState>(
+            builder: (context, state) {
+              return TabSelector(
+                height: 40.h,
+                viewBorder: false,
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                titles: context.read<FilterCubit>().homeFilterModel.timeType,
+                currentIndex: context.read<FilterCubit>().homeFilterModel.timeType.indexOf(filterParams.selectedShift),
+                onIndexChanged: (index){onShiftChanged(context.read<FilterCubit>().homeFilterModel.timeType[index]);}
+              );
+            },
           )
         ],
       ),

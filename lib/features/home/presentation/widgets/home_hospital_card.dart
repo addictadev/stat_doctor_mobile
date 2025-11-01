@@ -4,6 +4,7 @@ import 'package:stat_doctor/core/config/app_colors.dart';
 import 'package:stat_doctor/core/config/styles/styles.dart';
 import 'package:stat_doctor/core/injection/injection_container.dart';
 import 'package:stat_doctor/core/navigation/app_navigator.dart';
+import 'package:stat_doctor/features/home/data/models/home_shift_model.dart';
 import 'package:stat_doctor/features/home/presentation/widgets/home_hospital_card_buttons.dart';
 import 'package:stat_doctor/features/home/presentation/widgets/home_hospital_card_image.dart';
 import 'package:stat_doctor/features/home/presentation/widgets/home_hospital_card_rate.dart';
@@ -11,9 +12,9 @@ import 'package:stat_doctor/features/home/presentation/widgets/home_hospital_inf
 import 'package:stat_doctor/features/shifts/presentation/screens/shifts_details_screen.dart';
 
 class HomeHospitalCard extends StatelessWidget {
-  const HomeHospitalCard({super.key});
+  final HomeShiftModel homeShiftModel;
+  const HomeHospitalCard({super.key, required this.homeShiftModel});
 
-  static const String image = "https://plus.unsplash.com/premium_photo-1672097247893-4f8660247b1f?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1169";
 
   @override
   Widget build(BuildContext context) {
@@ -29,21 +30,23 @@ class HomeHospitalCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(20.r),
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           spacing: 15.h,
           children: [
-            HomeHospitalCardImage(image: image),
-            Text("St Vincent’s Public Hospital  Melbourne", style: TextStyles.textViewBold16,),
+            HomeHospitalCardImage(homeShiftModel: homeShiftModel),
+            Text(homeShiftModel.hospitalVO.hospitalName, style: TextStyles.textViewBold16, maxLines: 2, overflow: TextOverflow.ellipsis,),
             HomeHospitalCardRate(),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               spacing: 15.h,
               children: [
-                HomeHospitalInfoItem(title: "Min. skill level: ", value: "VMO/SMO"),
-                HomeHospitalInfoItem(title: "Specialty: ", value: "Emergency Medicine"),
-                HomeHospitalInfoItem(title: "Support level: ", value: "Senior on site"),
+                HomeHospitalInfoItem(title: "Min. skill level: ", value: homeShiftModel.shiftsDetailVO.skillLevel),
+                HomeHospitalInfoItem(title: "Specialty: ", value: homeShiftModel.shiftsDetailVO.specialty),
+                HomeHospitalInfoItem(title: "Support level: ", value: homeShiftModel.shiftsDetailVO.supportLevel),
               ],
             ),
-            HomeHospitalCardButtons(),
+            HomeHospitalCardButtons(homeShiftModel: homeShiftModel),
           ],
         ),
       ),
