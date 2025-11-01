@@ -23,19 +23,21 @@ class HomeShiftsCardInfoItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
-      decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular(100.r),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        spacing: 5.w,
-        children: [
-          if(icon != null) AppIcons.icon(icon: icon!, size: iconSize ?? 10, color: iconColor ?? Theme.of(context).primaryColor),
-          Text(text, style: textStyle ?? TextStyles.textViewBold8.copyWith(color: textColor ?? Theme.of(context).primaryColor),),
-        ],
+    return Expanded(
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
+        decoration: BoxDecoration(
+          color: Theme.of(context).cardColor,
+          borderRadius: BorderRadius.circular(100.r),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          spacing: 5.w,
+          children: [
+            if(icon != null) AppIcons.icon(icon: icon!, size: iconSize ?? 10, color: iconColor ?? Theme.of(context).primaryColor),
+            Expanded(child: Text(text, style: textStyle ?? TextStyles.textViewBold8.copyWith(color: textColor ?? Theme.of(context).primaryColor), maxLines: 1, overflow: TextOverflow.ellipsis,)),
+          ],
+        ),
       ),
     );
   }
