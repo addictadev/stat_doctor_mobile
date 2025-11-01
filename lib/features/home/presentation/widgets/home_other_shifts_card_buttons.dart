@@ -3,11 +3,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stat_doctor/core/config/app_colors.dart';
 import 'package:stat_doctor/core/config/app_icons.dart';
 import 'package:stat_doctor/core/config/styles/styles.dart';
+import 'package:stat_doctor/features/home/data/models/home_shift_model.dart';
 
 class HomeOtherShiftsCardButtons extends StatelessWidget {
-  final Function()? onAccommodationTap;
-  final Function()? onTravelTap;
-  const HomeOtherShiftsCardButtons({super.key, this.onAccommodationTap, this.onTravelTap});
+  final HomeShiftModel homeShiftModel;
+  const HomeOtherShiftsCardButtons({super.key, required this.homeShiftModel});
+
+  Widget getFlag(bool value) {
+    return value ? AppIcons.icon(icon: AppIcons.right, size: 12, color: AppColors.lightGreen) : AppIcons.icon(icon: AppIcons.failure, size: 12, color: AppColors.red);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,31 +19,23 @@ class HomeOtherShiftsCardButtons extends StatelessWidget {
       spacing: 5.w,
       children: [
         Expanded(
-          child: InkWell(
-            onTap: onTravelTap,
-            overlayColor: WidgetStatePropertyAll(AppColors.transparent),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              spacing: 5.w,
-              children: [
-                AppIcons.icon(icon: AppIcons.right, size: 8, color: AppColors.lightGreen),
-                Expanded(child: Text("Travel", style: TextStyles.textViewSemiBold8.copyWith(color: AppColors.cardColorLight),)),
-              ],
-            ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            spacing: 5.w,
+            children: [
+              getFlag(homeShiftModel.shiftsDetailVO.travelFlag == 1),
+              Expanded(child: Text("Travel", style: TextStyles.textViewSemiBold8.copyWith(color: AppColors.cardColorLight),)),
+            ],
           ),
         ),
         Expanded(
-          child: InkWell(
-            onTap: onAccommodationTap,
-            overlayColor: WidgetStatePropertyAll(AppColors.transparent),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              spacing: 5.w,
-              children: [
-                AppIcons.icon(icon: AppIcons.failure, size: 10, color: AppColors.red),
-                Expanded(child: Text("Accommodation", style: TextStyles.textViewSemiBold8.copyWith(color: AppColors.cardColorLight),)),
-              ],
-            ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            spacing: 5.w,
+            children: [
+              getFlag(homeShiftModel.shiftsDetailVO.accommodationFlag == 1),
+              Expanded(child: Text("Accommodation", style: TextStyles.textViewSemiBold8.copyWith(color: AppColors.cardColorLight),)),
+            ],
           ),
         ),
       ],
